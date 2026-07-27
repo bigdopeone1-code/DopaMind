@@ -15,7 +15,7 @@ import com.dopamind.app.feature.finance.ui.FinanceScreen
 import com.dopamind.app.feature.libido.ui.LibidoScreen
 import com.dopamind.app.feature.recovery.ui.ChillCoachSosScreen
 import com.dopamind.app.feature.recovery.ui.RecoveryScreen
-import com.dopamind.app.feature.recovery.ui.VisionScannerScreen
+import com.dopamind.app.feature.scanner.ui.VisionScannerScreen
 import com.dopamind.app.feature.tobacco.ui.TobaccoScreen
 import com.dopamind.app.feature.voicelog.ui.VoiceLogScreen
 import com.dopamind.app.feature.weeklyrecap.ui.AnnualWrappedScreen

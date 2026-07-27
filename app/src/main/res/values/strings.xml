@@ -98,4 +98,187 @@
     <string name="wrapped_avg_sleep">%1$.1fh average sleep</string>
     <string name="wrapped_most_active">Most active module: %1$s</string>
     <string name="wrapped_most_active_none">None — a quiet year</string>
+
+    <!-- Cannabis & CBD -->
+    <string name="cannabis_log_title">Log a session</string>
+    <string name="cannabis_strain_placeholder">Strain (optional)</string>
+    <string name="cannabis_mood_before">Mood before</string>
+    <string name="cannabis_note_placeholder">Note (optional)</string>
+    <string name="cannabis_log_save">Log it</string>
+    <string name="cannabis_recent_logs">Recent sessions</string>
+    <string name="cannabis_method_joint">Joint</string>
+    <string name="cannabis_method_vape">Vape</string>
+    <string name="cannabis_method_edible">Edible</string>
+    <string name="cannabis_method_tincture">Tincture</string>
+    <string name="cannabis_method_bong">Bong</string>
+    <string name="cannabis_method_other">Other</string>
+    <string name="cannabis_tbreak_title">T-Break Timer</string>
+    <string name="cannabis_tbreak_days_chip">%1$dd</string>
+    <string name="cannabis_tbreak_start">Start a T-Break</string>
+    <string name="cannabis_tbreak_progress">Day %1$d of %2$d</string>
+    <string name="cannabis_tbreak_end">End T-Break</string>
+    <string name="cannabis_edibles_title">Edibles calculator</string>
+    <string name="cannabis_edibles_dose_placeholder">Dose (mg THC)</string>
+    <string name="cannabis_edibles_weight_placeholder">Body weight (kg)</string>
+    <string name="cannabis_edibles_calculate">Estimate</string>
+    <string name="cannabis_edibles_result">%1$s • onset in %2$d–%3$d min</string>
+    <string name="cannabis_edibles_wait_hint">Wait at least %1$d min before considering more.</string>
+    <string name="cannabis_edibles_micro">Micro dose</string>
+    <string name="cannabis_edibles_low">Low</string>
+    <string name="cannabis_edibles_moderate">Moderate</string>
+    <string name="cannabis_edibles_high">High</string>
+    <string name="cannabis_edibles_very_high">Very high</string>
+
+    <!-- Tobacco / IQOS -->
+    <string name="tobacco_today_count">%1$d / %2$d today</string>
+    <string name="tobacco_product_type">Product</string>
+    <string name="tobacco_trigger">Trigger (optional)</string>
+    <string name="tobacco_log_button">Log it</string>
+    <string name="tobacco_recent_logs">Recent logs</string>
+    <string name="tobacco_spacer_title">Smart spacer</string>
+    <string name="tobacco_spacer_wait">Try to wait %1$d more min before the next one.</string>
+    <string name="tobacco_spacer_clear">You\'re clear for one whenever you need it.</string>
+    <string name="tobacco_product_cigarette">Cigarette</string>
+    <string name="tobacco_product_iqos">IQOS stick</string>
+    <string name="tobacco_product_vape">Vape puff</string>
+    <string name="tobacco_product_other">Other</string>
+    <string name="tobacco_trigger_boredom">Boredom</string>
+    <string name="tobacco_trigger_stress">Stress</string>
+    <string name="tobacco_trigger_social">Social</string>
+    <string name="tobacco_trigger_habit">Habit</string>
+    <string name="tobacco_trigger_after_meal">After meal</string>
+    <string name="tobacco_trigger_alcohol">Alcohol</string>
+    <string name="tobacco_trigger_other">Other</string>
+
+    <!-- Alcohol & Party -->
+    <string name="alcohol_tonight_count">%1$d tonight</string>
+    <string name="alcohol_scan_label">Scan a label instead</string>
+    <string name="alcohol_recent_logs">Recent drinks</string>
+    <string name="alcohol_profile_title">For a more accurate estimate</string>
+    <string name="alcohol_sex_male">Male</string>
+    <string name="alcohol_sex_female">Female</string>
+    <string name="alcohol_sex_other">Other / prefer not to say</string>
+    <string name="alcohol_bac_title">Estimated BAC</string>
+    <string name="alcohol_bac_rising">Still rising — give it time</string>
+    <string name="alcohol_bac_stable">Stable / falling</string>
+    <string name="alcohol_can_drive_title">Can I drive?</string>
+    <string name="alcohol_can_drive_yes">Likely under the legal limit</string>
+    <string name="alcohol_can_drive_no">Not yet — you\'re over the limit</string>
+    <string name="alcohol_can_drive_hours">≈ %1$.1fh until you\'re likely under the limit</string>
+    <string name="alcohol_can_drive_disclaimer">Rough estimate only — never a substitute for a real breathalyzer or your own judgment.</string>
+    <string name="alcohol_hangover_title">Hangover risk</string>
+    <string name="alcohol_hangover_score">%1$d/100 — %2$s</string>
+    <string name="alcohol_ate_food">Ate food tonight</string>
+    <string name="hangover_level_low">Low</string>
+    <string name="hangover_level_moderate">Moderate</string>
+    <string name="hangover_level_high">High</string>
+    <string name="hangover_level_severe">Severe</string>
+    <string name="hangover_tip_water">Drink some water</string>
+    <string name="hangover_tip_eat">Eat something before bed</string>
+    <string name="hangover_tip_electrolytes">Electrolytes would help</string>
+    <string name="hangover_tip_sleep_early">Try to get to bed early</string>
+    <string name="hangover_tip_slow_down">Your BAC is still climbing — slow down</string>
+    <string name="hangover_tip_stop">Consider calling it here</string>
+
+    <!-- Libido & Pleasure -->
+    <string name="libido_log_title">Log</string>
+    <string name="libido_type_solo">Solo</string>
+    <string name="libido_type_partner">Partner</string>
+    <string name="libido_mood_label">Mood before</string>
+    <string name="libido_log_save">Log it</string>
+    <string name="libido_streak_caption">%1$d days — monk mode</string>
+    <string name="libido_reset_title">Dopamine reset</string>
+    <string name="libido_reset_start">Start a 1-minute reset</string>
+    <string name="libido_reset_stop">Stop</string>
+    <string name="breathing_inhale">Inhale</string>
+    <string name="breathing_hold">Hold</string>
+    <string name="breathing_exhale">Exhale</string>
+    <string name="breathing_rest">Rest</string>
+
+    <!-- Dopamine & Focus -->
+    <string name="focus_debt_title">Dopamine Debt</string>
+    <string name="focus_debt_top_contributors">Mostly from: %1$s</string>
+    <string name="focus_debt_trend_rising">Trending up</string>
+    <string name="focus_debt_trend_falling">Trending down</string>
+    <string name="focus_debt_trend_stable">Holding steady</string>
+    <string name="focus_contributor_poor_sleep">Poor sleep</string>
+    <string name="focus_stacking_title">Health stacking</string>
+    <string name="focus_stacking_subtitle">Pair a duty with a reward.</string>
+    <string name="focus_stacking_duty_placeholder">Duty (e.g. laundry)</string>
+    <string name="focus_stacking_pleasure_placeholder">Reward (e.g. an episode)</string>
+    <string name="focus_stacking_start">Start stack</string>
+    <string name="focus_detox_title">Detox mode</string>
+    <string name="focus_detox_hours_chip">%1$dh</string>
+    <string name="focus_detox_target">Target: %1$dh</string>
+    <string name="focus_detox_complete">Mark complete</string>
+    <string name="focus_why_title">Why prompt</string>
+    <string name="focus_why_subtitle">A quick note on what\'s driving it right now.</string>
+    <string name="focus_why_placeholder">Why right now?</string>
+    <string name="focus_why_save">Save</string>
+
+    <!-- Recovery & Food -->
+    <string name="recovery_sos_title">Feeling off? SOS</string>
+    <string name="recovery_sos_subtitle">A calm guided reset for a rough moment.</string>
+    <string name="recovery_sleep_title">Sleep</string>
+    <string name="recovery_sleep_quality">Quality</string>
+    <string name="recovery_sleep_save">Save sleep</string>
+    <string name="recovery_munchies_title">Munchies &amp; junk food</string>
+    <string name="recovery_munchies_placeholder">What did you eat?</string>
+    <string name="recovery_munchies_save">Log it</string>
+    <string name="recovery_munchies_scan">Scan a plate</string>
+    <string name="recovery_munchies_score">Junk score: %1$d/100</string>
+    <string name="recovery_recent_munchies">Recent food logs</string>
+
+    <!-- Chill Coach SOS -->
+    <string name="sos_next">Next</string>
+    <string name="sos_done">I\'m okay</string>
+    <string name="sos_welcome_first_time">Hey. You\'re safe. Let\'s slow this down together.</string>
+    <string name="sos_welcome_returning">You\'ve done this before. You know how this goes.</string>
+    <string name="sos_reassurance_temporary">This feeling is temporary — it will pass.</string>
+    <string name="sos_reassurance_safe_place">You\'re in a safe place right now. Nothing bad is happening.</string>
+    <string name="sos_reassurance_breathe">Follow the ring. Breathe with it.</string>
+    <string name="sos_reassurance_passes">Every wave like this has passed before. This one will too.</string>
+    <string name="sos_grounding">Name 5 things you can see, 4 you can touch, 3 you can hear.</string>
+    <string name="sos_reassurance_low_mood">You\'ve had a rough few days — be extra gentle with yourself tonight.</string>
+
+    <!-- Vision Scanner -->
+    <string name="scanner_capture">Capture</string>
+    <string name="scanner_scanning">Scanning…</string>
+    <string name="scanner_permission_rationale">Camera access is needed to scan a label or a plate. Nothing leaves your device.</string>
+    <string name="scanner_error">Couldn\'t read that — try again or log it manually.</string>
+    <string name="scanner_drink_result_title">Detected</string>
+    <string name="scanner_drink_result_body">%1$.1f%% ABV • %2$dml</string>
+    <string name="scanner_food_result_title">Detected</string>
+    <string name="scanner_confirm_log">Log it</string>
+
+    <!-- Calc & Finance -->
+    <string name="finance_budget_title">Monthly budget</string>
+    <string name="finance_budget_placeholder">Monthly limit (€)</string>
+    <string name="finance_budget_set">Set budget</string>
+    <string name="finance_budget_progress">%1$.0f€ of %2$.0f€ this month</string>
+    <string name="finance_spend_title">Log a spend</string>
+    <string name="finance_spend_amount_placeholder">Amount (€)</string>
+    <string name="finance_spend_quantity_placeholder">Quantity (optional, e.g. grams)</string>
+    <string name="finance_spend_save">Log it</string>
+    <string name="finance_convenience_title">€/unit convenience</string>
+    <string name="finance_convenience_quantity_placeholder">Quantity (e.g. grams)</string>
+    <string name="finance_convenience_calculate">Calculate</string>
+    <string name="finance_spots_title">Saved spots</string>
+    <string name="finance_spots_subtitle">A simple local list for now — no map/location tracking in this MVP.</string>
+    <string name="finance_spots_placeholder">Spot name</string>
+    <string name="finance_spots_save">Save spot</string>
+    <string name="finance_category_other">Other</string>
+    <string name="finance_recent_spends">Recent spends</string>
+
+    <!-- Voice Log -->
+    <string name="voicelog_idle_title">Tell me what happened</string>
+    <string name="voicelog_idle_example">e.g. "Two beers and a cigarette after work"</string>
+    <string name="voicelog_start">Start talking</string>
+    <string name="voicelog_listening">Listening…</string>
+    <string name="voicelog_transcript">Heard</string>
+    <string name="voicelog_no_match">Couldn\'t match anything — try logging it manually instead.</string>
+    <string name="voicelog_confirm">Log these</string>
+    <string name="voicelog_retry">Try again</string>
+    <string name="voicelog_saved">Logged!</string>
+    <string name="voicelog_error">Something went wrong with speech recognition.</string>
 </resources>
