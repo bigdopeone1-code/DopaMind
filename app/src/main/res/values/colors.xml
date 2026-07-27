@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors core/theme/Color.kt — kept for the XML launch theme / adaptive icon only.
+         All in-app UI reads colors from the Compose theme, not from here. -->
+    <color name="dm_background_primary">#0A0A0C</color>
+    <color name="dm_background_elevated">#121214</color>
+    <color name="dm_text_primary">#F5F5F7</color>
+    <color name="dm_accent">#00D9A3</color>
+</resources>

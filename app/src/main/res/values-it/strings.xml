@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DopaMind</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_tagline">Traccia tutto, senza stressarti.</string>
+    <string name="dashboard_checkin_cta_title">Daily Vibe Check-in</string>
+    <string name="dashboard_checkin_cta_subtitle">20 secondi. Scorri le card, prendi il badge.</string>
+    <string name="dashboard_quick_voice_log">Log vocale</string>
+    <string name="dashboard_quick_sos">SOS / Rilassati</string>
+    <string name="dashboard_modules_header">I tuoi moduli</string>
+    <string name="dashboard_weekly_recap_link">Weekly Recap</string>
+    <string name="dashboard_weekly_recap_title">Il tuo Weekly Recap è pronto</string>
+    <string name="dashboard_weekly_recap_subtitle">Scorri le statistiche della settimana, stile Wrapped.</string>
+
+    <!-- Module names -->
+    <string name="module_cannabis">Cannabis &amp; CBD</string>
+    <string name="module_tobacco">Tabacco / IQOS</string>
+    <string name="module_alcohol">Alcol &amp; Party</string>
+    <string name="module_libido">Libido &amp; Pleasure</string>
+    <string name="module_dopamine_focus">Dopamina &amp; Focus</string>
+    <string name="module_recovery">Recovery &amp; Food</string>
+    <string name="module_finance">Calc &amp; Finance</string>
+
+    <!-- Azioni comuni -->
+    <string name="action_close">Chiudi</string>
+    <string name="action_back">Indietro</string>
+    <string name="action_save">Salva</string>
+    <string name="action_cancel">Annulla</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_scan">Scansiona</string>
+
+    <!-- Daily Vibe Check-in -->
+    <string name="checkin_next">Avanti</string>
+    <string name="checkin_finish">Fatto</string>
+    <string name="checkin_done">Top, chiudi</string>
+    <string name="checkin_mood_title">Come va l\'energia oggi?</string>
+    <string name="checkin_mood_drained">Scarico</string>
+    <string name="checkin_mood_low">Giù</string>
+    <string name="checkin_mood_okay">Ok</string>
+    <string name="checkin_mood_good">Bene</string>
+    <string name="checkin_mood_energized">Carico</string>
+    <string name="checkin_chips_title">Qualcosa ieri?</string>
+    <string name="checkin_chips_subtitle">Tocca quello che è successo — niente numeri.</string>
+    <string name="checkin_sleep_title">Come hai dormito?</string>
+    <string name="checkin_sleep_hours_value">%1$dh</string>
+    <string name="checkin_note_placeholder">Altro? (opzionale)</string>
+    <string name="checkin_streak_caption">%1$d giorni di check-in di fila</string>
+    <string name="checkin_badge_unlocked">Nuovo badge: %1$s</string>
+
+    <!-- Reazioni check-in -->
+    <string name="reaction_weekend_warrior">Weekend Warrior</string>
+    <string name="reaction_clean_day">Giornata Pulita</string>
+    <string name="reaction_night_owl">Gufo Notturno</string>
+    <string name="reaction_energized">Carica Piena</string>
+    <string name="reaction_low_battery">Batteria Scarica</string>
+    <string name="reaction_balanced">Equilibrio Zen</string>
+
+    <!-- Badge -->
+    <string name="badge_checkin_streak_7">Streak di 7 Giorni</string>
+    <string name="badge_checkin_streak_30">Streak di 30 Giorni</string>
+    <string name="badge_tbreak_hero_7">Eroe del T-Break</string>
+    <string name="badge_smoke_free_3">3 Giorni Senza Fumo</string>
+    <string name="badge_liver_friend_7">Amico del Fegato</string>
+    <string name="badge_monk_mode_7">Monk Mode 7</string>
+    <string name="badge_detox_master_3">Maestro del Detox</string>
+    <string name="badge_budget_boss">Budget Boss</string>
+
+    <!-- Weekly Recap -->
+    <string name="recap_loading">Sto elaborando la tua settimana…</string>
+    <string name="recap_value_euros">%1$.0f€</string>
+    <string name="recap_value_days">%1$d</string>
+    <string name="recap_value_hours">%1$.1fh</string>
+    <string name="recap_value_score">%1$d/100</string>
+    <string name="recap_value_score_5">%1$.1f/5</string>
+    <string name="recap_caption_total_spend">spesi in tutti i moduli questa settimana</string>
+    <string name="recap_caption_alcohol_spend">in drink — soprattutto %1$s</string>
+    <string name="recap_caption_smoke_free">giorni senza fumo questa settimana</string>
+    <string name="recap_caption_cannabis_sessions">sessioni cannabis questa settimana</string>
+    <string name="recap_caption_sleep">media sonno questa settimana</string>
+    <string name="recap_caption_dopamine_debt_rising">Il Dopamine Debt sta salendo — magari rallenta un po\'</string>
+    <string name="recap_caption_dopamine_debt_falling">Il Dopamine Debt sta scendendo — ottimo lavoro</string>
+    <string name="recap_caption_dopamine_debt_stable">Dopamine Debt stabile</string>
+    <string name="recap_caption_mood">mood/energia media questa settimana</string>
+    <string name="recap_caption_no_data">Ancora nessun dato questa settimana — inizia con un check-in!</string>
+
+    <string name="drink_type_beer">birra</string>
+    <string name="drink_type_wine">vino</string>
+    <string name="drink_type_spirit">superalcolici</string>
+    <string name="drink_type_cocktail">cocktail</string>
+    <string name="drink_type_other">drink</string>
+
+    <!-- Wrapped Annuale -->
+    <string name="wrapped_title">Il Tuo Anno, Wrapped</string>
+    <string name="wrapped_total_spend">%1$.0f€ tracciati quest\'anno</string>
+    <string name="wrapped_badges">%1$d badge sbloccati</string>
+    <string name="wrapped_smoke_free_streak">%1$d giorni: miglior streak senza fumo</string>
+    <string name="wrapped_avg_sleep">%1$.1fh di sonno medio</string>
+    <string name="wrapped_most_active">Modulo più usato: %1$s</string>
+    <string name="wrapped_most_active_none">Nessuno — anno tranquillo</string>
+</resources>

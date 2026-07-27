@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base window theme; actual UI theming (colors, typography, shapes) is
+         driven entirely by Compose in core/theme/Theme.kt. This only controls
+         the system window before Compose takes over and the app icon. -->
+    <style name="Theme.DopaMind" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/dm_background_primary</item>
+        <item name="android:statusBarColor">@color/dm_background_primary</item>
+        <item name="android:navigationBarColor">@color/dm_background_primary</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
+    </style>
+</resources>
