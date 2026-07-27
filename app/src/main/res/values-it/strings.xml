@@ -8,6 +8,7 @@
     <string name="dashboard_checkin_cta_subtitle">20 secondi. Scorri le card, prendi il badge.</string>
     <string name="dashboard_quick_voice_log">Log vocale</string>
     <string name="dashboard_quick_sos">SOS / Rilassati</string>
+    <string name="dashboard_quick_badges">Badge</string>
     <string name="dashboard_modules_header">I tuoi moduli</string>
     <string name="dashboard_weekly_recap_link">Weekly Recap</string>
     <string name="dashboard_weekly_recap_title">Il tuo Weekly Recap è pronto</string>
@@ -277,4 +278,64 @@
     <string name="voicelog_retry">Riprova</string>
     <string name="voicelog_saved">Registrato!</string>
     <string name="voicelog_error">Qualcosa è andato storto con il riconoscimento vocale.</string>
+
+    <!-- Notifiche -->
+    <string name="notif_channel_reminders_name">Check-in giornaliero</string>
+    <string name="notif_channel_reminders_description">Un promemoria giornaliero per il Vibe Check-in, se non l\'hai ancora fatto.</string>
+    <string name="notif_channel_craving_name">Alert pattern di consumo</string>
+    <string name="notif_channel_craving_description">Un avviso prima dei tuoi orari abituali, basato sulla tua storia.</string>
+    <string name="notif_daily_reminder_title">Check-in veloce?</string>
+    <string name="notif_daily_reminder_body">20 secondi, scorri le card, prendi il badge.</string>
+    <string name="notif_craving_alert_title">Avviso</string>
+    <string name="notif_craving_alert_body">Questo è di solito l\'orario in cui registri %1$s — vale la pena farci caso.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_finish">Si parte</string>
+    <string name="onboarding_welcome_title">Benvenuto su DopaMind</string>
+    <string name="onboarding_welcome_subtitle">Come ti chiami?</string>
+    <string name="onboarding_name_placeholder">Il tuo nome (opzionale)</string>
+    <string name="onboarding_profile_title">Un paio di numeri</string>
+    <string name="onboarding_profile_subtitle">Usati solo per rendere più precisi i calcolatori BAC ed edibles — restano su questo dispositivo.</string>
+    <string name="onboarding_language_title">Lingua</string>
+    <string name="onboarding_language_system">Sistema</string>
+    <string name="onboarding_language_it">Italiano</string>
+    <string name="onboarding_language_en">English</string>
+    <string name="onboarding_notifications_title">Restiamo in contatto?</string>
+    <string name="onboarding_notifications_subtitle">Un promemoria giornaliero per il check-in e qualche avviso prima dei tuoi orari abituali.</string>
+    <string name="onboarding_notifications_on">Notifiche attive</string>
+    <string name="onboarding_notifications_off">Notifiche disattive</string>
+    <string name="onboarding_reminder_hour">Orario promemoria giornaliero</string>
+
+    <!-- Profilo / Impostazioni -->
+    <string name="profile_title">Profilo</string>
+    <string name="profile_name_label">Nome</string>
+    <string name="profile_body_label">Corpo &amp; sesso (per precisione BAC/edibles)</string>
+    <string name="profile_notifications_label">Notifiche</string>
+    <string name="profile_backup_title">Backup locale</string>
+    <string name="profile_backup_subtitle">Esporta il file del database così com\'è, già cifrato. Ripristinabile solo su questo stesso dispositivo/installazione — la chiave di cifratura vive nell\'hardware di questo telefono e non ne esce mai, quindi non è un modo per spostare i dati su un telefono nuovo.</string>
+    <string name="profile_backup_export">Esporta</string>
+    <string name="profile_backup_import">Importa</string>
+    <string name="profile_backup_export_success">Backup salvato.</string>
+    <string name="profile_backup_export_failed">Esportazione fallita — riprova.</string>
+    <string name="profile_backup_import_success">Importato. Chiudi completamente e riapri l\'app per vederlo.</string>
+    <string name="profile_backup_import_failed">Importazione fallita — verifica che il file sia un backup DopaMind.</string>
+
+    <!-- Galleria badge -->
+    <string name="badges_title">Badge</string>
+    <string name="badges_subtitle">%1$d di %2$d sbloccati</string>
+    <string name="badges_unlocked_caption">Sbloccato</string>
+    <string name="badge_desc_checkin_streak_7">Fai check-in per 7 giorni di fila</string>
+    <string name="badge_desc_checkin_streak_30">Fai check-in per 30 giorni di fila</string>
+    <string name="badge_desc_tbreak_hero_7">Mantieni un T-Break per 7 giorni</string>
+    <string name="badge_desc_smoke_free_3">3 giorni senza log tabacco</string>
+    <string name="badge_desc_liver_friend_7">7 giorni senza log alcol</string>
+    <string name="badge_desc_monk_mode_7">7 giorni senza log libido</string>
+    <string name="badge_desc_detox_master_3">Completa 3 sessioni detox</string>
+    <string name="badge_desc_budget_boss">Resta sotto il budget mensile</string>
+
+    <!-- Storico modulo -->
+    <string name="history_window_caption">Ultimi %1$d giorni</string>
+    <string name="history_total">Totale: %1$.0f</string>
+    <string name="history_average">Media giornaliera: %1$.1f</string>
+    <string name="history_view_trend">Vedi andamento</string>
 </resources>

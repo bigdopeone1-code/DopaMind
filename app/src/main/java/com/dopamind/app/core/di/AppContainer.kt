@@ -5,15 +5,18 @@ import com.dopamind.app.core.ai.coach.ChillCoachEngine
 import com.dopamind.app.core.ai.craving.CravingPredictionEngine
 import com.dopamind.app.core.ai.voice.VoiceCaptureManager
 import com.dopamind.app.core.analytics.CorrelationEngine
+import com.dopamind.app.core.backup.BackupManager
 import com.dopamind.app.core.database.DopaMindDatabase
 import com.dopamind.app.core.gamification.BadgeEngine
 import com.dopamind.app.core.gamification.GamificationRepository
+import com.dopamind.app.core.notifications.NotificationScheduler
 import com.dopamind.app.feature.alcohol.data.AlcoholRepository
 import com.dopamind.app.feature.cannabis.data.CannabisRepository
 import com.dopamind.app.feature.dailyvibe.data.DailyVibeRepository
 import com.dopamind.app.feature.dopaminefocus.data.DopamineFocusRepository
 import com.dopamind.app.feature.finance.data.FinanceRepository
 import com.dopamind.app.feature.libido.data.LibidoRepository
+import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.recovery.data.RecoveryRepository
 import com.dopamind.app.feature.tobacco.data.TobaccoRepository
 import com.dopamind.app.feature.weeklyrecap.domain.AnnualWrappedGenerator
@@ -38,6 +41,7 @@ class AppContainer(private val appContext: Context) {
     val financeRepository by lazy { FinanceRepository(database.financeDao()) }
     val dailyVibeRepository by lazy { DailyVibeRepository(database.dailyVibeDao()) }
     val gamificationRepository: GamificationRepository by lazy { GamificationRepository(database.gamificationDao()) }
+    val profileRepository: ProfileRepository by lazy { ProfileRepository(database.profileDao()) }
 
     val correlationEngine: CorrelationEngine by lazy {
         CorrelationEngine(
@@ -92,6 +96,10 @@ class AppContainer(private val appContext: Context) {
     val chillCoachEngine: ChillCoachEngine by lazy {
         ChillCoachEngine(recoveryRepository = recoveryRepository, dailyVibeRepository = dailyVibeRepository)
     }
+
+    val notificationScheduler: NotificationScheduler by lazy { NotificationScheduler(appContext) }
+
+    val backupManager: BackupManager by lazy { BackupManager(appContext, database) }
 
     fun createVoiceCaptureManager(): VoiceCaptureManager = VoiceCaptureManager(appContext)
 }

@@ -43,17 +43,25 @@ import com.dopamind.app.feature.cannabis.data.ConsumptionMethod
 import com.dopamind.app.feature.cannabis.data.TBreakEntity
 import com.dopamind.app.feature.cannabis.domain.EdiblesCalculator
 import com.dopamind.app.feature.cannabis.domain.EdiblesEstimate
+import com.dopamind.app.feature.profile.data.ProfileRepository
+import com.dopamind.app.feature.profile.data.UserProfileEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class CannabisViewModel(private val repository: CannabisRepository) : ViewModel() {
+class CannabisViewModel(
+    private val repository: CannabisRepository,
+    profileRepository: ProfileRepository,
+) : ViewModel() {
     val logs: StateFlow<List<CannabisLogEntity>> =
         repository.observeLogs().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val activeTBreak: StateFlow<TBreakEntity?> =
         repository.observeActiveTBreak().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    val profile: StateFlow<UserProfileEntity?> =
+        profileRepository.observeProfile().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun logSession(strainName: String, method: ConsumptionMethod, moodBefore: Int, note: String?) {
         viewModelScope.launch {
@@ -75,10 +83,11 @@ class CannabisViewModel(private val repository: CannabisRepository) : ViewModel(
 }
 
 @Composable
-fun CannabisScreen(onBack: () -> Unit) {
-    val viewModel = dopaMindViewModel { container -> CannabisViewModel(container.cannabisRepository) }
+fun CannabisScreen(onBack: () -> Unit, onViewHistory: () -> Unit) {
+    val viewModel = dopaMindViewModel { container -> CannabisViewModel(container.cannabisRepository, container.profileRepository) }
     val logs by viewModel.logs.collectAsStateWithLifecycle()
     val activeTBreak by viewModel.activeTBreak.collectAsStateWithLifecycle()
+    val profile by viewModel.profile.collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -86,9 +95,10 @@ fun CannabisScreen(onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item { ScreenHeader(titleRes = R.string.module_cannabis, onBack = onBack) }
+        item { DMSecondaryButton(text = stringResource(R.string.history_view_trend), onClick = onViewHistory) }
         item { LogSessionCard(onLog = viewModel::logSession) }
         item { TBreakCard(activeTBreak, onStart = viewModel::startTBreak, onEnd = viewModel::endTBreak) }
-        item { EdiblesCalculatorCard() }
+        item { EdiblesCalculatorCard(defaultWeightKg = profile?.weightKg) }
         item { SectionHeader(stringResource(R.string.cannabis_recent_logs)) }
         items(logs.take(10)) { log -> LogRow(log) }
     }
@@ -180,9 +190,9 @@ private fun TBreakCard(active: TBreakEntity?, onStart: (Int) -> Unit, onEnd: () 
 }
 
 @Composable
-private fun EdiblesCalculatorCard() {
+private fun EdiblesCalculatorCard(defaultWeightKg: Float?) {
     var doseMg by remember { mutableStateOf("10") }
-    var weightKg by remember { mutableStateOf("70") }
+    var weightKg by remember(defaultWeightKg) { mutableStateOf((defaultWeightKg ?: 70f).toInt().toString()) }
     var result by remember { mutableStateOf<EdiblesEstimate?>(null) }
 
     DMCard(modifier = Modifier.fillMaxWidth()) {

@@ -18,7 +18,6 @@ import java.time.ZoneId
 enum class ConsumedModuleChip { CANNABIS, TOBACCO, ALCOHOL, LIBIDO }
 
 data class DailyVibeUiState(
-    val pageIndex: Int = 0,
     val moodEnergyIndex: Int = 2,
     val selectedModules: Set<ConsumedModuleChip> = emptySet(),
     val sleepHours: Float = 7f,
@@ -41,7 +40,6 @@ class DailyVibeCheckInViewModel(
     private val _uiState = MutableStateFlow(DailyVibeUiState())
     val uiState: StateFlow<DailyVibeUiState> = _uiState.asStateFlow()
 
-    fun onPageChange(page: Int) = _uiState.update { it.copy(pageIndex = page) }
     fun onMoodChange(index: Int) = _uiState.update { it.copy(moodEnergyIndex = index) }
     fun onSleepHoursChange(hours: Float) = _uiState.update { it.copy(sleepHours = hours) }
     fun onNoteChange(note: String) = _uiState.update { it.copy(note = note) }

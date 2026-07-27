@@ -1,6 +1,7 @@
 package com.dopamind.app.feature.dashboard.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,14 +16,17 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBalanceWallet
 import androidx.compose.material.icons.outlined.Bolt
+import androidx.compose.material.icons.outlined.EmojiEvents
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.LocalBar
 import androidx.compose.material.icons.outlined.LocalFlorist
 import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.NightsStay
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SmokingRooms
 import androidx.compose.material.icons.outlined.SupportAgent
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,16 +64,23 @@ fun DashboardScreen(onNavigate: (Destination) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineLarge,
-                color = TextPrimary,
-            )
-            Text(
-                text = stringResource(R.string.dashboard_tagline),
-                style = MaterialTheme.typography.bodyLarge,
-                color = TextSecondary,
-            )
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.app_name),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = TextPrimary,
+                    )
+                    Text(
+                        text = stringResource(R.string.dashboard_tagline),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = TextSecondary,
+                    )
+                }
+                IconButton(onClick = { onNavigate(Destination.Profile) }) {
+                    Icon(Icons.Outlined.Settings, contentDescription = stringResource(R.string.profile_title), tint = TextSecondary)
+                }
+            }
         }
 
         item {
@@ -100,6 +111,12 @@ fun DashboardScreen(onNavigate: (Destination) -> Unit) {
                     icon = Icons.Outlined.SupportAgent,
                     label = stringResource(R.string.dashboard_quick_sos),
                     onClick = { onNavigate(Destination.ChillCoachSos) },
+                    modifier = Modifier.weight(1f),
+                )
+                QuickActionCard(
+                    icon = Icons.Outlined.EmojiEvents,
+                    label = stringResource(R.string.dashboard_quick_badges),
+                    onClick = { onNavigate(Destination.BadgeGallery) },
                     modifier = Modifier.weight(1f),
                 )
             }

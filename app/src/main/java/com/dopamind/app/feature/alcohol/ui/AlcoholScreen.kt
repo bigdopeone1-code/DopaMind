@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,8 @@ import com.dopamind.app.feature.alcohol.data.DrinkType
 import com.dopamind.app.feature.alcohol.domain.BacCalculator
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.alcohol.domain.DrinkInput
+import com.dopamind.app.feature.profile.data.ProfileRepository
+import com.dopamind.app.feature.profile.data.UserProfileEntity
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -55,9 +58,15 @@ import kotlinx.coroutines.launch
 
 private const val SESSION_WINDOW_HOURS = 12L
 
-class AlcoholViewModel(private val repository: AlcoholRepository) : ViewModel() {
+class AlcoholViewModel(
+    private val repository: AlcoholRepository,
+    profileRepository: ProfileRepository,
+) : ViewModel() {
     val logs: StateFlow<List<DrinkLogEntity>> =
         repository.observeLogs().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val profile: StateFlow<UserProfileEntity?> =
+        profileRepository.observeProfile().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     fun logDrink(type: DrinkType, priceEuros: Float?) {
         viewModelScope.launch {
@@ -67,9 +76,10 @@ class AlcoholViewModel(private val repository: AlcoholRepository) : ViewModel() 
 }
 
 @Composable
-fun AlcoholScreen(onBack: () -> Unit, onScanLabel: () -> Unit) {
-    val viewModel = dopaMindViewModel { container -> AlcoholViewModel(container.alcoholRepository) }
+fun AlcoholScreen(onBack: () -> Unit, onScanLabel: () -> Unit, onViewHistory: () -> Unit) {
+    val viewModel = dopaMindViewModel { container -> AlcoholViewModel(container.alcoholRepository, container.profileRepository) }
     val logs by viewModel.logs.collectAsStateWithLifecycle()
+    val profile by viewModel.profile.collectAsStateWithLifecycle()
 
     val now = System.currentTimeMillis()
     val sessionStart = now - SESSION_WINDOW_HOURS * 3_600_000L
@@ -80,6 +90,13 @@ fun AlcoholScreen(onBack: () -> Unit, onScanLabel: () -> Unit) {
     var waterGlasses by remember { mutableStateOf(0) }
     var ateFood by remember { mutableStateOf(true) }
     var plannedSleepHours by remember { mutableStateOf(7f) }
+
+    LaunchedEffect(profile) {
+        profile?.let {
+            weightKg = it.weightKg
+            sex = runCatching { BiologicalSex.valueOf(it.biologicalSex) }.getOrDefault(BiologicalSex.OTHER)
+        }
+    }
 
     val averageDrinksLastMonth = remember(logs.size) {
         val monthAgo = now - 30L * 86_400_000L
@@ -106,6 +123,7 @@ fun AlcoholScreen(onBack: () -> Unit, onScanLabel: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item { ScreenHeader(titleRes = R.string.module_alcohol, onBack = onBack) }
+        item { DMSecondaryButton(text = stringResource(R.string.history_view_trend), onClick = onViewHistory) }
         item { DrinkCounterCard(tonightCount = tonightLogs.size, onLog = viewModel::logDrink, onScanLabel = onScanLabel) }
         item {
             BodyProfileCard(

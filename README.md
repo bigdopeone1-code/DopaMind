@@ -19,10 +19,13 @@ be done in this environment: an actual Gradle build run.
 app/src/main/java/com/dopamind/app/
 ├── core/
 │   ├── theme/            Dark design system: colors, typography, shapes
-│   ├── designsystem/      Reusable Compose components (DMCard, ProgressRing, DMChip, …)
+│   ├── designsystem/      Reusable Compose components (DMCard, ProgressRing, DMChip, SimpleBarChart, …)
 │   ├── navigation/        Type-safe Navigation Compose routes (@Serializable) + NavHost
 │   ├── database/          Encrypted Room database (SQLCipher)
 │   ├── security/          Keystore-backed passphrase generation for the DB
+│   ├── backup/            Local encrypted export/import of the DB file
+│   ├── notifications/     Daily check-in reminder + craving-pattern alert WorkManager jobs
+│   ├── i18n/              Per-app language override (SYSTEM/IT/EN)
 │   ├── di/                Hand-rolled DI container (AppContainer) + ViewModel factory
 │   ├── analytics/         Cross-module correlation engine (see below)
 │   ├── ai/                The 4 AI modules (see below)
@@ -38,10 +41,41 @@ app/src/main/java/com/dopamind/app/
 │   ├── dailyvibe/         The Daily Vibe Check-in (swipeable 3-card flow)
 │   ├── weeklyrecap/       Weekly Recap + Annual Wrapped (Spotify-Wrapped style)
 │   ├── dashboard/         Home screen (7 module cards)
+│   ├── profile/           Onboarding, Splash routing, Profile/Settings screen
+│   ├── badges/            Full badge gallery (locked/unlocked)
+│   ├── history/           30-day trend charts per module
 │   ├── voicelog/          Voice-to-Log hands-free entry point
 │   └── scanner/           Shared camera screen for label/food scanning
 └── res/values(-it)/strings.xml   All UI copy, English base + Italian
 ```
+
+### What's new since the first MVP commit
+
+- **Onboarding + Profile**: first launch collects a name/weight/sex/language/
+  notification preference (all optional, all local); a `Splash` route decides
+  whether to show onboarding or go straight to the dashboard. The saved
+  weight/sex now feed the BAC and edibles calculators as defaults instead of
+  hardcoded numbers, and a Profile screen (gear icon, top-right of the
+  dashboard) lets you edit all of it later.
+- **Notifications**: two WorkManager jobs — a daily reminder if you haven't
+  checked in yet, and an hourly check against the Craving Prediction Engine
+  that only fires if a predicted peak (from your own history) is coming up
+  within the next hour. Both respect the notification toggle in onboarding/
+  profile and Android 13+'s runtime permission.
+- **Badge gallery**: every badge, locked or unlocked, with its unlock
+  condition spelled out — reachable from the dashboard.
+- **Module history**: a 30-day bar chart (Cannabis/Tobacco/Alcohol/Libido
+  counts, Sleep hours) via a "View trend" button on each of those module
+  screens, drawn with a small custom Canvas chart — no charting library
+  dependency.
+- **Local encrypted backup**: export/import the SQLCipher database file as-is
+  from the Profile screen, via the system file picker. Important: this is a
+  same-device backup only — the encryption key lives in this phone's hardware
+  Keystore and never leaves it, so it can't restore onto a different phone or
+  after an uninstall/reinstall. That's a deliberate, documented trade-off, not
+  an oversight — see the in-app copy on the Profile screen.
+- The Spot Map / saved-spots idea from the original brief was removed
+  entirely from the Finance module per a later request, to keep it focused.
 
 Each `feature/<module>` package is split into `data` (Room entity/DAO/repository),
 `domain` (pure Kotlin calculators — Widmark BAC, edibles dosing, €/unit convenience,

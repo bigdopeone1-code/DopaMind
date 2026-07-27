@@ -10,6 +10,9 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <!-- Local-only reminders: daily check-in nudge and craving-pattern alerts -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".DopaMindApplication"
         android:allowBackup="false"

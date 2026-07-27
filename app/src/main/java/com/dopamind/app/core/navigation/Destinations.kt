@@ -9,6 +9,22 @@ import kotlinx.serialization.Serializable
  */
 sealed interface Destination {
 
+    /** Decides, once the profile finishes loading, whether to route to Onboarding or Dashboard. */
+    @Serializable
+    data object Splash : Destination
+
+    @Serializable
+    data object Onboarding : Destination
+
+    @Serializable
+    data object Profile : Destination
+
+    @Serializable
+    data object BadgeGallery : Destination
+
+    @Serializable
+    data class ModuleHistory(val module: HistoryModule) : Destination
+
     @Serializable
     data object Dashboard : Destination
 
@@ -57,3 +73,6 @@ sealed interface Destination {
 
 @Serializable
 enum class ScanTarget { DRINK_LABEL, FOOD_PLATE }
+
+@Serializable
+enum class HistoryModule { CANNABIS, TOBACCO, ALCOHOL, LIBIDO, SLEEP }

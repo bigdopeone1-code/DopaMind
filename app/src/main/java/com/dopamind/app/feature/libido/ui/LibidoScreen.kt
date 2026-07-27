@@ -28,6 +28,7 @@ import com.dopamind.app.core.ai.coach.BreathingStep
 import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
 import com.dopamind.app.core.designsystem.DMPrimaryButton
+import com.dopamind.app.core.designsystem.DMSecondaryButton
 import com.dopamind.app.core.designsystem.ProgressRing
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.Accent
@@ -62,7 +63,7 @@ class LibidoViewModel(private val repository: LibidoRepository) : ViewModel() {
 }
 
 @Composable
-fun LibidoScreen(onBack: () -> Unit) {
+fun LibidoScreen(onBack: () -> Unit, onViewHistory: () -> Unit) {
     val viewModel = dopaMindViewModel { container -> LibidoViewModel(container.libidoRepository) }
     val logs by viewModel.logs.collectAsStateWithLifecycle()
     val lastLogMillis = logs.maxByOrNull { it.timestampEpochMillis }?.timestampEpochMillis
@@ -74,6 +75,7 @@ fun LibidoScreen(onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item { ScreenHeader(titleRes = R.string.module_libido, onBack = onBack) }
+        item { DMSecondaryButton(text = stringResource(R.string.history_view_trend), onClick = onViewHistory) }
         item { LogCard(onLog = viewModel::logActivity) }
         item { StreakCard(streakDays) }
         item { DopamineResetCard() }

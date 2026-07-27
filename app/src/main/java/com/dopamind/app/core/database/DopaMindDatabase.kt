@@ -23,6 +23,8 @@ import com.dopamind.app.feature.finance.data.FinanceDao
 import com.dopamind.app.feature.finance.data.SpendLogEntity
 import com.dopamind.app.feature.libido.data.LibidoDao
 import com.dopamind.app.feature.libido.data.LibidoLogEntity
+import com.dopamind.app.feature.profile.data.ProfileDao
+import com.dopamind.app.feature.profile.data.UserProfileEntity
 import com.dopamind.app.feature.recovery.data.MunchiesLogEntity
 import com.dopamind.app.feature.recovery.data.RecoveryDao
 import com.dopamind.app.feature.recovery.data.SleepLogEntity
@@ -49,6 +51,7 @@ import net.sqlcipher.database.SupportFactory
         BudgetSettingsEntity::class,
         DailyVibeEntity::class,
         BadgeUnlockEntity::class,
+        UserProfileEntity::class,
     ],
     version = 1,
     exportSchema = true,
@@ -63,9 +66,12 @@ abstract class DopaMindDatabase : RoomDatabase() {
     abstract fun financeDao(): FinanceDao
     abstract fun dailyVibeDao(): DailyVibeDao
     abstract fun gamificationDao(): GamificationDao
+    abstract fun profileDao(): ProfileDao
 
     companion object {
         private const val DATABASE_NAME = "dopamind_encrypted.db"
+
+        fun databaseFile(context: Context) = context.getDatabasePath(DATABASE_NAME)
 
         fun create(context: Context): DopaMindDatabase {
             // Loads SQLCipher's native library; required once before first use.

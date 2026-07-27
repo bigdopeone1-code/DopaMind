@@ -27,6 +27,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +49,7 @@ import com.dopamind.app.core.theme.BorderSubtle
 import com.dopamind.app.core.theme.TextPrimary
 import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.dailyvibe.domain.CheckInReaction
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 private const val PAGE_COUNT = 3
@@ -66,7 +68,6 @@ fun DailyVibeCheckInScreen(onFinish: () -> Unit, onBack: () -> Unit) {
         } else {
             CheckInPagerContent(
                 uiState = uiState,
-                onPageChange = viewModel::onPageChange,
                 onMoodChange = viewModel::onMoodChange,
                 onToggleModule = viewModel::onToggleModule,
                 onSleepHoursChange = viewModel::onSleepHoursChange,
@@ -84,7 +85,6 @@ fun DailyVibeCheckInScreen(onFinish: () -> Unit, onBack: () -> Unit) {
 @Composable
 private fun CheckInPagerContent(
     uiState: DailyVibeUiState,
-    onPageChange: (Int) -> Unit,
     onMoodChange: (Int) -> Unit,
     onToggleModule: (ConsumedModuleChip) -> Unit,
     onSleepHoursChange: (Float) -> Unit,
@@ -92,6 +92,7 @@ private fun CheckInPagerContent(
     onSubmit: () -> Unit,
 ) {
     val pagerState = rememberPagerState(initialPage = 0) { PAGE_COUNT }
+    val scope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize().padding(top = 56.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)) {
         PagerDots(pageCount = PAGE_COUNT, currentPage = pagerState.currentPage)
@@ -115,8 +116,7 @@ private fun CheckInPagerContent(
                 if (pagerState.currentPage == PAGE_COUNT - 1) {
                     onSubmit()
                 } else {
-                    val next = pagerState.currentPage + 1
-                    onPageChange(next)
+                    scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                 }
             },
         )

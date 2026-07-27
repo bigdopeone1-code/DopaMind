@@ -7,12 +7,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.dopamind.app.feature.alcohol.ui.AlcoholScreen
+import com.dopamind.app.feature.badges.ui.BadgeGalleryScreen
 import com.dopamind.app.feature.cannabis.ui.CannabisScreen
 import com.dopamind.app.feature.dailyvibe.ui.DailyVibeCheckInScreen
 import com.dopamind.app.feature.dashboard.ui.DashboardScreen
 import com.dopamind.app.feature.dopaminefocus.ui.DopamineFocusScreen
 import com.dopamind.app.feature.finance.ui.FinanceScreen
+import com.dopamind.app.feature.history.ui.ModuleHistoryScreen
 import com.dopamind.app.feature.libido.ui.LibidoScreen
+import com.dopamind.app.feature.profile.ui.OnboardingScreen
+import com.dopamind.app.feature.profile.ui.ProfileScreen
+import com.dopamind.app.feature.profile.ui.SplashScreen
 import com.dopamind.app.feature.recovery.ui.ChillCoachSosScreen
 import com.dopamind.app.feature.recovery.ui.RecoveryScreen
 import com.dopamind.app.feature.scanner.ui.VisionScannerScreen
@@ -25,7 +30,45 @@ import com.dopamind.app.feature.weeklyrecap.ui.WeeklyRecapScreen
 fun DopaMindNavHost(
     navController: NavHostController = rememberNavController(),
 ) {
-    NavHost(navController = navController, startDestination = Destination.Dashboard) {
+    NavHost(navController = navController, startDestination = Destination.Splash) {
+
+        composable<Destination.Splash> {
+            SplashScreen(
+                onNeedsOnboarding = {
+                    navController.navigate(Destination.Onboarding) {
+                        popUpTo(Destination.Splash) { inclusive = true }
+                    }
+                },
+                onReady = {
+                    navController.navigate(Destination.Dashboard) {
+                        popUpTo(Destination.Splash) { inclusive = true }
+                    }
+                },
+            )
+        }
+
+        composable<Destination.Onboarding> {
+            OnboardingScreen(
+                onComplete = {
+                    navController.navigate(Destination.Dashboard) {
+                        popUpTo(Destination.Onboarding) { inclusive = true }
+                    }
+                },
+            )
+        }
+
+        composable<Destination.Profile> {
+            ProfileScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable<Destination.BadgeGallery> {
+            BadgeGalleryScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable<Destination.ModuleHistory> { backStackEntry ->
+            val route: Destination.ModuleHistory = backStackEntry.toRoute()
+            ModuleHistoryScreen(module = route.module, onBack = { navController.popBackStack() })
+        }
 
         composable<Destination.Dashboard> {
             DashboardScreen(onNavigate = { destination -> navController.navigate(destination) })
@@ -47,22 +90,32 @@ fun DopaMindNavHost(
         }
 
         composable<Destination.CannabisHome> {
-            CannabisScreen(onBack = { navController.popBackStack() })
+            CannabisScreen(
+                onBack = { navController.popBackStack() },
+                onViewHistory = { navController.navigate(Destination.ModuleHistory(HistoryModule.CANNABIS)) },
+            )
         }
 
         composable<Destination.TobaccoHome> {
-            TobaccoScreen(onBack = { navController.popBackStack() })
+            TobaccoScreen(
+                onBack = { navController.popBackStack() },
+                onViewHistory = { navController.navigate(Destination.ModuleHistory(HistoryModule.TOBACCO)) },
+            )
         }
 
         composable<Destination.AlcoholHome> {
             AlcoholScreen(
                 onBack = { navController.popBackStack() },
                 onScanLabel = { navController.navigate(Destination.VisionScanner(ScanTarget.DRINK_LABEL)) },
+                onViewHistory = { navController.navigate(Destination.ModuleHistory(HistoryModule.ALCOHOL)) },
             )
         }
 
         composable<Destination.LibidoHome> {
-            LibidoScreen(onBack = { navController.popBackStack() })
+            LibidoScreen(
+                onBack = { navController.popBackStack() },
+                onViewHistory = { navController.navigate(Destination.ModuleHistory(HistoryModule.LIBIDO)) },
+            )
         }
 
         composable<Destination.DopamineFocusHome> {
@@ -74,6 +127,7 @@ fun DopaMindNavHost(
                 onBack = { navController.popBackStack() },
                 onSos = { navController.navigate(Destination.ChillCoachSos) },
                 onScanFood = { navController.navigate(Destination.VisionScanner(ScanTarget.FOOD_PLATE)) },
+                onViewSleepHistory = { navController.navigate(Destination.ModuleHistory(HistoryModule.SLEEP)) },
             )
         }
 

@@ -27,6 +27,7 @@ import com.dopamind.app.R
 import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
 import com.dopamind.app.core.designsystem.DMPrimaryButton
+import com.dopamind.app.core.designsystem.DMSecondaryButton
 import com.dopamind.app.core.designsystem.SectionHeader
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.Accent
@@ -58,7 +59,7 @@ class TobaccoViewModel(private val repository: TobaccoRepository) : ViewModel() 
 }
 
 @Composable
-fun TobaccoScreen(onBack: () -> Unit) {
+fun TobaccoScreen(onBack: () -> Unit, onViewHistory: () -> Unit) {
     val viewModel = dopaMindViewModel { container -> TobaccoViewModel(container.tobaccoRepository) }
     val logs by viewModel.logs.collectAsStateWithLifecycle()
 
@@ -76,6 +77,7 @@ fun TobaccoScreen(onBack: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item { ScreenHeader(titleRes = R.string.module_tobacco, onBack = onBack) }
+        item { DMSecondaryButton(text = stringResource(R.string.history_view_trend), onClick = onViewHistory) }
         item { CounterCard(todayCount = todayLogs.size, target = DAILY_TARGET_DEFAULT, onLog = viewModel::logPuff) }
         item { SmartSpacerCard(suggestion) }
         item { SectionHeader(stringResource(R.string.tobacco_recent_logs)) }

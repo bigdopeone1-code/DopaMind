@@ -8,6 +8,7 @@
     <string name="dashboard_checkin_cta_subtitle">20 seconds. Swipe through, get your badge.</string>
     <string name="dashboard_quick_voice_log">Voice log</string>
     <string name="dashboard_quick_sos">SOS / Chill</string>
+    <string name="dashboard_quick_badges">Badges</string>
     <string name="dashboard_modules_header">Your modules</string>
     <string name="dashboard_weekly_recap_link">Weekly Recap</string>
     <string name="dashboard_weekly_recap_title">Your Weekly Recap is ready</string>
@@ -277,4 +278,64 @@
     <string name="voicelog_retry">Try again</string>
     <string name="voicelog_saved">Logged!</string>
     <string name="voicelog_error">Something went wrong with speech recognition.</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_reminders_name">Daily check-in</string>
+    <string name="notif_channel_reminders_description">A daily nudge to do your Vibe Check-in if you haven\'t yet.</string>
+    <string name="notif_channel_craving_name">Craving pattern alerts</string>
+    <string name="notif_channel_craving_description">A heads-up before your usual peak times, based on your own history.</string>
+    <string name="notif_daily_reminder_title">Quick check-in?</string>
+    <string name="notif_daily_reminder_body">20 seconds, swipe through, get your badge.</string>
+    <string name="notif_craving_alert_title">Heads up</string>
+    <string name="notif_craving_alert_body">This is usually around when you log %1$s — worth a moment to notice it.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_finish">Let\'s go</string>
+    <string name="onboarding_welcome_title">Welcome to DopaMind</string>
+    <string name="onboarding_welcome_subtitle">What should we call you?</string>
+    <string name="onboarding_name_placeholder">Your name (optional)</string>
+    <string name="onboarding_profile_title">A couple of numbers</string>
+    <string name="onboarding_profile_subtitle">Used only to make the BAC and edibles calculators more accurate — stays on this device.</string>
+    <string name="onboarding_language_title">Language</string>
+    <string name="onboarding_language_system">System</string>
+    <string name="onboarding_language_it">Italiano</string>
+    <string name="onboarding_language_en">English</string>
+    <string name="onboarding_notifications_title">Stay on track?</string>
+    <string name="onboarding_notifications_subtitle">A daily check-in nudge and the occasional heads-up before your usual peak times.</string>
+    <string name="onboarding_notifications_on">Notifications on</string>
+    <string name="onboarding_notifications_off">Notifications off</string>
+    <string name="onboarding_reminder_hour">Daily reminder time</string>
+
+    <!-- Profile / Settings -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_name_label">Name</string>
+    <string name="profile_body_label">Body &amp; sex (for BAC/edibles accuracy)</string>
+    <string name="profile_notifications_label">Notifications</string>
+    <string name="profile_backup_title">Local backup</string>
+    <string name="profile_backup_subtitle">Exports the encrypted database file as-is. Only restorable on this same device/install — the encryption key lives in this phone\'s hardware and never leaves it, so this is not a way to move data to a new phone.</string>
+    <string name="profile_backup_export">Export</string>
+    <string name="profile_backup_import">Import</string>
+    <string name="profile_backup_export_success">Backup saved.</string>
+    <string name="profile_backup_export_failed">Export failed — try again.</string>
+    <string name="profile_backup_import_success">Imported. Fully close and reopen the app to see it.</string>
+    <string name="profile_backup_import_failed">Import failed — make sure the file is a DopaMind backup.</string>
+
+    <!-- Badge gallery -->
+    <string name="badges_title">Badges</string>
+    <string name="badges_subtitle">%1$d of %2$d unlocked</string>
+    <string name="badges_unlocked_caption">Unlocked</string>
+    <string name="badge_desc_checkin_streak_7">Check in 7 days in a row</string>
+    <string name="badge_desc_checkin_streak_30">Check in 30 days in a row</string>
+    <string name="badge_desc_tbreak_hero_7">Keep a T-Break going for 7 days</string>
+    <string name="badge_desc_smoke_free_3">3 days without a tobacco log</string>
+    <string name="badge_desc_liver_friend_7">7 days without an alcohol log</string>
+    <string name="badge_desc_monk_mode_7">7 days without a libido log</string>
+    <string name="badge_desc_detox_master_3">Complete 3 detox sessions</string>
+    <string name="badge_desc_budget_boss">Stay under your monthly budget</string>
+
+    <!-- Module history -->
+    <string name="history_window_caption">Last %1$d days</string>
+    <string name="history_total">Total: %1$.0f</string>
+    <string name="history_average">Daily average: %1$.1f</string>
+    <string name="history_view_trend">View trend</string>
 </resources>

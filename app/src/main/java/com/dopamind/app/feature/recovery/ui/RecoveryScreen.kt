@@ -61,7 +61,7 @@ class RecoveryViewModel(private val repository: RecoveryRepository) : ViewModel(
 }
 
 @Composable
-fun RecoveryScreen(onBack: () -> Unit, onSos: () -> Unit, onScanFood: () -> Unit) {
+fun RecoveryScreen(onBack: () -> Unit, onSos: () -> Unit, onScanFood: () -> Unit, onViewSleepHistory: () -> Unit) {
     val viewModel = dopaMindViewModel { container -> RecoveryViewModel(container.recoveryRepository) }
     val munchiesLogs by viewModel.munchiesLogs.collectAsStateWithLifecycle()
 
@@ -71,6 +71,7 @@ fun RecoveryScreen(onBack: () -> Unit, onSos: () -> Unit, onScanFood: () -> Unit
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item { ScreenHeader(titleRes = R.string.module_recovery, onBack = onBack) }
+        item { DMSecondaryButton(text = stringResource(R.string.history_view_trend), onClick = onViewSleepHistory) }
         item { SosCard(onSos) }
         item { SleepCard(onLog = viewModel::logSleep) }
         item { MunchiesCard(onLogManual = viewModel::logMunchies, onScanFood = onScanFood) }
