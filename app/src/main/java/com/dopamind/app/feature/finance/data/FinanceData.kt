@@ -27,15 +27,6 @@ data class BudgetSettingsEntity(
     val monthlyLimitEuros: Float,
 )
 
-@Entity(tableName = "saved_spots")
-data class SpotEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val name: String,
-    val category: String, // SpendCategory.name
-    val note: String?,
-    val timestampEpochMillis: Long,
-)
-
 @Dao
 interface FinanceDao {
     @Insert
@@ -58,15 +49,6 @@ interface FinanceDao {
 
     @Query("SELECT * FROM budget_settings WHERE id = 1")
     fun observeBudget(): Flow<BudgetSettingsEntity?>
-
-    @Insert
-    suspend fun insertSpot(entity: SpotEntity): Long
-
-    @Query("DELETE FROM saved_spots WHERE id = :id")
-    suspend fun deleteSpot(id: Long)
-
-    @Query("SELECT * FROM saved_spots ORDER BY timestampEpochMillis DESC")
-    fun observeSpots(): Flow<List<SpotEntity>>
 }
 
 class FinanceRepository(private val dao: FinanceDao) {
@@ -74,7 +56,6 @@ class FinanceRepository(private val dao: FinanceDao) {
     fun observeSpendsSince(sinceEpochMillis: Long): Flow<List<SpendLogEntity>> = dao.observeSpendsSince(sinceEpochMillis)
     fun observeSpendsForCategory(category: SpendCategory): Flow<List<SpendLogEntity>> = dao.observeSpendsForCategory(category.name)
     fun observeBudget(): Flow<BudgetSettingsEntity?> = dao.observeBudget()
-    fun observeSpots(): Flow<List<SpotEntity>> = dao.observeSpots()
 
     suspend fun logSpend(
         category: SpendCategory,
@@ -99,10 +80,4 @@ class FinanceRepository(private val dao: FinanceDao) {
     suspend fun deleteSpend(id: Long) = dao.deleteSpend(id)
 
     suspend fun setMonthlyBudget(limitEuros: Float) = dao.upsertBudget(BudgetSettingsEntity(monthlyLimitEuros = limitEuros))
-
-    suspend fun saveSpot(name: String, category: SpendCategory, note: String?, timestampEpochMillis: Long = System.currentTimeMillis()) {
-        dao.insertSpot(SpotEntity(name = name, category = category.name, note = note, timestampEpochMillis = timestampEpochMillis))
-    }
-
-    suspend fun deleteSpot(id: Long) = dao.deleteSpot(id)
 }

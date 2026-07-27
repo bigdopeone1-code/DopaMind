@@ -21,7 +21,6 @@ import com.dopamind.app.feature.dopaminefocus.data.WhyPromptEntity
 import com.dopamind.app.feature.finance.data.BudgetSettingsEntity
 import com.dopamind.app.feature.finance.data.FinanceDao
 import com.dopamind.app.feature.finance.data.SpendLogEntity
-import com.dopamind.app.feature.finance.data.SpotEntity
 import com.dopamind.app.feature.libido.data.LibidoDao
 import com.dopamind.app.feature.libido.data.LibidoLogEntity
 import com.dopamind.app.feature.recovery.data.MunchiesLogEntity
@@ -48,7 +47,6 @@ import net.sqlcipher.database.SupportFactory
         SosSessionEntity::class,
         SpendLogEntity::class,
         BudgetSettingsEntity::class,
-        SpotEntity::class,
         DailyVibeEntity::class,
         BadgeUnlockEntity::class,
     ],

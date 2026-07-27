@@ -263,10 +263,6 @@
     <string name="finance_convenience_title">Convenienza €/unità</string>
     <string name="finance_convenience_quantity_placeholder">Quantità (es. grammi)</string>
     <string name="finance_convenience_calculate">Calcola</string>
-    <string name="finance_spots_title">Spot salvati</string>
-    <string name="finance_spots_subtitle">Una semplice lista locale per ora — nessuna mappa/localizzazione in questo MVP.</string>
-    <string name="finance_spots_placeholder">Nome dello spot</string>
-    <string name="finance_spots_save">Salva spot</string>
     <string name="finance_category_other">Altro</string>
     <string name="finance_recent_spends">Spese recenti</string>
 

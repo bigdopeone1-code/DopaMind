@@ -33,13 +33,11 @@ import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.Accent
 import com.dopamind.app.core.theme.Danger
 import com.dopamind.app.core.theme.TextPrimary
-import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.core.designsystem.ScreenHeader
 import com.dopamind.app.feature.finance.data.BudgetSettingsEntity
 import com.dopamind.app.feature.finance.data.FinanceRepository
 import com.dopamind.app.feature.finance.data.SpendCategory
 import com.dopamind.app.feature.finance.data.SpendLogEntity
-import com.dopamind.app.feature.finance.data.SpotEntity
 import com.dopamind.app.feature.finance.domain.ConvenienceCalculator
 import com.dopamind.app.feature.finance.domain.PricePoint
 import kotlinx.coroutines.flow.SharingStarted
@@ -54,16 +52,12 @@ class FinanceViewModel(private val repository: FinanceRepository) : ViewModel() 
         repository.observeSpends().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val budget: StateFlow<BudgetSettingsEntity?> =
         repository.observeBudget().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
-    val spots: StateFlow<List<SpotEntity>> =
-        repository.observeSpots().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun logSpend(category: SpendCategory, amount: Float, quantity: Float?, unit: String?) {
         viewModelScope.launch { repository.logSpend(category, amount, quantity, unit, note = null) }
     }
 
     fun setBudget(limit: Float) = viewModelScope.launch { repository.setMonthlyBudget(limit) }
-
-    fun saveSpot(name: String, category: SpendCategory) = viewModelScope.launch { repository.saveSpot(name, category, note = null) }
 }
 
 @Composable
@@ -71,7 +65,6 @@ fun FinanceScreen(onBack: () -> Unit) {
     val viewModel = dopaMindViewModel { container -> FinanceViewModel(container.financeRepository) }
     val spends by viewModel.spends.collectAsStateWithLifecycle()
     val budget by viewModel.budget.collectAsStateWithLifecycle()
-    val spots by viewModel.spots.collectAsStateWithLifecycle()
 
     val monthStartEpochDay = remember { LocalDate.now(ZoneId.systemDefault()).withDayOfMonth(1).toEpochDay() }
     val monthStartMillis = monthStartEpochDay * 86_400_000L
@@ -86,7 +79,6 @@ fun FinanceScreen(onBack: () -> Unit) {
         item { BudgetCard(spentThisMonth, budget, onSetBudget = viewModel::setBudget) }
         item { SpendLogCard(onLog = viewModel::logSpend) }
         item { ConvenienceCalculatorCard(spends) }
-        item { SpotsCard(spots, onSave = viewModel::saveSpot) }
         item { SectionHeader(stringResource(R.string.finance_recent_spends)) }
         items(spends.take(10)) { spend -> SpendRow(spend) }
     }
@@ -179,23 +171,6 @@ private fun ConvenienceCalculatorCard(history: List<SpendLogEntity>) {
         resultText?.let {
             Spacer(Modifier.height(8.dp))
             Text(text = it, style = MaterialTheme.typography.bodyLarge, color = Accent)
-        }
-    }
-}
-
-@Composable
-private fun SpotsCard(spots: List<SpotEntity>, onSave: (String, SpendCategory) -> Unit) {
-    var name by remember { mutableStateOf("") }
-    DMCard(modifier = Modifier.fillMaxWidth()) {
-        Text(stringResource(R.string.finance_spots_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
-        Text(stringResource(R.string.finance_spots_subtitle), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
-        Spacer(Modifier.height(12.dp))
-        DMTextField(value = name, onValueChange = { name = it }, placeholder = stringResource(R.string.finance_spots_placeholder), singleLine = true)
-        Spacer(Modifier.height(8.dp))
-        DMPrimaryButton(text = stringResource(R.string.finance_spots_save), onClick = { if (name.isNotBlank()) { onSave(name, SpendCategory.OTHER); name = "" } })
-        spots.take(5).forEach { spot ->
-            Spacer(Modifier.height(8.dp))
-            Text(text = spot.name, style = MaterialTheme.typography.bodyLarge, color = TextPrimary)
         }
     }
 }

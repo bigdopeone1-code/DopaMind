@@ -34,7 +34,7 @@ app/src/main/java/com/dopamind/app/
 │   ├── libido/             Solo/partner log, dopamine reset, monk-mode streak
 │   ├── dopaminefocus/     Dopamine Debt display, health stacking, detox mode, why-prompt
 │   ├── recovery/          Sleep log, Chill Coach SOS, munchies/junk-food tracker
-│   ├── finance/           €/unit convenience calc, budget tracker, spend log, saved spots
+│   ├── finance/           €/unit convenience calc, budget tracker, spend log
 │   ├── dailyvibe/         The Daily Vibe Check-in (swipeable 3-card flow)
 │   ├── weeklyrecap/       Weekly Recap + Annual Wrapped (Spotify-Wrapped style)
 │   ├── dashboard/         Home screen (7 module cards)
@@ -132,16 +132,17 @@ be treated as the true first compile — expect to fix a handful of small
 issues (an import, a Compose API surface that shifted between library
 versions, etc.) rather than a guaranteed one-shot green build.
 
-Two things are intentionally left as a simple placeholder rather than fully
-built, both because a proper implementation needs a paid API this project's
-~35€ budget doesn't cover:
+One thing is intentionally left as a placeholder rather than fully built,
+because a proper implementation needs a paid API this project's ~35€ budget
+doesn't cover:
 
-- **Finance → Saved spots** is a local list (name/category/note), not an
-  actual map — Google Maps SDK requires a billing-enabled API key.
 - **Inter/SF Pro font** is not bundled (no network access to fetch the font
   files); the app falls back to the platform default (Roboto), which is close
   enough geometrically for the MVP. Swapping in the real Inter files later is
   a one-line change in `core/theme/Type.kt`.
+
+(The Spot Map / saved-spots idea from the original brief has been dropped
+entirely to keep the Finance module focused — see the module list above.)
 
 ### Before publishing to Google Play
 
