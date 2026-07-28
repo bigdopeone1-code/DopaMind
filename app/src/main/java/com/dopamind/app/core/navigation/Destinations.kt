@@ -25,6 +25,10 @@ sealed interface Destination {
     @Serializable
     data class ModuleHistory(val module: HistoryModule) : Destination
 
+    /** Module picker landing screen — the "History" bottom-tab destination. */
+    @Serializable
+    data object HistoryHub : Destination
+
     @Serializable
     data object Dashboard : Destination
 

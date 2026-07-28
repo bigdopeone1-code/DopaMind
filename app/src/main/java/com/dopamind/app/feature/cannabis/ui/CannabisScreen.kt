@@ -27,10 +27,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dopamind.app.R
 import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
+import com.dopamind.app.core.designsystem.DMGlassCard
 import com.dopamind.app.core.designsystem.DMPrimaryButton
 import com.dopamind.app.core.designsystem.DMSecondaryButton
 import com.dopamind.app.core.designsystem.DMTextField
+import com.dopamind.app.core.designsystem.PresetOption
 import com.dopamind.app.core.designsystem.ProgressRing
+import com.dopamind.app.core.designsystem.QuickPresetChipRow
 import com.dopamind.app.core.designsystem.ScreenHeader
 import com.dopamind.app.core.designsystem.SectionHeader
 import com.dopamind.app.core.di.dopaMindViewModel
@@ -40,6 +43,7 @@ import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.cannabis.data.CannabisLogEntity
 import com.dopamind.app.feature.cannabis.data.CannabisRepository
 import com.dopamind.app.feature.cannabis.data.ConsumptionMethod
+import com.dopamind.app.feature.cannabis.data.StrainCategory
 import com.dopamind.app.feature.cannabis.data.TBreakEntity
 import com.dopamind.app.feature.cannabis.domain.EdiblesCalculator
 import com.dopamind.app.feature.cannabis.domain.EdiblesEstimate
@@ -63,10 +67,10 @@ class CannabisViewModel(
     val profile: StateFlow<UserProfileEntity?> =
         profileRepository.observeProfile().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
-    fun logSession(strainName: String, method: ConsumptionMethod, moodBefore: Int, note: String?) {
+    fun logSession(strainName: String, strainCategory: StrainCategory, method: ConsumptionMethod, moodBefore: Int, note: String?) {
         viewModelScope.launch {
             repository.logConsumption(
-                strainName = strainName.ifBlank { "—" },
+                strainName = strainName,
                 method = method,
                 thcPercent = null,
                 cbdPercent = null,
@@ -74,6 +78,7 @@ class CannabisViewModel(
                 moodBefore = moodBefore,
                 moodAfter = null,
                 note = note,
+                strainCategory = strainCategory,
             )
         }
     }
@@ -105,16 +110,38 @@ fun CannabisScreen(onBack: () -> Unit, onViewHistory: () -> Unit) {
 }
 
 @Composable
-private fun LogSessionCard(onLog: (String, ConsumptionMethod, Int, String?) -> Unit) {
-    var strainName by remember { mutableStateOf("") }
+private fun strainCategoryLabel(category: StrainCategory): String = stringResource(
+    when (category) {
+        StrainCategory.UNSPECIFIED -> R.string.cannabis_strain_category_unspecified
+        StrainCategory.INDICA -> R.string.cannabis_strain_category_indica
+        StrainCategory.SATIVA -> R.string.cannabis_strain_category_sativa
+        StrainCategory.HYBRID -> R.string.cannabis_strain_category_hybrid
+        StrainCategory.CBD_DOMINANT -> R.string.cannabis_strain_category_cbd_dominant
+    }
+)
+
+@Composable
+private fun LogSessionCard(onLog: (String, StrainCategory, ConsumptionMethod, Int, String?) -> Unit) {
+    val strainOptions = StrainCategory.entries.map { PresetOption(it.name, strainCategoryLabel(it)) }
+    var strainCategory by remember { mutableStateOf(StrainCategory.entries.first()) }
+    val strainLabel = strainCategoryLabel(strainCategory)
     var method by remember { mutableStateOf(ConsumptionMethod.JOINT) }
     var moodBefore by remember { mutableStateOf(3) }
-    var note by remember { mutableStateOf("") }
 
-    DMCard(modifier = Modifier.fillMaxWidth()) {
+    val notePresets = listOf(
+        PresetOption("none", stringResource(R.string.cannabis_note_preset_none)),
+        PresetOption("relaxing", stringResource(R.string.cannabis_note_preset_relaxing)),
+        PresetOption("creative", stringResource(R.string.cannabis_note_preset_creative)),
+        PresetOption("sleepy", stringResource(R.string.cannabis_note_preset_sleepy)),
+        PresetOption("anxious", stringResource(R.string.cannabis_note_preset_anxious)),
+        PresetOption("social", stringResource(R.string.cannabis_note_preset_social)),
+    )
+    var noteOption by remember { mutableStateOf(notePresets.first()) }
+
+    DMGlassCard(modifier = Modifier.fillMaxWidth()) {
         Text(stringResource(R.string.cannabis_log_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
         Spacer(Modifier.height(12.dp))
-        DMTextField(value = strainName, onValueChange = { strainName = it }, placeholder = stringResource(R.string.cannabis_strain_placeholder))
+        QuickPresetChipRow(options = strainOptions, selectedId = strainCategory.name, onSelect = { strainCategory = StrainCategory.valueOf(it.id) })
         Spacer(Modifier.height(12.dp))
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(ConsumptionMethod.entries.toList()) { m ->
@@ -129,14 +156,12 @@ private fun LogSessionCard(onLog: (String, ConsumptionMethod, Int, String?) -> U
             }
         }
         Spacer(Modifier.height(12.dp))
-        DMTextField(value = note, onValueChange = { note = it }, placeholder = stringResource(R.string.cannabis_note_placeholder))
+        QuickPresetChipRow(options = notePresets, selectedId = noteOption.id, onSelect = { noteOption = it })
         Spacer(Modifier.height(12.dp))
         DMPrimaryButton(
             text = stringResource(R.string.cannabis_log_save),
             onClick = {
-                onLog(strainName, method, moodBefore, note.ifBlank { null })
-                strainName = ""
-                note = ""
+                onLog(strainLabel, strainCategory, method, moodBefore, if (noteOption.id == "none") null else noteOption.label)
             },
         )
     }

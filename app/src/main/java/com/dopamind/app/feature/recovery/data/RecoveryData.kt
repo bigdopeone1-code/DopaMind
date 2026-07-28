@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 enum class MunchiesSource { MANUAL, VISION_SCAN }
 
+enum class FoodCategory { SWEET, SALTY_SNACK, FRIED, FAST_FOOD, FRUIT_VEG, OTHER }
+
 @Entity(tableName = "sleep_logs")
 data class SleepLogEntity(
     @PrimaryKey val dateEpochDay: Long,
@@ -25,6 +27,7 @@ data class MunchiesLogEntity(
     val foodDescription: String,
     val junkScore: Int, // 0-100
     val source: String, // MunchiesSource.name
+    val foodCategory: String = FoodCategory.OTHER.name,
 )
 
 @Entity(tableName = "sos_sessions")
@@ -67,13 +70,20 @@ class RecoveryRepository(private val dao: RecoveryDao) {
         dao.upsertSleepLog(SleepLogEntity(dateEpochDay = dateEpochDay, hours = hours, quality = quality, note = note))
     }
 
-    suspend fun logMunchies(foodDescription: String, junkScore: Int, source: MunchiesSource, timestampEpochMillis: Long = System.currentTimeMillis()) {
+    suspend fun logMunchies(
+        foodDescription: String,
+        junkScore: Int,
+        source: MunchiesSource,
+        foodCategory: FoodCategory = FoodCategory.OTHER,
+        timestampEpochMillis: Long = System.currentTimeMillis(),
+    ) {
         dao.insertMunchiesLog(
             MunchiesLogEntity(
                 timestampEpochMillis = timestampEpochMillis,
                 foodDescription = foodDescription,
                 junkScore = junkScore,
                 source = source.name,
+                foodCategory = foodCategory.name,
             )
         )
     }

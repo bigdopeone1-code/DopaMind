@@ -10,6 +10,19 @@
     <string name="dashboard_quick_sos">SOS / Chill</string>
     <string name="dashboard_quick_badges">Badges</string>
     <string name="dashboard_modules_header">Your modules</string>
+    <string name="dashboard_health_score_title">Wellness score</string>
+    <string name="dashboard_metrics_header">This week</string>
+    <string name="dashboard_all_modules_header">All modules</string>
+    <string name="status_optimal">Optimal</string>
+    <string name="status_good">Good</string>
+    <string name="status_fair">Fair</string>
+    <string name="status_low">Low</string>
+    <string name="checkin_streak_label">Check-in streak</string>
+    <string name="checkin_streak_days">%1$d days</string>
+    <string name="insight_card_title">Sleep insight</string>
+    <string name="insight_positive">%1$s seems to improve your sleep quality this month.</string>
+    <string name="insight_negative">%1$s seems to lower your sleep quality this month.</string>
+    <string name="insight_no_data">Keep logging to uncover correlations with your sleep.</string>
     <string name="dashboard_weekly_recap_link">Weekly Recap</string>
     <string name="dashboard_weekly_recap_title">Your Weekly Recap is ready</string>
     <string name="dashboard_weekly_recap_subtitle">Swipe through this week\'s stats, Wrapped-style.</string>
@@ -46,6 +59,12 @@
     <string name="checkin_sleep_title">How did you sleep?</string>
     <string name="checkin_sleep_hours_value">%1$dh</string>
     <string name="checkin_note_placeholder">Anything else? (optional)</string>
+    <string name="checkin_note_preset_none">None</string>
+    <string name="checkin_note_preset_rough">Rough day</string>
+    <string name="checkin_note_preset_nothing">Nothing special</string>
+    <string name="checkin_note_preset_great">Great day</string>
+    <string name="checkin_note_preset_win">Big win</string>
+    <string name="checkin_note_preset_struggled">Struggled</string>
     <string name="checkin_streak_caption">%1$d-day check-in streak</string>
     <string name="checkin_badge_unlocked">New badge: %1$s</string>
 
@@ -89,6 +108,12 @@
     <string name="drink_type_wine">wine</string>
     <string name="drink_type_spirit">spirits</string>
     <string name="drink_type_cocktail">cocktails</string>
+    <string name="drink_type_spritz">Spritz</string>
+    <string name="drink_type_negroni">Negroni</string>
+    <string name="drink_type_mojito">Mojito</string>
+    <string name="drink_type_margarita">Margarita</string>
+    <string name="drink_type_gin_tonic">Gin Tonic</string>
+    <string name="drink_type_cocktail_other">Other cocktail</string>
     <string name="drink_type_other">drinks</string>
 
     <!-- Annual Wrapped -->
@@ -103,8 +128,19 @@
     <!-- Cannabis & CBD -->
     <string name="cannabis_log_title">Log a session</string>
     <string name="cannabis_strain_placeholder">Strain (optional)</string>
+    <string name="cannabis_strain_category_unspecified">Unspecified</string>
+    <string name="cannabis_strain_category_indica">Indica</string>
+    <string name="cannabis_strain_category_sativa">Sativa</string>
+    <string name="cannabis_strain_category_hybrid">Hybrid</string>
+    <string name="cannabis_strain_category_cbd_dominant">CBD-dominant</string>
     <string name="cannabis_mood_before">Mood before</string>
     <string name="cannabis_note_placeholder">Note (optional)</string>
+    <string name="cannabis_note_preset_none">None</string>
+    <string name="cannabis_note_preset_relaxing">Relaxing</string>
+    <string name="cannabis_note_preset_creative">Creative</string>
+    <string name="cannabis_note_preset_sleepy">Sleepy</string>
+    <string name="cannabis_note_preset_anxious">Anxious</string>
+    <string name="cannabis_note_preset_social">Social</string>
     <string name="cannabis_log_save">Log it</string>
     <string name="cannabis_recent_logs">Recent sessions</string>
     <string name="cannabis_method_joint">Joint</string>
@@ -207,6 +243,16 @@
     <string name="focus_stacking_subtitle">Pair a duty with a reward.</string>
     <string name="focus_stacking_duty_placeholder">Duty (e.g. laundry)</string>
     <string name="focus_stacking_pleasure_placeholder">Reward (e.g. an episode)</string>
+    <string name="focus_stacking_duty_preset_pushups">10 pushups</string>
+    <string name="focus_stacking_duty_preset_water">Drink water</string>
+    <string name="focus_stacking_duty_preset_bed">Make the bed</string>
+    <string name="focus_stacking_duty_preset_journal">2-min journal</string>
+    <string name="focus_stacking_duty_preset_stretch">Stretch</string>
+    <string name="focus_stacking_pleasure_preset_episode">Watch an episode</string>
+    <string name="focus_stacking_pleasure_preset_scroll">5-min scroll</string>
+    <string name="focus_stacking_pleasure_preset_coffee">Coffee break</string>
+    <string name="focus_stacking_pleasure_preset_game">Play a game</string>
+    <string name="focus_stacking_pleasure_preset_music">Music break</string>
     <string name="focus_stacking_start">Start stack</string>
     <string name="focus_detox_title">Detox mode</string>
     <string name="focus_detox_hours_chip">%1$dh</string>
@@ -215,6 +261,11 @@
     <string name="focus_why_title">Why prompt</string>
     <string name="focus_why_subtitle">A quick note on what\'s driving it right now.</string>
     <string name="focus_why_placeholder">Why right now?</string>
+    <string name="focus_why_preset_boredom">Boredom</string>
+    <string name="focus_why_preset_stress">Stress</string>
+    <string name="focus_why_preset_habit">Habit</string>
+    <string name="focus_why_preset_craving">Craving</string>
+    <string name="focus_why_preset_social">Social</string>
     <string name="focus_why_save">Save</string>
 
     <!-- Recovery & Food -->
@@ -225,6 +276,12 @@
     <string name="recovery_sleep_save">Save sleep</string>
     <string name="recovery_munchies_title">Munchies &amp; junk food</string>
     <string name="recovery_munchies_placeholder">What did you eat?</string>
+    <string name="food_category_sweet">Sweet</string>
+    <string name="food_category_salty_snack">Salty snack</string>
+    <string name="food_category_fried">Fried</string>
+    <string name="food_category_fast_food">Fast food</string>
+    <string name="food_category_fruit_veg">Fruit/veg</string>
+    <string name="food_category_other">Other</string>
     <string name="recovery_munchies_save">Log it</string>
     <string name="recovery_munchies_scan">Scan a plate</string>
     <string name="recovery_munchies_score">Junk score: %1$d/100</string>
@@ -296,6 +353,27 @@
     <string name="onboarding_name_placeholder">Your name (optional)</string>
     <string name="onboarding_profile_title">A couple of numbers</string>
     <string name="onboarding_profile_subtitle">Used only to make the BAC and edibles calculators more accurate — stays on this device.</string>
+    <string name="onboarding_body_title">Your body</string>
+    <string name="onboarding_body_subtitle">Height and activity level — helps tailor your stats.</string>
+    <string name="onboarding_height_label">Height</string>
+    <string name="onboarding_activity_label">Activity level</string>
+    <string name="activity_level_sedentary">Sedentary</string>
+    <string name="activity_level_light">Light</string>
+    <string name="activity_level_active">Active</string>
+    <string name="activity_level_very_active">Very active</string>
+    <string name="onboarding_substances_title">Your habits</string>
+    <string name="onboarding_substances_subtitle">Nothing judgmental — just helps DopaMind tailor what it shows you. Stays on this device.</string>
+    <string name="onboarding_smoking_label">Do you smoke?</string>
+    <string name="smoking_status_never">Never</string>
+    <string name="smoking_status_occasional">Occasionally</string>
+    <string name="smoking_status_regular">Regularly</string>
+    <string name="smoking_status_heavy">Heavily</string>
+    <string name="onboarding_cannabis_label">Cannabis use?</string>
+    <string name="onboarding_alcohol_label">Alcohol use?</string>
+    <string name="use_frequency_never">Never</string>
+    <string name="use_frequency_rare">Rarely</string>
+    <string name="use_frequency_occasional">Occasionally</string>
+    <string name="use_frequency_regular">Regularly</string>
     <string name="onboarding_language_title">Language</string>
     <string name="onboarding_language_system">System</string>
     <string name="onboarding_language_it">Italiano</string>
@@ -311,6 +389,7 @@
     <string name="profile_name_label">Name</string>
     <string name="profile_body_label">Body &amp; sex (for BAC/edibles accuracy)</string>
     <string name="profile_notifications_label">Notifications</string>
+    <string name="profile_immersive_label">Immersive full-screen mode</string>
     <string name="profile_backup_title">Local backup</string>
     <string name="profile_backup_subtitle">Exports the encrypted database file as-is. Only restorable on this same device/install — the encryption key lives in this phone\'s hardware and never leaves it, so this is not a way to move data to a new phone.</string>
     <string name="profile_backup_export">Export</string>
@@ -337,5 +416,13 @@
     <string name="history_window_caption">Last %1$d days</string>
     <string name="history_total">Total: %1$.0f</string>
     <string name="history_average">Daily average: %1$.1f</string>
+    <string name="history_breakdown_header">Breakdown by type</string>
+    <string name="history_week_over_week_header">This week vs. last week</string>
     <string name="history_view_trend">View trend</string>
+    <string name="history_hub_title">History</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_history">History</string>
+    <string name="tab_scan">Scan</string>
+    <string name="tab_insights">Insights</string>
+    <string name="tab_profile">Profile</string>
 </resources>

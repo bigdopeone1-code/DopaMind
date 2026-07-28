@@ -10,6 +10,19 @@
     <string name="dashboard_quick_sos">SOS / Rilassati</string>
     <string name="dashboard_quick_badges">Badge</string>
     <string name="dashboard_modules_header">I tuoi moduli</string>
+    <string name="dashboard_health_score_title">Punteggio benessere</string>
+    <string name="dashboard_metrics_header">Questa settimana</string>
+    <string name="dashboard_all_modules_header">Tutti i moduli</string>
+    <string name="status_optimal">Ottimo</string>
+    <string name="status_good">Buono</string>
+    <string name="status_fair">Discreto</string>
+    <string name="status_low">Basso</string>
+    <string name="checkin_streak_label">Serie di check-in</string>
+    <string name="checkin_streak_days">%1$d giorni</string>
+    <string name="insight_card_title">Insight sul sonno</string>
+    <string name="insight_positive">%1$s sembra migliorare la qualità del tuo sonno questo mese.</string>
+    <string name="insight_negative">%1$s sembra peggiorare la qualità del tuo sonno questo mese.</string>
+    <string name="insight_no_data">Continua a registrare per scoprire le correlazioni con il tuo sonno.</string>
     <string name="dashboard_weekly_recap_link">Weekly Recap</string>
     <string name="dashboard_weekly_recap_title">Il tuo Weekly Recap è pronto</string>
     <string name="dashboard_weekly_recap_subtitle">Scorri le statistiche della settimana, stile Wrapped.</string>
@@ -46,6 +59,12 @@
     <string name="checkin_sleep_title">Come hai dormito?</string>
     <string name="checkin_sleep_hours_value">%1$dh</string>
     <string name="checkin_note_placeholder">Altro? (opzionale)</string>
+    <string name="checkin_note_preset_none">Nessuna</string>
+    <string name="checkin_note_preset_rough">Giornata dura</string>
+    <string name="checkin_note_preset_nothing">Niente di che</string>
+    <string name="checkin_note_preset_great">Ottima giornata</string>
+    <string name="checkin_note_preset_win">Bella vittoria</string>
+    <string name="checkin_note_preset_struggled">Difficile</string>
     <string name="checkin_streak_caption">%1$d giorni di check-in di fila</string>
     <string name="checkin_badge_unlocked">Nuovo badge: %1$s</string>
 
@@ -89,6 +108,12 @@
     <string name="drink_type_wine">vino</string>
     <string name="drink_type_spirit">superalcolici</string>
     <string name="drink_type_cocktail">cocktail</string>
+    <string name="drink_type_spritz">Spritz</string>
+    <string name="drink_type_negroni">Negroni</string>
+    <string name="drink_type_mojito">Mojito</string>
+    <string name="drink_type_margarita">Margarita</string>
+    <string name="drink_type_gin_tonic">Gin Tonic</string>
+    <string name="drink_type_cocktail_other">Altro cocktail</string>
     <string name="drink_type_other">drink</string>
 
     <!-- Wrapped Annuale -->
@@ -103,8 +128,19 @@
     <!-- Cannabis & CBD -->
     <string name="cannabis_log_title">Registra una sessione</string>
     <string name="cannabis_strain_placeholder">Strain (opzionale)</string>
+    <string name="cannabis_strain_category_unspecified">Non specificato</string>
+    <string name="cannabis_strain_category_indica">Indica</string>
+    <string name="cannabis_strain_category_sativa">Sativa</string>
+    <string name="cannabis_strain_category_hybrid">Ibrido</string>
+    <string name="cannabis_strain_category_cbd_dominant">A base di CBD</string>
     <string name="cannabis_mood_before">Umore prima</string>
     <string name="cannabis_note_placeholder">Nota (opzionale)</string>
+    <string name="cannabis_note_preset_none">Nessuna</string>
+    <string name="cannabis_note_preset_relaxing">Rilassante</string>
+    <string name="cannabis_note_preset_creative">Creativo</string>
+    <string name="cannabis_note_preset_sleepy">Sonnolento</string>
+    <string name="cannabis_note_preset_anxious">Ansioso</string>
+    <string name="cannabis_note_preset_social">Sociale</string>
     <string name="cannabis_log_save">Registra</string>
     <string name="cannabis_recent_logs">Sessioni recenti</string>
     <string name="cannabis_method_joint">Canna</string>
@@ -207,6 +243,16 @@
     <string name="focus_stacking_subtitle">Abbina un dovere a una ricompensa.</string>
     <string name="focus_stacking_duty_placeholder">Dovere (es. bucato)</string>
     <string name="focus_stacking_pleasure_placeholder">Ricompensa (es. un episodio)</string>
+    <string name="focus_stacking_duty_preset_pushups">10 flessioni</string>
+    <string name="focus_stacking_duty_preset_water">Bevi acqua</string>
+    <string name="focus_stacking_duty_preset_bed">Rifai il letto</string>
+    <string name="focus_stacking_duty_preset_journal">Diario di 2 min</string>
+    <string name="focus_stacking_duty_preset_stretch">Stretching</string>
+    <string name="focus_stacking_pleasure_preset_episode">Guarda un episodio</string>
+    <string name="focus_stacking_pleasure_preset_scroll">5 min di scroll</string>
+    <string name="focus_stacking_pleasure_preset_coffee">Pausa caffè</string>
+    <string name="focus_stacking_pleasure_preset_game">Gioca</string>
+    <string name="focus_stacking_pleasure_preset_music">Pausa musica</string>
     <string name="focus_stacking_start">Inizia stack</string>
     <string name="focus_detox_title">Detox mode</string>
     <string name="focus_detox_hours_chip">%1$dh</string>
@@ -215,6 +261,11 @@
     <string name="focus_why_title">Why prompt</string>
     <string name="focus_why_subtitle">Una nota veloce su cosa ti spinge ora.</string>
     <string name="focus_why_placeholder">Perché proprio ora?</string>
+    <string name="focus_why_preset_boredom">Noia</string>
+    <string name="focus_why_preset_stress">Stress</string>
+    <string name="focus_why_preset_habit">Abitudine</string>
+    <string name="focus_why_preset_craving">Voglia improvvisa</string>
+    <string name="focus_why_preset_social">Socialità</string>
     <string name="focus_why_save">Salva</string>
 
     <!-- Recovery & Food -->
@@ -225,6 +276,12 @@
     <string name="recovery_sleep_save">Salva sonno</string>
     <string name="recovery_munchies_title">Fame improvvisa &amp; junk food</string>
     <string name="recovery_munchies_placeholder">Cosa hai mangiato?</string>
+    <string name="food_category_sweet">Dolce</string>
+    <string name="food_category_salty_snack">Snack salato</string>
+    <string name="food_category_fried">Fritto</string>
+    <string name="food_category_fast_food">Fast food</string>
+    <string name="food_category_fruit_veg">Frutta/verdura</string>
+    <string name="food_category_other">Altro</string>
     <string name="recovery_munchies_save">Registra</string>
     <string name="recovery_munchies_scan">Scansiona un piatto</string>
     <string name="recovery_munchies_score">Junk score: %1$d/100</string>
@@ -296,6 +353,27 @@
     <string name="onboarding_name_placeholder">Il tuo nome (opzionale)</string>
     <string name="onboarding_profile_title">Un paio di numeri</string>
     <string name="onboarding_profile_subtitle">Usati solo per rendere più precisi i calcolatori BAC ed edibles — restano su questo dispositivo.</string>
+    <string name="onboarding_body_title">Il tuo corpo</string>
+    <string name="onboarding_body_subtitle">Altezza e livello di attività — aiuta a personalizzare le statistiche.</string>
+    <string name="onboarding_height_label">Altezza</string>
+    <string name="onboarding_activity_label">Livello di attività</string>
+    <string name="activity_level_sedentary">Sedentario</string>
+    <string name="activity_level_light">Leggero</string>
+    <string name="activity_level_active">Attivo</string>
+    <string name="activity_level_very_active">Molto attivo</string>
+    <string name="onboarding_substances_title">Le tue abitudini</string>
+    <string name="onboarding_substances_subtitle">Nessun giudizio — serve solo a personalizzare DopaMind. Resta su questo dispositivo.</string>
+    <string name="onboarding_smoking_label">Fumi?</string>
+    <string name="smoking_status_never">Mai</string>
+    <string name="smoking_status_occasional">Occasionalmente</string>
+    <string name="smoking_status_regular">Regolarmente</string>
+    <string name="smoking_status_heavy">Molto</string>
+    <string name="onboarding_cannabis_label">Uso di cannabis?</string>
+    <string name="onboarding_alcohol_label">Uso di alcol?</string>
+    <string name="use_frequency_never">Mai</string>
+    <string name="use_frequency_rare">Raramente</string>
+    <string name="use_frequency_occasional">Occasionalmente</string>
+    <string name="use_frequency_regular">Regolarmente</string>
     <string name="onboarding_language_title">Lingua</string>
     <string name="onboarding_language_system">Sistema</string>
     <string name="onboarding_language_it">Italiano</string>
@@ -311,6 +389,7 @@
     <string name="profile_name_label">Nome</string>
     <string name="profile_body_label">Corpo &amp; sesso (per precisione BAC/edibles)</string>
     <string name="profile_notifications_label">Notifiche</string>
+    <string name="profile_immersive_label">Modalità schermo intero</string>
     <string name="profile_backup_title">Backup locale</string>
     <string name="profile_backup_subtitle">Esporta il file del database così com\'è, già cifrato. Ripristinabile solo su questo stesso dispositivo/installazione — la chiave di cifratura vive nell\'hardware di questo telefono e non ne esce mai, quindi non è un modo per spostare i dati su un telefono nuovo.</string>
     <string name="profile_backup_export">Esporta</string>
@@ -337,5 +416,13 @@
     <string name="history_window_caption">Ultimi %1$d giorni</string>
     <string name="history_total">Totale: %1$.0f</string>
     <string name="history_average">Media giornaliera: %1$.1f</string>
+    <string name="history_breakdown_header">Ripartizione per tipo</string>
+    <string name="history_week_over_week_header">Questa settimana vs. scorsa</string>
     <string name="history_view_trend">Vedi andamento</string>
+    <string name="history_hub_title">Storico</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_history">Storico</string>
+    <string name="tab_scan">Scanner</string>
+    <string name="tab_insights">Insights</string>
+    <string name="tab_profile">Profilo</string>
 </resources>

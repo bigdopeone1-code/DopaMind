@@ -127,6 +127,18 @@ fun ProfileScreen(onBack: () -> Unit) {
 
         item {
             DMCard(modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.profile_immersive_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                Spacer(Modifier.height(8.dp))
+                DMChip(
+                    label = stringResource(if (currentProfile.immersiveModeEnabled) R.string.onboarding_notifications_on else R.string.onboarding_notifications_off),
+                    selected = currentProfile.immersiveModeEnabled,
+                    onClick = { viewModel.updateImmersiveMode(!currentProfile.immersiveModeEnabled) },
+                )
+            }
+        }
+
+        item {
+            DMCard(modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.profile_backup_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
                 Text(stringResource(R.string.profile_backup_subtitle), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
                 Spacer(Modifier.height(12.dp))

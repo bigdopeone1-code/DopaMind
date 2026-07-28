@@ -35,10 +35,13 @@ import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.TextPrimary
 import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
+import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
+import com.dopamind.app.feature.profile.data.SmokingStatus
+import com.dopamind.app.feature.profile.data.UseFrequency
 import kotlinx.coroutines.launch
 
-private const val ONBOARDING_PAGE_COUNT = 4
+private const val ONBOARDING_PAGE_COUNT = 6
 
 @Composable
 fun OnboardingScreen(onComplete: () -> Unit) {
@@ -60,7 +63,16 @@ fun OnboardingScreen(onComplete: () -> Unit) {
             when (page) {
                 0 -> WelcomeStep(uiState.displayName, viewModel::onNameChange)
                 1 -> ProfileStep(uiState.weightKg, viewModel::onWeightChange, uiState.sex, viewModel::onSexChange)
-                2 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
+                2 -> BodyStep(uiState.heightCm, viewModel::onHeightChange, uiState.activityLevel, viewModel::onActivityLevelChange)
+                3 -> SubstancesStep(
+                    smokingStatus = uiState.smokingStatus,
+                    onSmokingChange = viewModel::onSmokingStatusChange,
+                    cannabisFrequency = uiState.cannabisUseFrequency,
+                    onCannabisChange = viewModel::onCannabisUseChange,
+                    alcoholFrequency = uiState.alcoholUseFrequency,
+                    onAlcoholChange = viewModel::onAlcoholUseChange,
+                )
+                4 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
                 else -> NotificationsStep(
                     enabled = uiState.notificationsEnabled,
                     onEnabledChange = { enabled ->
@@ -147,6 +159,121 @@ private fun onboardingSexLabel(sex: BiologicalSex): String = stringResource(
         BiologicalSex.MALE -> R.string.alcohol_sex_male
         BiologicalSex.FEMALE -> R.string.alcohol_sex_female
         BiologicalSex.OTHER -> R.string.alcohol_sex_other
+    }
+)
+
+@Composable
+private fun BodyStep(heightCm: Int, onHeightChange: (Int) -> Unit, activityLevel: ActivityLevel, onActivityChange: (ActivityLevel) -> Unit) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Text(
+            text = stringResource(R.string.onboarding_body_title),
+            style = MaterialTheme.typography.headlineLarge,
+            color = TextPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(
+            text = stringResource(R.string.onboarding_body_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = TextSecondary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 24.dp),
+        )
+        Text(stringResource(R.string.onboarding_height_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+        Spacer(Modifier.height(8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(listOf(150, 160, 170, 180, 190, 200)) { h ->
+                DMChip(label = "${h}cm", selected = heightCm == h, onClick = { onHeightChange(h) })
+            }
+        }
+        Spacer(Modifier.height(20.dp))
+        Text(stringResource(R.string.onboarding_activity_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+        Spacer(Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ActivityLevel.entries.forEach { level ->
+                DMChip(label = activityLevelLabel(level), selected = activityLevel == level, onClick = { onActivityChange(level) })
+            }
+        }
+    }
+}
+
+@Composable
+private fun activityLevelLabel(level: ActivityLevel): String = stringResource(
+    when (level) {
+        ActivityLevel.SEDENTARY -> R.string.activity_level_sedentary
+        ActivityLevel.LIGHT -> R.string.activity_level_light
+        ActivityLevel.ACTIVE -> R.string.activity_level_active
+        ActivityLevel.VERY_ACTIVE -> R.string.activity_level_very_active
+    }
+)
+
+@Composable
+private fun SubstancesStep(
+    smokingStatus: SmokingStatus,
+    onSmokingChange: (SmokingStatus) -> Unit,
+    cannabisFrequency: UseFrequency,
+    onCannabisChange: (UseFrequency) -> Unit,
+    alcoholFrequency: UseFrequency,
+    onAlcoholChange: (UseFrequency) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Text(
+            text = stringResource(R.string.onboarding_substances_title),
+            style = MaterialTheme.typography.headlineLarge,
+            color = TextPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(
+            text = stringResource(R.string.onboarding_substances_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = TextSecondary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 24.dp),
+        )
+        Text(stringResource(R.string.onboarding_smoking_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+        Spacer(Modifier.height(8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(SmokingStatus.entries.toList()) { status ->
+                DMChip(label = smokingStatusLabel(status), selected = smokingStatus == status, onClick = { onSmokingChange(status) })
+            }
+        }
+        Spacer(Modifier.height(16.dp))
+        Text(stringResource(R.string.onboarding_cannabis_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+        Spacer(Modifier.height(8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(UseFrequency.entries.toList()) { freq ->
+                DMChip(label = useFrequencyLabel(freq), selected = cannabisFrequency == freq, onClick = { onCannabisChange(freq) })
+            }
+        }
+        Spacer(Modifier.height(16.dp))
+        Text(stringResource(R.string.onboarding_alcohol_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+        Spacer(Modifier.height(8.dp))
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(UseFrequency.entries.toList()) { freq ->
+                DMChip(label = useFrequencyLabel(freq), selected = alcoholFrequency == freq, onClick = { onAlcoholChange(freq) })
+            }
+        }
+    }
+}
+
+@Composable
+private fun smokingStatusLabel(status: SmokingStatus): String = stringResource(
+    when (status) {
+        SmokingStatus.NEVER -> R.string.smoking_status_never
+        SmokingStatus.OCCASIONAL -> R.string.smoking_status_occasional
+        SmokingStatus.REGULAR -> R.string.smoking_status_regular
+        SmokingStatus.HEAVY -> R.string.smoking_status_heavy
+    }
+)
+
+@Composable
+private fun useFrequencyLabel(frequency: UseFrequency): String = stringResource(
+    when (frequency) {
+        UseFrequency.NEVER -> R.string.use_frequency_never
+        UseFrequency.RARE -> R.string.use_frequency_rare
+        UseFrequency.OCCASIONAL -> R.string.use_frequency_occasional
+        UseFrequency.REGULAR -> R.string.use_frequency_regular
     }
 )
 

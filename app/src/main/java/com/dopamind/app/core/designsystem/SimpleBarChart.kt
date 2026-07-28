@@ -20,6 +20,7 @@ fun SimpleBarChart(
     values: List<Float>,
     modifier: Modifier = Modifier,
     barColor: androidx.compose.ui.graphics.Color = Accent,
+    barBrush: androidx.compose.ui.graphics.Brush? = null,
     trackColor: androidx.compose.ui.graphics.Color = BorderSubtle,
     height: androidx.compose.ui.unit.Dp = 120.dp,
 ) {
@@ -42,11 +43,17 @@ fun SimpleBarChart(
         values.forEachIndexed { index, value ->
             val barHeight = (value / maxValue) * size.height
             val left = index * (barWidth + barGap)
-            drawRect(
-                color = if (value > 0f) barColor else trackColor,
-                topLeft = Offset(left, size.height - barHeight),
-                size = Size(barWidth, barHeight.coerceAtLeast(2f)),
-            )
+            val topLeft = Offset(left, size.height - barHeight)
+            val rectSize = Size(barWidth, barHeight.coerceAtLeast(2f))
+            if (barBrush != null && value > 0f) {
+                drawRect(brush = barBrush, topLeft = topLeft, size = rectSize)
+            } else {
+                drawRect(
+                    color = if (value > 0f) barColor else trackColor,
+                    topLeft = topLeft,
+                    size = rectSize,
+                )
+            }
         }
     }
 }

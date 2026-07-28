@@ -56,6 +56,8 @@ class ProfileViewModel(
         }
     }
 
+    fun updateImmersiveMode(enabled: Boolean) = update { it.copy(immersiveModeEnabled = enabled) }
+
     fun updateReminderHour(hour: Int) {
         update { it.copy(dailyReminderHour = hour) }
         if (profile.value?.notificationsEnabled == true) {

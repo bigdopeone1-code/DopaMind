@@ -53,7 +53,7 @@ import net.sqlcipher.database.SupportFactory
         BadgeUnlockEntity::class,
         UserProfileEntity::class,
     ],
-    version = 1,
+    version = 3,
     exportSchema = true,
 )
 abstract class DopaMindDatabase : RoomDatabase() {
@@ -82,6 +82,9 @@ abstract class DopaMindDatabase : RoomDatabase() {
 
             return Room.databaseBuilder(context, DopaMindDatabase::class.java, DATABASE_NAME)
                 .openHelperFactory(factory)
+                // Pre-release MVP data only — acceptable to recreate on schema bumps
+                // rather than hand-writing migrations for every enum/column addition.
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }

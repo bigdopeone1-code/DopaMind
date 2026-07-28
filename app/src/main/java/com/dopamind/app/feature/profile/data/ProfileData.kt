@@ -11,6 +11,13 @@ import kotlinx.coroutines.flow.Flow
 
 enum class LanguagePreference { SYSTEM, IT, EN }
 
+/** How often the user engages in a given habit — shared by cannabis/alcohol onboarding questions. */
+enum class UseFrequency { NEVER, RARE, OCCASIONAL, REGULAR }
+
+enum class SmokingStatus { NEVER, OCCASIONAL, REGULAR, HEAVY }
+
+enum class ActivityLevel { SEDENTARY, LIGHT, ACTIVE, VERY_ACTIVE }
+
 @Entity(tableName = "user_profile")
 data class UserProfileEntity(
     @PrimaryKey val id: Int = 1,
@@ -21,6 +28,12 @@ data class UserProfileEntity(
     val notificationsEnabled: Boolean,
     val dailyReminderHour: Int, // 0..23
     val onboardingCompletedAtEpochMillis: Long,
+    val immersiveModeEnabled: Boolean = false,
+    val heightCm: Int = 170,
+    val smokingStatus: String = SmokingStatus.NEVER.name,
+    val cannabisUseFrequency: String = UseFrequency.NEVER.name,
+    val alcoholUseFrequency: String = UseFrequency.NEVER.name,
+    val activityLevel: String = ActivityLevel.LIGHT.name,
 )
 
 @Dao
@@ -46,6 +59,11 @@ class ProfileRepository(private val dao: ProfileDao) {
         language: LanguagePreference,
         notificationsEnabled: Boolean,
         dailyReminderHour: Int,
+        heightCm: Int = 170,
+        smokingStatus: SmokingStatus = SmokingStatus.NEVER,
+        cannabisUseFrequency: UseFrequency = UseFrequency.NEVER,
+        alcoholUseFrequency: UseFrequency = UseFrequency.NEVER,
+        activityLevel: ActivityLevel = ActivityLevel.LIGHT,
     ) {
         dao.upsert(
             UserProfileEntity(
@@ -56,6 +74,11 @@ class ProfileRepository(private val dao: ProfileDao) {
                 notificationsEnabled = notificationsEnabled,
                 dailyReminderHour = dailyReminderHour,
                 onboardingCompletedAtEpochMillis = System.currentTimeMillis(),
+                heightCm = heightCm,
+                smokingStatus = smokingStatus.name,
+                cannabisUseFrequency = cannabisUseFrequency.name,
+                alcoholUseFrequency = alcoholUseFrequency.name,
+                activityLevel = activityLevel.name,
             )
         )
     }

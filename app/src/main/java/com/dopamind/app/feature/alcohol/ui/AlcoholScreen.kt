@@ -32,6 +32,7 @@ import com.dopamind.app.core.analytics.model.HangoverRiskLevel
 import com.dopamind.app.core.analytics.model.HangoverTip
 import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
+import com.dopamind.app.core.designsystem.DMGlassCard
 import com.dopamind.app.core.designsystem.DMPrimaryButton
 import com.dopamind.app.core.designsystem.DMSecondaryButton
 import com.dopamind.app.core.designsystem.ProgressRing
@@ -151,14 +152,29 @@ fun AlcoholScreen(onBack: () -> Unit, onScanLabel: () -> Unit, onViewHistory: ()
     }
 }
 
+private val DirectDrinkTypes = listOf(DrinkType.BEER, DrinkType.WINE, DrinkType.SPIRIT_SHOT, DrinkType.OTHER)
+private val CocktailDrinkTypes = listOf(DrinkType.SPRITZ, DrinkType.NEGRONI, DrinkType.MOJITO, DrinkType.MARGARITA, DrinkType.GIN_TONIC, DrinkType.COCKTAIL_OTHER)
+
 @Composable
 private fun DrinkCounterCard(tonightCount: Int, onLog: (DrinkType, Float?) -> Unit, onScanLabel: () -> Unit) {
-    DMCard(modifier = Modifier.fillMaxWidth()) {
+    var showCocktails by remember { mutableStateOf(false) }
+    DMGlassCard(modifier = Modifier.fillMaxWidth()) {
         Text(stringResource(R.string.alcohol_tonight_count, tonightCount), style = MaterialTheme.typography.headlineLarge, color = Accent)
         Spacer(Modifier.height(12.dp))
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(DrinkType.entries.toList()) { type ->
+            items(DirectDrinkTypes) { type ->
                 DMChip(label = drinkTypeLabel(type), selected = false, onClick = { onLog(type, null) })
+            }
+            item {
+                DMChip(label = stringResource(R.string.drink_type_cocktail), selected = showCocktails, onClick = { showCocktails = !showCocktails })
+            }
+        }
+        if (showCocktails) {
+            Spacer(Modifier.height(8.dp))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(CocktailDrinkTypes) { type ->
+                    DMChip(label = drinkTypeLabel(type), selected = false, onClick = { onLog(type, null); showCocktails = false })
+                }
             }
         }
         Spacer(Modifier.height(12.dp))
@@ -310,7 +326,12 @@ internal fun drinkTypeLabel(type: DrinkType): String = stringResource(
         DrinkType.BEER -> R.string.drink_type_beer
         DrinkType.WINE -> R.string.drink_type_wine
         DrinkType.SPIRIT_SHOT -> R.string.drink_type_spirit
-        DrinkType.COCKTAIL -> R.string.drink_type_cocktail
+        DrinkType.SPRITZ -> R.string.drink_type_spritz
+        DrinkType.NEGRONI -> R.string.drink_type_negroni
+        DrinkType.MOJITO -> R.string.drink_type_mojito
+        DrinkType.MARGARITA -> R.string.drink_type_margarita
+        DrinkType.GIN_TONIC -> R.string.drink_type_gin_tonic
+        DrinkType.COCKTAIL_OTHER -> R.string.drink_type_cocktail_other
         DrinkType.OTHER -> R.string.drink_type_other
     }
 )

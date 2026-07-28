@@ -38,9 +38,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dopamind.app.R
 import com.dopamind.app.core.designsystem.DMChip
 import com.dopamind.app.core.designsystem.DMPrimaryButton
-import com.dopamind.app.core.designsystem.DMTextField
 import com.dopamind.app.core.designsystem.EmojiMoodSlider
 import com.dopamind.app.core.designsystem.MoodStep
+import com.dopamind.app.core.designsystem.PresetOption
+import com.dopamind.app.core.designsystem.QuickPresetChipRow
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.gamification.BadgeId
 import com.dopamind.app.core.theme.Accent
@@ -227,11 +228,19 @@ private fun SleepAndNoteCard(sleepHours: Float, note: String, onSleepHoursChange
             colors = SliderDefaults.colors(thumbColor = Accent, activeTrackColor = Accent, inactiveTrackColor = BorderSubtle),
         )
         Spacer(Modifier.height(24.dp))
-        DMTextField(
-            value = note,
-            onValueChange = onNoteChange,
-            placeholder = stringResource(R.string.checkin_note_placeholder),
-            minLines = 2,
+        val notePresets = listOf(
+            PresetOption("none", stringResource(R.string.checkin_note_preset_none)),
+            PresetOption("rough", stringResource(R.string.checkin_note_preset_rough)),
+            PresetOption("nothing", stringResource(R.string.checkin_note_preset_nothing)),
+            PresetOption("great", stringResource(R.string.checkin_note_preset_great)),
+            PresetOption("win", stringResource(R.string.checkin_note_preset_win)),
+            PresetOption("struggled", stringResource(R.string.checkin_note_preset_struggled)),
+        )
+        val selectedId = notePresets.firstOrNull { it.label == note }?.id ?: notePresets.first().id
+        QuickPresetChipRow(
+            options = notePresets,
+            selectedId = selectedId,
+            onSelect = { onNoteChange(if (it.id == "none") "" else it.label) },
         )
     }
 }
