@@ -2,7 +2,7 @@ package com.dopamind.app.core.ai.vision
 
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizerOptions
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 data class DrinkLabelScanResult(
     val abvPercent: Float?,

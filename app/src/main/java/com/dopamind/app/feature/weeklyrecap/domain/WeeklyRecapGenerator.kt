@@ -55,7 +55,7 @@ class WeeklyRecapGenerator(
 
         return buildList {
             if (totalSpend > 0f) add(RecapCard(RecapCardType.TOTAL_SPEND, primaryValue = totalSpend))
-            if (alcoholSpend > 0f) add(RecapCard(RecapCardType.ALCOHOL_SPEND, primaryValue = alcoholSpend, secondaryLabel = mostLoggedDrinkType?.name))
+            if (alcoholSpend > 0f) add(RecapCard(RecapCardType.ALCOHOL_SPEND, primaryValue = alcoholSpend, secondaryLabel = mostLoggedDrinkType))
             if (smokeFreeDays > 0) add(RecapCard(RecapCardType.SMOKE_FREE_DAYS, primaryValue = smokeFreeDays.toFloat()))
             if (cannabisSessions > 0) add(RecapCard(RecapCardType.CANNABIS_SESSIONS, primaryValue = cannabisSessions.toFloat()))
             sleepAverage?.let { add(RecapCard(RecapCardType.SLEEP_AVERAGE, primaryValue = it)) }

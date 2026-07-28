@@ -118,8 +118,9 @@ private fun DopamineDebtCard(debt: DopamineDebtResult?) {
                 Column {
                     Text(stringResource(trendLabel(debt.trend)), style = MaterialTheme.typography.bodyLarge, color = TextPrimary)
                     if (debt.topContributors.isNotEmpty()) {
+                        val contributorLabels = debt.topContributors.map { stringResource(contributorLabel(it)) }
                         Text(
-                            text = stringResource(R.string.focus_debt_top_contributors, debt.topContributors.joinToString(", ") { stringResource(contributorLabel(it)) }),
+                            text = stringResource(R.string.focus_debt_top_contributors, contributorLabels.joinToString(", ")),
                             style = MaterialTheme.typography.labelMedium,
                             color = TextSecondary,
                         )
