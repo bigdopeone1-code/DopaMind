@@ -23,6 +23,11 @@ import com.dopamind.app.feature.finance.data.FinanceDao
 import com.dopamind.app.feature.finance.data.SpendLogEntity
 import com.dopamind.app.feature.libido.data.LibidoDao
 import com.dopamind.app.feature.libido.data.LibidoLogEntity
+import com.dopamind.app.feature.nutrition.data.FastingSessionEntity
+import com.dopamind.app.feature.nutrition.data.FoodLogEntity
+import com.dopamind.app.feature.nutrition.data.NutritionDao
+import com.dopamind.app.feature.nutrition.data.WaterLogEntity
+import com.dopamind.app.feature.nutrition.data.WeightLogEntity
 import com.dopamind.app.feature.profile.data.ProfileDao
 import com.dopamind.app.feature.profile.data.UserProfileEntity
 import com.dopamind.app.feature.recovery.data.MunchiesLogEntity
@@ -52,6 +57,10 @@ import net.sqlcipher.database.SupportFactory
         DailyVibeEntity::class,
         BadgeUnlockEntity::class,
         UserProfileEntity::class,
+        FoodLogEntity::class,
+        WeightLogEntity::class,
+        WaterLogEntity::class,
+        FastingSessionEntity::class,
     ],
     version = 1,
     exportSchema = true,
@@ -67,6 +76,7 @@ abstract class DopaMindDatabase : RoomDatabase() {
     abstract fun dailyVibeDao(): DailyVibeDao
     abstract fun gamificationDao(): GamificationDao
     abstract fun profileDao(): ProfileDao
+    abstract fun nutritionDao(): NutritionDao
 
     companion object {
         private const val DATABASE_NAME = "dopamind_encrypted.db"

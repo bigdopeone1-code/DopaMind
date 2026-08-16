@@ -15,6 +15,7 @@ import com.dopamind.app.feature.dopaminefocus.ui.DopamineFocusScreen
 import com.dopamind.app.feature.finance.ui.FinanceScreen
 import com.dopamind.app.feature.history.ui.ModuleHistoryScreen
 import com.dopamind.app.feature.libido.ui.LibidoScreen
+import com.dopamind.app.feature.nutrition.ui.NutritionScreen
 import com.dopamind.app.feature.profile.ui.OnboardingScreen
 import com.dopamind.app.feature.profile.ui.ProfileScreen
 import com.dopamind.app.feature.profile.ui.SplashScreen
@@ -133,6 +134,10 @@ fun DopaMindNavHost(
 
         composable<Destination.FinanceHome> {
             FinanceScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable<Destination.NutritionHome> {
+            NutritionScreen(onBack = { navController.popBackStack() })
         }
 
         composable<Destination.ChillCoachSos> {

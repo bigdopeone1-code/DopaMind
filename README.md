@@ -44,6 +44,7 @@ app/src/main/java/com/dopamind/app/
 │   ├── profile/           Onboarding, Splash routing, Profile/Settings screen
 │   ├── badges/            Full badge gallery (locked/unlocked)
 │   ├── history/           30-day trend charts per module
+│   ├── nutrition/         Food diary + calorie/macro goals, water, weight, intermittent fasting
 │   ├── voicelog/          Voice-to-Log hands-free entry point
 │   └── scanner/           Shared camera screen for label/food scanning
 └── res/values(-it)/strings.xml   All UI copy, English base + Italian
@@ -76,6 +77,17 @@ app/src/main/java/com/dopamind/app/
   an oversight — see the in-app copy on the Profile screen.
 - The Spot Map / saved-spots idea from the original brief was removed
   entirely from the Finance module per a later request, to keep it focused.
+- **Nutrition & Fitness** (an 8th module, added on request — "bring in the
+  Yazio-style features"): a food diary with per-meal calories/macros, a
+  daily calorie/macro goal computed from the profile (Mifflin-St Jeor BMR ×
+  activity level — same informational-only framing as the rest of the app's
+  calculators, editable/overridable), water tracking, weight tracking with a
+  30-day trend chart, and an intermittent-fasting timer (16:8-style, reusing
+  the same start/target-hours/progress-ring pattern as the T-Break and Detox
+  Mode timers elsewhere in the app). **No barcode scanner**: a real one needs
+  a network call to an external food database (e.g. Open Food Facts), which
+  would break the "no cloud" design that holds for every other module — food
+  entry is manual-only by design, not a missing feature.
 
 Each `feature/<module>` package is split into `data` (Room entity/DAO/repository),
 `domain` (pure Kotlin calculators — Widmark BAC, edibles dosing, €/unit convenience,

@@ -30,6 +30,7 @@ import com.dopamind.app.core.theme.Danger
 import com.dopamind.app.core.theme.TextPrimary
 import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
+import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
 
 @Composable
@@ -84,6 +85,41 @@ fun ProfileScreen(onBack: () -> Unit) {
                             selected = currentProfile.biologicalSex == s.name,
                             onClick = { viewModel.updateSex(s) },
                         )
+                    }
+                }
+            }
+        }
+
+        item {
+            DMCard(modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.profile_nutrition_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(150f, 160f, 170f, 180f, 190f, 200f).forEach { h ->
+                        DMChip(label = "${h.toInt()}cm", selected = currentProfile.heightCm == h, onClick = { viewModel.updateHeight(h) })
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(18, 25, 35, 45, 55, 65).forEach { a ->
+                        DMChip(label = "$a", selected = currentProfile.ageYears == a, onClick = { viewModel.updateAge(a) })
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ActivityLevel.entries.forEach { level ->
+                        DMChip(
+                            label = activityLevelLabel(level),
+                            selected = currentProfile.activityLevel == level.name,
+                            onClick = { viewModel.updateActivityLevel(level) },
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+                Text(stringResource(R.string.profile_water_goal_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(1500, 2000, 2500, 3000).forEach { ml ->
+                        DMChip(label = "${ml / 1000f}L", selected = currentProfile.dailyWaterGoalMl == ml, onClick = { viewModel.updateWaterGoal(ml) })
                     }
                 }
             }
@@ -175,5 +211,16 @@ private fun profileLanguageLabel(language: LanguagePreference): String = stringR
         LanguagePreference.SYSTEM -> R.string.onboarding_language_system
         LanguagePreference.IT -> R.string.onboarding_language_it
         LanguagePreference.EN -> R.string.onboarding_language_en
+    }
+)
+
+@Composable
+private fun activityLevelLabel(level: ActivityLevel): String = stringResource(
+    when (level) {
+        ActivityLevel.SEDENTARY -> R.string.activity_level_sedentary
+        ActivityLevel.LIGHT -> R.string.activity_level_light
+        ActivityLevel.MODERATE -> R.string.activity_level_moderate
+        ActivityLevel.ACTIVE -> R.string.activity_level_active
+        ActivityLevel.VERY_ACTIVE -> R.string.activity_level_very_active
     }
 )

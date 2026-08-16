@@ -11,6 +11,18 @@ import kotlinx.coroutines.flow.Flow
 
 enum class LanguagePreference { SYSTEM, IT, EN }
 
+enum class ActivityLevel(val tdeeMultiplier: Double) {
+    SEDENTARY(1.2),
+    LIGHT(1.375),
+    MODERATE(1.55),
+    ACTIVE(1.725),
+    VERY_ACTIVE(1.9),
+}
+
+private const val DEFAULT_HEIGHT_CM = 170f
+private const val DEFAULT_AGE_YEARS = 30
+private const val DEFAULT_WATER_GOAL_ML = 2000
+
 @Entity(tableName = "user_profile")
 data class UserProfileEntity(
     @PrimaryKey val id: Int = 1,
@@ -21,6 +33,11 @@ data class UserProfileEntity(
     val notificationsEnabled: Boolean,
     val dailyReminderHour: Int, // 0..23
     val onboardingCompletedAtEpochMillis: Long,
+    val heightCm: Float = DEFAULT_HEIGHT_CM,
+    val ageYears: Int = DEFAULT_AGE_YEARS,
+    val activityLevel: String = ActivityLevel.MODERATE.name,
+    val dailyWaterGoalMl: Int = DEFAULT_WATER_GOAL_ML,
+    val dailyCalorieGoalOverride: Int? = null,
 )
 
 @Dao

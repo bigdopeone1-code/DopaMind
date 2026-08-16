@@ -338,4 +338,40 @@
     <string name="history_total">Totale: %1$.0f</string>
     <string name="history_average">Media giornaliera: %1$.1f</string>
     <string name="history_view_trend">Vedi andamento</string>
+
+    <!-- Nutrizione & Fitness -->
+    <string name="module_nutrition">Nutrizione &amp; Fitness</string>
+    <string name="nutrition_summary_title">Oggi</string>
+    <string name="nutrition_calories_goal">%1$d / %2$d kcal</string>
+    <string name="nutrition_macros_line">P %1$d/%2$dg · C %3$d/%4$dg · G %5$d/%6$dg</string>
+    <string name="nutrition_log_food_title">Registra un pasto</string>
+    <string name="nutrition_food_name_placeholder">Cosa hai mangiato?</string>
+    <string name="nutrition_calories_placeholder">Calorie (kcal)</string>
+    <string name="nutrition_protein_placeholder">Proteine (g)</string>
+    <string name="nutrition_carbs_placeholder">Carboidrati (g)</string>
+    <string name="nutrition_fat_placeholder">Grassi (g)</string>
+    <string name="nutrition_log_food_save">Registra</string>
+    <string name="nutrition_meal_breakfast">Colazione</string>
+    <string name="nutrition_meal_lunch">Pranzo</string>
+    <string name="nutrition_meal_dinner">Cena</string>
+    <string name="nutrition_meal_snack">Spuntino</string>
+    <string name="nutrition_calories_short">%1$d kcal</string>
+    <string name="nutrition_today_meals">Pasti di oggi (tocca per eliminare)</string>
+    <string name="nutrition_water_title">Acqua</string>
+    <string name="nutrition_water_ml">%1$.1fL</string>
+    <string name="nutrition_water_goal">Obiettivo: %1$.1fL</string>
+    <string name="nutrition_weight_title">Peso</string>
+    <string name="nutrition_fasting_title">Digiuno intermittente</string>
+    <string name="nutrition_fasting_hours">%1$.1fh</string>
+    <string name="nutrition_fasting_target">Digiuno — obiettivo %1$dh</string>
+    <string name="nutrition_fasting_end">Termina digiuno</string>
+
+    <!-- Profilo: campi nutrizione -->
+    <string name="profile_nutrition_label">Altezza, età &amp; attività (per l\'obiettivo calorico)</string>
+    <string name="profile_water_goal_label">Obiettivo acqua giornaliero</string>
+    <string name="activity_level_sedentary">Sedentario</string>
+    <string name="activity_level_light">Leggermente attivo</string>
+    <string name="activity_level_moderate">Moderatamente attivo</string>
+    <string name="activity_level_active">Attivo</string>
+    <string name="activity_level_very_active">Molto attivo</string>
 </resources>

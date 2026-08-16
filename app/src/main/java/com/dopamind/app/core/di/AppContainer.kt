@@ -16,6 +16,7 @@ import com.dopamind.app.feature.dailyvibe.data.DailyVibeRepository
 import com.dopamind.app.feature.dopaminefocus.data.DopamineFocusRepository
 import com.dopamind.app.feature.finance.data.FinanceRepository
 import com.dopamind.app.feature.libido.data.LibidoRepository
+import com.dopamind.app.feature.nutrition.data.NutritionRepository
 import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.recovery.data.RecoveryRepository
 import com.dopamind.app.feature.tobacco.data.TobaccoRepository
@@ -42,6 +43,7 @@ class AppContainer(private val appContext: Context) {
     val dailyVibeRepository by lazy { DailyVibeRepository(database.dailyVibeDao()) }
     val gamificationRepository: GamificationRepository by lazy { GamificationRepository(database.gamificationDao()) }
     val profileRepository: ProfileRepository by lazy { ProfileRepository(database.profileDao()) }
+    val nutritionRepository: NutritionRepository by lazy { NutritionRepository(database.nutritionDao()) }
 
     val correlationEngine: CorrelationEngine by lazy {
         CorrelationEngine(

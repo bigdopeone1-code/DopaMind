@@ -22,6 +22,7 @@ import androidx.compose.material.icons.outlined.LocalBar
 import androidx.compose.material.icons.outlined.LocalFlorist
 import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.NightsStay
+import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.SmokingRooms
 import androidx.compose.material.icons.outlined.SupportAgent
@@ -53,6 +54,7 @@ private val moduleCards = listOf(
     ModuleCardSpec(Destination.DopamineFocusHome, Icons.Outlined.Bolt, R.string.module_dopamine_focus),
     ModuleCardSpec(Destination.RecoveryHome, Icons.Outlined.NightsStay, R.string.module_recovery),
     ModuleCardSpec(Destination.FinanceHome, Icons.Outlined.AccountBalanceWallet, R.string.module_finance),
+    ModuleCardSpec(Destination.NutritionHome, Icons.Outlined.Restaurant, R.string.module_nutrition),
 )
 
 @Composable

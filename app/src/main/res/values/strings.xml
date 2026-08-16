@@ -338,4 +338,40 @@
     <string name="history_total">Total: %1$.0f</string>
     <string name="history_average">Daily average: %1$.1f</string>
     <string name="history_view_trend">View trend</string>
+
+    <!-- Nutrition & Fitness -->
+    <string name="module_nutrition">Nutrition &amp; Fitness</string>
+    <string name="nutrition_summary_title">Today</string>
+    <string name="nutrition_calories_goal">%1$d / %2$d kcal</string>
+    <string name="nutrition_macros_line">P %1$d/%2$dg · C %3$d/%4$dg · F %5$d/%6$dg</string>
+    <string name="nutrition_log_food_title">Log food</string>
+    <string name="nutrition_food_name_placeholder">What did you eat?</string>
+    <string name="nutrition_calories_placeholder">Calories (kcal)</string>
+    <string name="nutrition_protein_placeholder">Protein (g)</string>
+    <string name="nutrition_carbs_placeholder">Carbs (g)</string>
+    <string name="nutrition_fat_placeholder">Fat (g)</string>
+    <string name="nutrition_log_food_save">Log it</string>
+    <string name="nutrition_meal_breakfast">Breakfast</string>
+    <string name="nutrition_meal_lunch">Lunch</string>
+    <string name="nutrition_meal_dinner">Dinner</string>
+    <string name="nutrition_meal_snack">Snack</string>
+    <string name="nutrition_calories_short">%1$d kcal</string>
+    <string name="nutrition_today_meals">Today\'s meals (tap to delete)</string>
+    <string name="nutrition_water_title">Water</string>
+    <string name="nutrition_water_ml">%1$.1fL</string>
+    <string name="nutrition_water_goal">Goal: %1$.1fL</string>
+    <string name="nutrition_weight_title">Weight</string>
+    <string name="nutrition_fasting_title">Intermittent fasting</string>
+    <string name="nutrition_fasting_hours">%1$.1fh</string>
+    <string name="nutrition_fasting_target">Fasting — target %1$dh</string>
+    <string name="nutrition_fasting_end">End fast</string>
+
+    <!-- Profile: nutrition-related fields -->
+    <string name="profile_nutrition_label">Height, age &amp; activity (for calorie goal)</string>
+    <string name="profile_water_goal_label">Daily water goal</string>
+    <string name="activity_level_sedentary">Sedentary</string>
+    <string name="activity_level_light">Lightly active</string>
+    <string name="activity_level_moderate">Moderately active</string>
+    <string name="activity_level_active">Active</string>
+    <string name="activity_level_very_active">Very active</string>
 </resources>

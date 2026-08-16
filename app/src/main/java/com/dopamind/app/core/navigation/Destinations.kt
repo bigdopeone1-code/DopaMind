@@ -58,6 +58,9 @@ sealed interface Destination {
     @Serializable
     data object FinanceHome : Destination
 
+    @Serializable
+    data object NutritionHome : Destination
+
     /** The SOS / bad-trip breathing & rassurance flow, reachable from Recovery or the dashboard. */
     @Serializable
     data object ChillCoachSos : Destination

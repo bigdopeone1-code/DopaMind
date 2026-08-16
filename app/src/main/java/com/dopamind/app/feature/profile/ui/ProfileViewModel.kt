@@ -8,6 +8,7 @@ import com.dopamind.app.core.backup.BackupResult
 import com.dopamind.app.core.i18n.LocaleController
 import com.dopamind.app.core.notifications.NotificationScheduler
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
+import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
 import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.profile.data.UserProfileEntity
@@ -40,6 +41,10 @@ class ProfileViewModel(
     fun updateName(name: String) = update { it.copy(displayName = name) }
     fun updateWeight(weightKg: Float) = update { it.copy(weightKg = weightKg) }
     fun updateSex(sex: BiologicalSex) = update { it.copy(biologicalSex = sex.name) }
+    fun updateHeight(heightCm: Float) = update { it.copy(heightCm = heightCm) }
+    fun updateAge(ageYears: Int) = update { it.copy(ageYears = ageYears) }
+    fun updateActivityLevel(activityLevel: ActivityLevel) = update { it.copy(activityLevel = activityLevel.name) }
+    fun updateWaterGoal(goalMl: Int) = update { it.copy(dailyWaterGoalMl = goalMl) }
     fun updateLanguage(language: LanguagePreference) {
         update { it.copy(languagePreference = language.name) }
         LocaleController.apply(language)
