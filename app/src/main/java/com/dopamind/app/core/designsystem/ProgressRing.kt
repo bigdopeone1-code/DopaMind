@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -28,6 +29,7 @@ fun ProgressRing(
     strokeWidth: Dp = 5.dp,
     trackColor: Color = BorderSubtle,
     progressColor: Color = Accent,
+    progressBrush: Brush? = null,
     content: @Composable () -> Unit = {},
 ) {
     val clamped = progress.coerceIn(0f, 1f)
@@ -53,15 +55,27 @@ fun ProgressRing(
                 size = arcSize,
                 style = stroke,
             )
-            drawArc(
-                color = progressColor,
-                startAngle = -90f,
-                sweepAngle = 360f * clamped,
-                useCenter = false,
-                topLeft = topLeft,
-                size = arcSize,
-                style = stroke,
-            )
+            if (progressBrush != null) {
+                drawArc(
+                    brush = progressBrush,
+                    startAngle = -90f,
+                    sweepAngle = 360f * clamped,
+                    useCenter = false,
+                    topLeft = topLeft,
+                    size = arcSize,
+                    style = stroke,
+                )
+            } else {
+                drawArc(
+                    color = progressColor,
+                    startAngle = -90f,
+                    sweepAngle = 360f * clamped,
+                    useCenter = false,
+                    topLeft = topLeft,
+                    size = arcSize,
+                    style = stroke,
+                )
+            }
         }
         content()
     }

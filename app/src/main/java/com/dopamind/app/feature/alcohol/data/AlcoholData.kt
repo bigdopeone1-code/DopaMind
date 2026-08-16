@@ -7,12 +7,19 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
-enum class DrinkType(val defaultVolumeMl: Int, val defaultAbvPercent: Float) {
-    BEER(330, 5.0f),
-    WINE(150, 12.5f),
-    SPIRIT_SHOT(40, 40.0f),
-    COCKTAIL(200, 15.0f),
-    OTHER(330, 5.0f),
+enum class DrinkCategory { BEER, WINE, SPIRIT, COCKTAIL, OTHER }
+
+enum class DrinkType(val defaultVolumeMl: Int, val defaultAbvPercent: Float, val category: DrinkCategory) {
+    BEER(330, 5.0f, DrinkCategory.BEER),
+    WINE(150, 12.5f, DrinkCategory.WINE),
+    SPIRIT_SHOT(40, 40.0f, DrinkCategory.SPIRIT),
+    SPRITZ(200, 8.0f, DrinkCategory.COCKTAIL),
+    NEGRONI(100, 24.0f, DrinkCategory.COCKTAIL),
+    MOJITO(200, 12.0f, DrinkCategory.COCKTAIL),
+    MARGARITA(150, 18.0f, DrinkCategory.COCKTAIL),
+    GIN_TONIC(250, 10.0f, DrinkCategory.COCKTAIL),
+    COCKTAIL_OTHER(200, 15.0f, DrinkCategory.COCKTAIL),
+    OTHER(330, 5.0f, DrinkCategory.OTHER),
 }
 
 @Entity(tableName = "drink_logs")

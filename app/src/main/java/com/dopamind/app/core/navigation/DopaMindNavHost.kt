@@ -1,6 +1,7 @@
 package com.dopamind.app.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import com.dopamind.app.feature.dailyvibe.ui.DailyVibeCheckInScreen
 import com.dopamind.app.feature.dashboard.ui.DashboardScreen
 import com.dopamind.app.feature.dopaminefocus.ui.DopamineFocusScreen
 import com.dopamind.app.feature.finance.ui.FinanceScreen
+import com.dopamind.app.feature.history.ui.HistoryHubScreen
 import com.dopamind.app.feature.history.ui.ModuleHistoryScreen
 import com.dopamind.app.feature.libido.ui.LibidoScreen
 import com.dopamind.app.feature.nutrition.ui.NutritionScreen
@@ -30,8 +32,9 @@ import com.dopamind.app.feature.weeklyrecap.ui.WeeklyRecapScreen
 @Composable
 fun DopaMindNavHost(
     navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
 ) {
-    NavHost(navController = navController, startDestination = Destination.Splash) {
+    NavHost(navController = navController, startDestination = Destination.Splash, modifier = modifier) {
 
         composable<Destination.Splash> {
             SplashScreen(
@@ -69,6 +72,13 @@ fun DopaMindNavHost(
         composable<Destination.ModuleHistory> { backStackEntry ->
             val route: Destination.ModuleHistory = backStackEntry.toRoute()
             ModuleHistoryScreen(module = route.module, onBack = { navController.popBackStack() })
+        }
+
+        composable<Destination.HistoryHub> {
+            HistoryHubScreen(
+                onBack = { navController.popBackStack() },
+                onSelectModule = { module -> navController.navigate(Destination.ModuleHistory(module)) },
+            )
         }
 
         composable<Destination.Dashboard> {

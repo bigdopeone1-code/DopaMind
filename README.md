@@ -148,9 +148,8 @@ check-in reactions) rather than UI chrome. See `core/theme/` and
   once with `SecureRandom` and stored in `EncryptedSharedPreferences`, itself
   backed by a hardware Android Keystore key. Nothing is recoverable without
   the device.
-- `allowBackup="false"` and explicit `dataExtractionRules` exclude the database
-  from Android's auto-backup / device-transfer flows — this data doesn't leave
-  the device, full stop.
+- `allowBackup="false"` disables Android's auto-backup / device-transfer flows
+  entirely — this data doesn't leave the device, full stop.
 - No `INTERNET` permission is requested, because nothing in this app talks to
   the network.
 - Camera and microphone permissions are requested only when the Vision Scanner
@@ -166,26 +165,21 @@ check-in reactions) rather than UI chrome. See `core/theme/` and
 Requires a local Android SDK (`local.properties` with `sdk.dir=...`, or the
 `ANDROID_HOME` env var) and JDK 17+. minSdk 26, targetSdk/compileSdk 35.
 
-### Known limitations
+### Build status
 
-**This codebase was written in a sandboxed environment with no network access
-to Google's Maven repository (`dl.google.com`) or Maven Central**, so
-`./gradlew assembleDebug` could not actually be run here to verify it compiles.
-Every file was written and manually cross-checked (import-by-import,
-constructor-signature-by-constructor-signature, brace/paren balance) with real
-care, but the very first build on a machine with normal internet access should
-be treated as the true first compile — expect to fix a handful of small
-issues (an import, a Compose API surface that shifted between library
-versions, etc.) rather than a guaranteed one-shot green build.
+`./gradlew assembleDebug` has been run for real (JDK 17 + Android SDK
+Platform 35 installed locally) and reaches **BUILD SUCCESSFUL**, producing
+`app/build/outputs/apk/debug/app-debug.apk`. The codebase was originally
+written in a sandboxed environment with no network access, so the first real
+compile did surface a handful of small issues (a couple of bad imports, a
+missing `dp` import, a stray import that shadowed `Modifier.weight()`, an
+experimental-API opt-in) — all fixed. Only two harmless deprecation warnings
+remain (`Icons.Outlined.ArrowBack`, `LocalLifecycleOwner`'s package move).
 
-One thing is intentionally left as a placeholder rather than fully built,
-because a proper implementation needs a paid API this project's ~35€ budget
-doesn't cover:
-
-- **Inter/SF Pro font** is not bundled (no network access to fetch the font
-  files); the app falls back to the platform default (Roboto), which is close
-  enough geometrically for the MVP. Swapping in the real Inter files later is
-  a one-line change in `core/theme/Type.kt`.
+The real **Inter** variable font (SIL OFL 1.1, from the `google/fonts`
+GitHub repo) is now bundled at `app/src/main/res/font/inter.ttf` and wired
+per-weight via `FontVariation.Settings` in `core/theme/Type.kt` — no more
+Roboto fallback.
 
 (The Spot Map / saved-spots idea from the original brief has been dropped
 entirely to keep the Finance module focused — see the module list above.)

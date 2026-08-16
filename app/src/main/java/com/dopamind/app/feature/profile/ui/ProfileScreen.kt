@@ -95,8 +95,8 @@ fun ProfileScreen(onBack: () -> Unit) {
                 Text(stringResource(R.string.profile_nutrition_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf(150f, 160f, 170f, 180f, 190f, 200f).forEach { h ->
-                        DMChip(label = "${h.toInt()}cm", selected = currentProfile.heightCm == h, onClick = { viewModel.updateHeight(h) })
+                    listOf(150, 160, 170, 180, 190, 200).forEach { h ->
+                        DMChip(label = "${h}cm", selected = currentProfile.heightCm == h, onClick = { viewModel.updateHeight(h) })
                     }
                 }
                 Spacer(Modifier.height(8.dp))
@@ -163,6 +163,18 @@ fun ProfileScreen(onBack: () -> Unit) {
 
         item {
             DMCard(modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.profile_immersive_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                Spacer(Modifier.height(8.dp))
+                DMChip(
+                    label = stringResource(if (currentProfile.immersiveModeEnabled) R.string.onboarding_notifications_on else R.string.onboarding_notifications_off),
+                    selected = currentProfile.immersiveModeEnabled,
+                    onClick = { viewModel.updateImmersiveMode(!currentProfile.immersiveModeEnabled) },
+                )
+            }
+        }
+
+        item {
+            DMCard(modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.profile_backup_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
                 Text(stringResource(R.string.profile_backup_subtitle), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
                 Spacer(Modifier.height(12.dp))
@@ -219,7 +231,6 @@ private fun activityLevelLabel(level: ActivityLevel): String = stringResource(
     when (level) {
         ActivityLevel.SEDENTARY -> R.string.activity_level_sedentary
         ActivityLevel.LIGHT -> R.string.activity_level_light
-        ActivityLevel.MODERATE -> R.string.activity_level_moderate
         ActivityLevel.ACTIVE -> R.string.activity_level_active
         ActivityLevel.VERY_ACTIVE -> R.string.activity_level_very_active
     }

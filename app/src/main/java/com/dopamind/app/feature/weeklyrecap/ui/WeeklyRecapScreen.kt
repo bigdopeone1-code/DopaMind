@@ -136,6 +136,11 @@ private fun drinkTypeLabelRes(drinkType: DrinkType?): Int = when (drinkType) {
     DrinkType.BEER -> R.string.drink_type_beer
     DrinkType.WINE -> R.string.drink_type_wine
     DrinkType.SPIRIT_SHOT -> R.string.drink_type_spirit
-    DrinkType.COCKTAIL -> R.string.drink_type_cocktail
+    DrinkType.SPRITZ -> R.string.drink_type_spritz
+    DrinkType.NEGRONI -> R.string.drink_type_negroni
+    DrinkType.MOJITO -> R.string.drink_type_mojito
+    DrinkType.MARGARITA -> R.string.drink_type_margarita
+    DrinkType.GIN_TONIC -> R.string.drink_type_gin_tonic
+    DrinkType.COCKTAIL_OTHER -> R.string.drink_type_cocktail_other
     else -> R.string.drink_type_other
 }

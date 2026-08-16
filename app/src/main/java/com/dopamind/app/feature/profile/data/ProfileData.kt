@@ -11,15 +11,24 @@ import kotlinx.coroutines.flow.Flow
 
 enum class LanguagePreference { SYSTEM, IT, EN }
 
+/** How often the user engages in a given habit — shared by cannabis/alcohol onboarding questions. */
+enum class UseFrequency { NEVER, RARE, OCCASIONAL, REGULAR }
+
+enum class SmokingStatus { NEVER, OCCASIONAL, REGULAR, HEAVY }
+
+/**
+ * Onboarding only offers 4 buckets (see OnboardingScreen's activity step);
+ * the TDEE multiplier is added here for NutritionGoalCalculator's BMR x
+ * activity-level math. "ACTIVE" doubles as the traditional "moderately
+ * active" tier since there's no separate 5th bucket in the UI.
+ */
 enum class ActivityLevel(val tdeeMultiplier: Double) {
     SEDENTARY(1.2),
     LIGHT(1.375),
-    MODERATE(1.55),
-    ACTIVE(1.725),
-    VERY_ACTIVE(1.9),
+    ACTIVE(1.55),
+    VERY_ACTIVE(1.725),
 }
 
-private const val DEFAULT_HEIGHT_CM = 170f
 private const val DEFAULT_AGE_YEARS = 30
 private const val DEFAULT_WATER_GOAL_ML = 2000
 
@@ -33,9 +42,15 @@ data class UserProfileEntity(
     val notificationsEnabled: Boolean,
     val dailyReminderHour: Int, // 0..23
     val onboardingCompletedAtEpochMillis: Long,
-    val heightCm: Float = DEFAULT_HEIGHT_CM,
+    val immersiveModeEnabled: Boolean = false,
+    val heightCm: Int = 170,
+    val smokingStatus: String = SmokingStatus.NEVER.name,
+    val cannabisUseFrequency: String = UseFrequency.NEVER.name,
+    val alcoholUseFrequency: String = UseFrequency.NEVER.name,
+    val activityLevel: String = ActivityLevel.LIGHT.name,
+    // Not collected during onboarding (keeps it short) — editable in Profile, used by the
+    // Nutrition module's calorie/macro goal calculator.
     val ageYears: Int = DEFAULT_AGE_YEARS,
-    val activityLevel: String = ActivityLevel.MODERATE.name,
     val dailyWaterGoalMl: Int = DEFAULT_WATER_GOAL_ML,
     val dailyCalorieGoalOverride: Int? = null,
 )
@@ -63,6 +78,11 @@ class ProfileRepository(private val dao: ProfileDao) {
         language: LanguagePreference,
         notificationsEnabled: Boolean,
         dailyReminderHour: Int,
+        heightCm: Int = 170,
+        smokingStatus: SmokingStatus = SmokingStatus.NEVER,
+        cannabisUseFrequency: UseFrequency = UseFrequency.NEVER,
+        alcoholUseFrequency: UseFrequency = UseFrequency.NEVER,
+        activityLevel: ActivityLevel = ActivityLevel.LIGHT,
     ) {
         dao.upsert(
             UserProfileEntity(
@@ -73,6 +93,11 @@ class ProfileRepository(private val dao: ProfileDao) {
                 notificationsEnabled = notificationsEnabled,
                 dailyReminderHour = dailyReminderHour,
                 onboardingCompletedAtEpochMillis = System.currentTimeMillis(),
+                heightCm = heightCm,
+                smokingStatus = smokingStatus.name,
+                cannabisUseFrequency = cannabisUseFrequency.name,
+                alcoholUseFrequency = alcoholUseFrequency.name,
+                activityLevel = activityLevel.name,
             )
         )
     }

@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 
 enum class ConsumptionMethod { JOINT, VAPE, EDIBLE, TINCTURE, BONG, OTHER }
 
+enum class StrainCategory { UNSPECIFIED, INDICA, SATIVA, HYBRID, CBD_DOMINANT }
+
 @Entity(tableName = "cannabis_logs")
 data class CannabisLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -23,6 +25,7 @@ data class CannabisLogEntity(
     val moodBefore: Int,
     val moodAfter: Int?,
     val note: String?,
+    val strainCategory: String = StrainCategory.UNSPECIFIED.name,
 )
 
 @Entity(tableName = "cannabis_tbreaks")
@@ -75,6 +78,7 @@ class CannabisRepository(private val dao: CannabisDao) {
         moodBefore: Int,
         moodAfter: Int?,
         note: String?,
+        strainCategory: StrainCategory = StrainCategory.UNSPECIFIED,
         timestampEpochMillis: Long = System.currentTimeMillis(),
     ) {
         dao.insertLog(
@@ -88,6 +92,7 @@ class CannabisRepository(private val dao: CannabisDao) {
                 moodBefore = moodBefore,
                 moodAfter = moodAfter,
                 note = note,
+                strainCategory = strainCategory.name,
             )
         )
     }

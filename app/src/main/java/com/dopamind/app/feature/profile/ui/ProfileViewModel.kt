@@ -41,7 +41,7 @@ class ProfileViewModel(
     fun updateName(name: String) = update { it.copy(displayName = name) }
     fun updateWeight(weightKg: Float) = update { it.copy(weightKg = weightKg) }
     fun updateSex(sex: BiologicalSex) = update { it.copy(biologicalSex = sex.name) }
-    fun updateHeight(heightCm: Float) = update { it.copy(heightCm = heightCm) }
+    fun updateHeight(heightCm: Int) = update { it.copy(heightCm = heightCm) }
     fun updateAge(ageYears: Int) = update { it.copy(ageYears = ageYears) }
     fun updateActivityLevel(activityLevel: ActivityLevel) = update { it.copy(activityLevel = activityLevel.name) }
     fun updateWaterGoal(goalMl: Int) = update { it.copy(dailyWaterGoalMl = goalMl) }
@@ -60,6 +60,8 @@ class ProfileViewModel(
             notificationScheduler.cancelAll()
         }
     }
+
+    fun updateImmersiveMode(enabled: Boolean) = update { it.copy(immersiveModeEnabled = enabled) }
 
     fun updateReminderHour(hour: Int) {
         update { it.copy(dailyReminderHour = hour) }

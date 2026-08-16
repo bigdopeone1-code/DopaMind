@@ -30,8 +30,9 @@ import com.dopamind.app.core.analytics.model.Trend
 import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
 import com.dopamind.app.core.designsystem.DMPrimaryButton
-import com.dopamind.app.core.designsystem.DMTextField
+import com.dopamind.app.core.designsystem.PresetOption
 import com.dopamind.app.core.designsystem.ProgressRing
+import com.dopamind.app.core.designsystem.QuickPresetChipRow
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.Accent
 import com.dopamind.app.core.theme.Danger
@@ -118,8 +119,9 @@ private fun DopamineDebtCard(debt: DopamineDebtResult?) {
                 Column {
                     Text(stringResource(trendLabel(debt.trend)), style = MaterialTheme.typography.bodyLarge, color = TextPrimary)
                     if (debt.topContributors.isNotEmpty()) {
+                        val contributorLabels = debt.topContributors.map { stringResource(contributorLabel(it)) }
                         Text(
-                            text = stringResource(R.string.focus_debt_top_contributors, debt.topContributors.joinToString(", ") { stringResource(contributorLabel(it)) }),
+                            text = stringResource(R.string.focus_debt_top_contributors, contributorLabels.joinToString(", ")),
                             style = MaterialTheme.typography.labelMedium,
                             color = TextSecondary,
                         )
@@ -155,20 +157,34 @@ private fun contributorLabel(contributor: DebtContributor): Int = when (contribu
 
 @Composable
 private fun HealthStackingCard(onStart: (String, String) -> Unit) {
-    var duty by remember { mutableStateOf("") }
-    var pleasure by remember { mutableStateOf("") }
+    val dutyPresets = listOf(
+        PresetOption("pushups", stringResource(R.string.focus_stacking_duty_preset_pushups)),
+        PresetOption("water", stringResource(R.string.focus_stacking_duty_preset_water)),
+        PresetOption("bed", stringResource(R.string.focus_stacking_duty_preset_bed)),
+        PresetOption("journal", stringResource(R.string.focus_stacking_duty_preset_journal)),
+        PresetOption("stretch", stringResource(R.string.focus_stacking_duty_preset_stretch)),
+    )
+    val pleasurePresets = listOf(
+        PresetOption("episode", stringResource(R.string.focus_stacking_pleasure_preset_episode)),
+        PresetOption("scroll", stringResource(R.string.focus_stacking_pleasure_preset_scroll)),
+        PresetOption("coffee", stringResource(R.string.focus_stacking_pleasure_preset_coffee)),
+        PresetOption("game", stringResource(R.string.focus_stacking_pleasure_preset_game)),
+        PresetOption("music", stringResource(R.string.focus_stacking_pleasure_preset_music)),
+    )
+    var selectedDuty by remember { mutableStateOf(dutyPresets[0]) }
+    var selectedPleasure by remember { mutableStateOf(pleasurePresets[0]) }
     DMCard(modifier = Modifier.fillMaxWidth()) {
         Text(stringResource(R.string.focus_stacking_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
         Spacer(Modifier.height(8.dp))
         Text(stringResource(R.string.focus_stacking_subtitle), style = MaterialTheme.typography.bodyLarge, color = TextSecondary)
         Spacer(Modifier.height(12.dp))
-        DMTextField(value = duty, onValueChange = { duty = it }, placeholder = stringResource(R.string.focus_stacking_duty_placeholder), singleLine = true)
+        QuickPresetChipRow(options = dutyPresets, selectedId = selectedDuty.id, onSelect = { selectedDuty = it })
         Spacer(Modifier.height(8.dp))
-        DMTextField(value = pleasure, onValueChange = { pleasure = it }, placeholder = stringResource(R.string.focus_stacking_pleasure_placeholder), singleLine = true)
+        QuickPresetChipRow(options = pleasurePresets, selectedId = selectedPleasure.id, onSelect = { selectedPleasure = it })
         Spacer(Modifier.height(12.dp))
         DMPrimaryButton(
             text = stringResource(R.string.focus_stacking_start),
-            onClick = { if (duty.isNotBlank() && pleasure.isNotBlank()) { onStart(duty, pleasure); duty = ""; pleasure = "" } },
+            onClick = { onStart(selectedDuty.label, selectedPleasure.label) },
         )
     }
 }
@@ -203,17 +219,24 @@ private fun DetoxModeCard(active: DetoxSessionEntity?, onStart: (Int) -> Unit, o
 
 @Composable
 private fun WhyPromptCard(onLog: (String, String) -> Unit) {
-    var reason by remember { mutableStateOf("") }
+    val presets = listOf(
+        PresetOption("boredom", stringResource(R.string.focus_why_preset_boredom)),
+        PresetOption("stress", stringResource(R.string.focus_why_preset_stress)),
+        PresetOption("habit", stringResource(R.string.focus_why_preset_habit)),
+        PresetOption("craving", stringResource(R.string.focus_why_preset_craving)),
+        PresetOption("social", stringResource(R.string.focus_why_preset_social)),
+    )
+    var selected by remember { mutableStateOf(presets[0]) }
     DMCard(modifier = Modifier.fillMaxWidth()) {
         Text(stringResource(R.string.focus_why_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
         Spacer(Modifier.height(8.dp))
         Text(stringResource(R.string.focus_why_subtitle), style = MaterialTheme.typography.bodyLarge, color = TextSecondary)
         Spacer(Modifier.height(12.dp))
-        DMTextField(value = reason, onValueChange = { reason = it }, placeholder = stringResource(R.string.focus_why_placeholder), minLines = 2)
+        QuickPresetChipRow(options = presets, selectedId = selected.id, onSelect = { selected = it })
         Spacer(Modifier.height(12.dp))
         DMPrimaryButton(
             text = stringResource(R.string.focus_why_save),
-            onClick = { if (reason.isNotBlank()) { onLog("general", reason); reason = "" } },
+            onClick = { onLog("general", selected.label) },
         )
     }
 }

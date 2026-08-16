@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -28,7 +29,8 @@ import com.dopamind.app.core.designsystem.DMCard
 import com.dopamind.app.core.designsystem.DMChip
 import com.dopamind.app.core.designsystem.DMPrimaryButton
 import com.dopamind.app.core.designsystem.DMSecondaryButton
-import com.dopamind.app.core.designsystem.DMTextField
+import com.dopamind.app.core.designsystem.PresetOption
+import com.dopamind.app.core.designsystem.QuickPresetChipRow
 import com.dopamind.app.core.designsystem.SectionHeader
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.Accent
@@ -36,6 +38,7 @@ import com.dopamind.app.core.theme.BorderSubtle
 import com.dopamind.app.core.theme.TextPrimary
 import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.core.designsystem.ScreenHeader
+import com.dopamind.app.feature.recovery.data.FoodCategory
 import com.dopamind.app.feature.recovery.data.MunchiesLogEntity
 import com.dopamind.app.feature.recovery.data.MunchiesSource
 import com.dopamind.app.feature.recovery.data.RecoveryRepository
@@ -55,8 +58,8 @@ class RecoveryViewModel(private val repository: RecoveryRepository) : ViewModel(
         viewModelScope.launch { repository.logSleep(todayEpochDay, hours, quality, note = null) }
     }
 
-    fun logMunchies(description: String, junkScore: Int) {
-        viewModelScope.launch { repository.logMunchies(description, junkScore, MunchiesSource.MANUAL) }
+    fun logMunchies(foodDescription: String, category: FoodCategory, junkScore: Int) {
+        viewModelScope.launch { repository.logMunchies(foodDescription, junkScore, MunchiesSource.MANUAL, category) }
     }
 }
 
@@ -114,13 +117,31 @@ private fun SleepCard(onLog: (Float, Int) -> Unit) {
 }
 
 @Composable
-private fun MunchiesCard(onLogManual: (String, Int) -> Unit, onScanFood: () -> Unit) {
-    var description by remember { mutableStateOf("") }
+private fun foodCategoryLabel(category: FoodCategory): String = stringResource(
+    when (category) {
+        FoodCategory.SWEET -> R.string.food_category_sweet
+        FoodCategory.SALTY_SNACK -> R.string.food_category_salty_snack
+        FoodCategory.FRIED -> R.string.food_category_fried
+        FoodCategory.FAST_FOOD -> R.string.food_category_fast_food
+        FoodCategory.FRUIT_VEG -> R.string.food_category_fruit_veg
+        FoodCategory.OTHER -> R.string.food_category_other
+    }
+)
+
+@Composable
+private fun MunchiesCard(onLogManual: (String, FoodCategory, Int) -> Unit, onScanFood: () -> Unit) {
+    val options = FoodCategory.entries.map { PresetOption(it.name, foodCategoryLabel(it)) }
+    var selectedCategory by remember { mutableStateOf(FoodCategory.entries.first()) }
+    val selectedLabel = foodCategoryLabel(selectedCategory)
     var junkScore by remember { mutableStateOf(50f) }
     DMCard(modifier = Modifier.fillMaxWidth()) {
         Text(stringResource(R.string.recovery_munchies_title), style = MaterialTheme.typography.titleLarge, color = TextPrimary)
         Spacer(Modifier.height(12.dp))
-        DMTextField(value = description, onValueChange = { description = it }, placeholder = stringResource(R.string.recovery_munchies_placeholder), singleLine = true)
+        QuickPresetChipRow(
+            options = options,
+            selectedId = selectedCategory.name,
+            onSelect = { selectedCategory = FoodCategory.valueOf(it.id) },
+        )
         Spacer(Modifier.height(8.dp))
         Slider(
             value = junkScore,
@@ -132,7 +153,7 @@ private fun MunchiesCard(onLogManual: (String, Int) -> Unit, onScanFood: () -> U
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             DMPrimaryButton(
                 text = stringResource(R.string.recovery_munchies_save),
-                onClick = { if (description.isNotBlank()) { onLogManual(description, junkScore.toInt()); description = "" } },
+                onClick = { onLogManual(selectedLabel, selectedCategory, junkScore.toInt()) },
                 modifier = Modifier.weight(1f),
             )
             DMSecondaryButton(text = stringResource(R.string.recovery_munchies_scan), onClick = onScanFood, modifier = Modifier.weight(1f))

@@ -13,11 +13,18 @@
     <!-- Local-only reminders: daily check-in nudge and craving-pattern alerts -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Required on Android 11+ package-visibility rules so SpeechRecognizer can
+         see an installed recognition service; without this, isRecognitionAvailable()
+         and startListening() silently fail even when a recognizer is present. -->
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+    </queries>
+
     <application
         android:name=".DopaMindApplication"
         android:allowBackup="false"
-        android:fullBackupContent="false"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"

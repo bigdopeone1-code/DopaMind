@@ -30,7 +30,7 @@ object NutritionGoalCalculator {
     private const val CALORIES_PER_GRAM_CARBS = 4
     private const val CALORIES_PER_GRAM_FAT = 9
 
-    fun calculateBmr(weightKg: Float, heightCm: Float, ageYears: Int, sex: BiologicalSex): Double {
+    fun calculateBmr(weightKg: Float, heightCm: Int, ageYears: Int, sex: BiologicalSex): Double {
         val base = 10 * weightKg + 6.25 * heightCm - 5 * ageYears
         return when (sex) {
             BiologicalSex.MALE -> base + 5
@@ -43,7 +43,7 @@ object NutritionGoalCalculator {
 
     fun calculateGoal(
         weightKg: Float,
-        heightCm: Float,
+        heightCm: Int,
         ageYears: Int,
         sex: BiologicalSex,
         activityLevel: ActivityLevel,

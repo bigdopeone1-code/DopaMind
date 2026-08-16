@@ -41,7 +41,7 @@ class NutritionViewModel(
                 heightCm = it.heightCm,
                 ageYears = it.ageYears,
                 sex = runCatching { BiologicalSex.valueOf(it.biologicalSex) }.getOrDefault(BiologicalSex.OTHER),
-                activityLevel = runCatching { ActivityLevel.valueOf(it.activityLevel) }.getOrDefault(ActivityLevel.MODERATE),
+                activityLevel = runCatching { ActivityLevel.valueOf(it.activityLevel) }.getOrDefault(ActivityLevel.LIGHT),
                 manualCalorieOverride = it.dailyCalorieGoalOverride,
             )
         }

@@ -1,18 +1,24 @@
 package com.dopamind.app.core.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.dopamind.app.R
 
-// NOTE: Inter/SF Pro font files are not bundled (no network access to fetch them
-// in this build environment). Falls back to the platform default (Roboto on
-// Android), which shares Inter's geometry closely enough for the MVP.
-// To switch to the real Inter typeface: drop the .ttf files into
-// app/src/main/res/font/ and replace this with:
-//   FontFamily(Font(R.font.inter_regular, FontWeight.Normal), ...)
-val DopaMindFontFamily: FontFamily = FontFamily.Default
+// Inter (SIL OFL 1.1, see THIRD_PARTY_LICENSES_Inter_OFL.txt) as a single variable
+// font resource; each weight below selects the 'wght' axis via variationSettings.
+@OptIn(ExperimentalTextApi::class)
+val DopaMindFontFamily: FontFamily = FontFamily(
+    Font(R.font.inter, FontWeight.Normal, variationSettings = FontVariation.Settings(FontVariation.weight(400))),
+    Font(R.font.inter, FontWeight.Medium, variationSettings = FontVariation.Settings(FontVariation.weight(500))),
+    Font(R.font.inter, FontWeight.SemiBold, variationSettings = FontVariation.Settings(FontVariation.weight(600))),
+    Font(R.font.inter, FontWeight.Bold, variationSettings = FontVariation.Settings(FontVariation.weight(700))),
+)
 
 val DopaMindTypography = Typography(
     // H1 28px bold

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -91,6 +92,8 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
+
+    implementation(libs.sceneview)
 
     implementation(libs.androidx.security.crypto)
     implementation(libs.androidx.datastore.preferences)

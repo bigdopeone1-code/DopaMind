@@ -1,0 +1,9 @@
+Model: CesiumMan.glb (app/src/main/assets/models/cesium_man.glb)
+Source: https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/CesiumMan
+Donated by Cesium (https://cesium.com) for glTF testing.
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+
+Used as a placeholder animated humanoid model to validate the SceneView/
+Filament 3D rendering pipeline (Phase C of the Dashboard hero redesign),
+pending a final module-mapped asset (Phase D).
