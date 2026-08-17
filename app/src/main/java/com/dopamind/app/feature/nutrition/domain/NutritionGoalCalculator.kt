@@ -2,6 +2,7 @@ package com.dopamind.app.feature.nutrition.domain
 
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 import kotlin.math.roundToInt
 
 data class NutritionGoal(
@@ -30,6 +31,14 @@ object NutritionGoalCalculator {
     private const val CALORIES_PER_GRAM_CARBS = 4
     private const val CALORIES_PER_GRAM_FAT = 9
 
+    // ~0.5kg/week of fat is roughly a 500kcal/day deficit (7700kcal per kg of fat / 7 days).
+    // Mirrors the pace most goal-tracking apps (incl. Yazio) default to.
+    private const val WEIGHT_LOSS_DAILY_DEFICIT = 500
+    private const val WEIGHT_GAIN_DAILY_SURPLUS = 300
+
+    // Never recommend below this floor — informational safety rail, not a clinical minimum.
+    private const val MIN_SAFE_DAILY_CALORIES = 1200
+
     fun calculateBmr(weightKg: Float, heightCm: Int, ageYears: Int, sex: BiologicalSex): Double {
         val base = 10 * weightKg + 6.25 * heightCm - 5 * ageYears
         return when (sex) {
@@ -47,10 +56,18 @@ object NutritionGoalCalculator {
         ageYears: Int,
         sex: BiologicalSex,
         activityLevel: ActivityLevel,
+        goalType: NutritionGoalType = NutritionGoalType.MAINTAIN,
         manualCalorieOverride: Int? = null,
     ): NutritionGoal {
-        val calories = manualCalorieOverride
-            ?: calculateTdee(calculateBmr(weightKg, heightCm, ageYears, sex), activityLevel).roundToInt()
+        val calories = manualCalorieOverride ?: run {
+            val tdee = calculateTdee(calculateBmr(weightKg, heightCm, ageYears, sex), activityLevel)
+            val adjusted = when (goalType) {
+                NutritionGoalType.LOSE_WEIGHT -> tdee - WEIGHT_LOSS_DAILY_DEFICIT
+                NutritionGoalType.MAINTAIN -> tdee
+                NutritionGoalType.GAIN_WEIGHT -> tdee + WEIGHT_GAIN_DAILY_SURPLUS
+            }
+            adjusted.roundToInt().coerceAtLeast(MIN_SAFE_DAILY_CALORIES)
+        }
 
         return NutritionGoal(
             calories = calories,

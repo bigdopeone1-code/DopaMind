@@ -7,6 +7,7 @@ import com.dopamind.app.core.notifications.NotificationScheduler
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.profile.data.SmokingStatus
 import com.dopamind.app.feature.profile.data.UseFrequency
@@ -23,6 +24,8 @@ data class OnboardingUiState(
     val heightCm: Int = 170,
     val sex: BiologicalSex = BiologicalSex.OTHER,
     val activityLevel: ActivityLevel = ActivityLevel.LIGHT,
+    val goalType: NutritionGoalType = NutritionGoalType.MAINTAIN,
+    val targetWeightKg: Float? = null,
     val smokingStatus: SmokingStatus = SmokingStatus.NEVER,
     val cannabisUseFrequency: UseFrequency = UseFrequency.NEVER,
     val alcoholUseFrequency: UseFrequency = UseFrequency.NEVER,
@@ -46,6 +49,11 @@ class OnboardingViewModel(
     fun onHeightChange(heightCm: Int) = _uiState.update { it.copy(heightCm = heightCm) }
     fun onSexChange(sex: BiologicalSex) = _uiState.update { it.copy(sex = sex) }
     fun onActivityLevelChange(level: ActivityLevel) = _uiState.update { it.copy(activityLevel = level) }
+    fun onGoalTypeChange(goalType: NutritionGoalType) = _uiState.update {
+        // A new goal invalidates any previously picked target weight — MAINTAIN has none.
+        it.copy(goalType = goalType, targetWeightKg = if (goalType == NutritionGoalType.MAINTAIN) null else it.targetWeightKg)
+    }
+    fun onTargetWeightChange(targetWeightKg: Float) = _uiState.update { it.copy(targetWeightKg = targetWeightKg) }
     fun onSmokingStatusChange(status: SmokingStatus) = _uiState.update { it.copy(smokingStatus = status) }
     fun onCannabisUseChange(frequency: UseFrequency) = _uiState.update { it.copy(cannabisUseFrequency = frequency) }
     fun onAlcoholUseChange(frequency: UseFrequency) = _uiState.update { it.copy(alcoholUseFrequency = frequency) }
@@ -69,6 +77,8 @@ class OnboardingViewModel(
                 cannabisUseFrequency = state.cannabisUseFrequency,
                 alcoholUseFrequency = state.alcoholUseFrequency,
                 activityLevel = state.activityLevel,
+                nutritionGoalType = state.goalType,
+                targetWeightKg = state.targetWeightKg,
             )
             if (state.notificationsEnabled) {
                 notificationScheduler.scheduleDailyCheckInReminder(state.dailyReminderHour)

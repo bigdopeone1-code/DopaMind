@@ -88,6 +88,13 @@ app/src/main/java/com/dopamind/app/
   a network call to an external food database (e.g. Open Food Facts), which
   would break the "no cloud" design that holds for every other module — food
   entry is manual-only by design, not a missing feature.
+- **Goal-driven onboarding** (Yazio-style, added on request): onboarding now
+  asks "what's your goal?" (lose / maintain / gain weight) right after the
+  welcome step, with a target-weight follow-up when it's not "maintain". The
+  answer feeds `NutritionGoalCalculator` directly — a ±500/+300 kcal/day
+  deficit or surplus is applied on top of the Mifflin-St Jeor TDEE, floored
+  at a 1200 kcal/day safety rail. Both the goal and target weight are
+  editable anytime from the Profile screen, not just at onboarding.
 
 Each `feature/<module>` package is split into `data` (Room entity/DAO/repository),
 `domain` (pure Kotlin calculators — Widmark BAC, edibles dosing, €/unit convenience,

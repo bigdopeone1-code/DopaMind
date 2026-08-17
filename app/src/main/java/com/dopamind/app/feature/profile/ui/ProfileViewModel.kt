@@ -10,6 +10,7 @@ import com.dopamind.app.core.notifications.NotificationScheduler
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.profile.data.UserProfileEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +46,10 @@ class ProfileViewModel(
     fun updateAge(ageYears: Int) = update { it.copy(ageYears = ageYears) }
     fun updateActivityLevel(activityLevel: ActivityLevel) = update { it.copy(activityLevel = activityLevel.name) }
     fun updateWaterGoal(goalMl: Int) = update { it.copy(dailyWaterGoalMl = goalMl) }
+    fun updateGoalType(goalType: NutritionGoalType) = update {
+        it.copy(nutritionGoalType = goalType.name, targetWeightKg = if (goalType == NutritionGoalType.MAINTAIN) null else it.targetWeightKg)
+    }
+    fun updateTargetWeight(targetWeightKg: Float) = update { it.copy(targetWeightKg = targetWeightKg) }
     fun updateLanguage(language: LanguagePreference) {
         update { it.copy(languagePreference = language.name) }
         LocaleController.apply(language)

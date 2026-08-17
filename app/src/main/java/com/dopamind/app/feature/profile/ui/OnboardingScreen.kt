@@ -37,11 +37,12 @@ import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 import com.dopamind.app.feature.profile.data.SmokingStatus
 import com.dopamind.app.feature.profile.data.UseFrequency
 import kotlinx.coroutines.launch
 
-private const val ONBOARDING_PAGE_COUNT = 6
+private const val ONBOARDING_PAGE_COUNT = 7
 
 @Composable
 fun OnboardingScreen(onComplete: () -> Unit) {
@@ -62,9 +63,16 @@ fun OnboardingScreen(onComplete: () -> Unit) {
         HorizontalPager(state = pagerState, modifier = Modifier.weight(1f).fillMaxWidth()) { page ->
             when (page) {
                 0 -> WelcomeStep(uiState.displayName, viewModel::onNameChange)
-                1 -> ProfileStep(uiState.weightKg, viewModel::onWeightChange, uiState.sex, viewModel::onSexChange)
-                2 -> BodyStep(uiState.heightCm, viewModel::onHeightChange, uiState.activityLevel, viewModel::onActivityLevelChange)
-                3 -> SubstancesStep(
+                1 -> GoalStep(
+                    goalType = uiState.goalType,
+                    onGoalTypeChange = viewModel::onGoalTypeChange,
+                    currentWeightKg = uiState.weightKg,
+                    targetWeightKg = uiState.targetWeightKg,
+                    onTargetWeightChange = viewModel::onTargetWeightChange,
+                )
+                2 -> ProfileStep(uiState.weightKg, viewModel::onWeightChange, uiState.sex, viewModel::onSexChange)
+                3 -> BodyStep(uiState.heightCm, viewModel::onHeightChange, uiState.activityLevel, viewModel::onActivityLevelChange)
+                4 -> SubstancesStep(
                     smokingStatus = uiState.smokingStatus,
                     onSmokingChange = viewModel::onSmokingStatusChange,
                     cannabisFrequency = uiState.cannabisUseFrequency,
@@ -72,7 +80,7 @@ fun OnboardingScreen(onComplete: () -> Unit) {
                     alcoholFrequency = uiState.alcoholUseFrequency,
                     onAlcoholChange = viewModel::onAlcoholUseChange,
                 )
-                4 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
+                5 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
                 else -> NotificationsStep(
                     enabled = uiState.notificationsEnabled,
                     onEnabledChange = { enabled ->
@@ -121,6 +129,61 @@ private fun WelcomeStep(name: String, onNameChange: (String) -> Unit) {
         DMTextField(value = name, onValueChange = onNameChange, placeholder = stringResource(R.string.onboarding_name_placeholder), singleLine = true)
     }
 }
+
+@Composable
+private fun GoalStep(
+    goalType: NutritionGoalType,
+    onGoalTypeChange: (NutritionGoalType) -> Unit,
+    currentWeightKg: Float,
+    targetWeightKg: Float?,
+    onTargetWeightChange: (Float) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Text(
+            text = stringResource(R.string.onboarding_goal_title),
+            style = MaterialTheme.typography.headlineLarge,
+            color = TextPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(
+            text = stringResource(R.string.onboarding_goal_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = TextSecondary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 24.dp),
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            NutritionGoalType.entries.forEach { goal ->
+                DMChip(label = goalTypeLabel(goal), selected = goalType == goal, onClick = { onGoalTypeChange(goal) })
+            }
+        }
+        if (goalType != NutritionGoalType.MAINTAIN) {
+            Spacer(Modifier.height(20.dp))
+            Text(stringResource(R.string.onboarding_target_weight_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+            Spacer(Modifier.height(8.dp))
+            val targetOptions = if (goalType == NutritionGoalType.LOSE_WEIGHT) {
+                listOf(-15f, -10f, -5f, -2f).map { currentWeightKg + it }
+            } else {
+                listOf(2f, 5f, 10f, 15f).map { currentWeightKg + it }
+            }
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(targetOptions) { w ->
+                    DMChip(label = "${w.toInt()}kg", selected = targetWeightKg?.toInt() == w.toInt(), onClick = { onTargetWeightChange(w) })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun goalTypeLabel(goal: NutritionGoalType): String = stringResource(
+    when (goal) {
+        NutritionGoalType.LOSE_WEIGHT -> R.string.goal_lose_weight
+        NutritionGoalType.MAINTAIN -> R.string.goal_maintain
+        NutritionGoalType.GAIN_WEIGHT -> R.string.goal_gain_weight
+    }
+)
 
 @Composable
 private fun ProfileStep(weightKg: Float, onWeightChange: (Float) -> Unit, sex: BiologicalSex, onSexChange: (BiologicalSex) -> Unit) {

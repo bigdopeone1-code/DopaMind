@@ -32,6 +32,7 @@ import com.dopamind.app.core.theme.TextSecondary
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 
 @Composable
 fun ProfileScreen(onBack: () -> Unit) {
@@ -120,6 +121,38 @@ fun ProfileScreen(onBack: () -> Unit) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf(1500, 2000, 2500, 3000).forEach { ml ->
                         DMChip(label = "${ml / 1000f}L", selected = currentProfile.dailyWaterGoalMl == ml, onClick = { viewModel.updateWaterGoal(ml) })
+                    }
+                }
+            }
+        }
+
+        item {
+            DMCard(modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.onboarding_goal_title), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                Spacer(Modifier.height(8.dp))
+                val currentGoalType = runCatching { NutritionGoalType.valueOf(currentProfile.nutritionGoalType) }.getOrDefault(NutritionGoalType.MAINTAIN)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    NutritionGoalType.entries.forEach { goal ->
+                        DMChip(label = profileGoalTypeLabel(goal), selected = currentGoalType == goal, onClick = { viewModel.updateGoalType(goal) })
+                    }
+                }
+                if (currentGoalType != NutritionGoalType.MAINTAIN) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(stringResource(R.string.onboarding_target_weight_label), style = MaterialTheme.typography.labelMedium, color = TextSecondary)
+                    Spacer(Modifier.height(8.dp))
+                    val targetOptions = if (currentGoalType == NutritionGoalType.LOSE_WEIGHT) {
+                        listOf(-15f, -10f, -5f, -2f).map { currentProfile.weightKg + it }
+                    } else {
+                        listOf(2f, 5f, 10f, 15f).map { currentProfile.weightKg + it }
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        targetOptions.forEach { w ->
+                            DMChip(
+                                label = "${w.toInt()}kg",
+                                selected = currentProfile.targetWeightKg?.toInt() == w.toInt(),
+                                onClick = { viewModel.updateTargetWeight(w) },
+                            )
+                        }
                     }
                 }
             }
@@ -223,6 +256,15 @@ private fun profileLanguageLabel(language: LanguagePreference): String = stringR
         LanguagePreference.SYSTEM -> R.string.onboarding_language_system
         LanguagePreference.IT -> R.string.onboarding_language_it
         LanguagePreference.EN -> R.string.onboarding_language_en
+    }
+)
+
+@Composable
+private fun profileGoalTypeLabel(goal: NutritionGoalType): String = stringResource(
+    when (goal) {
+        NutritionGoalType.LOSE_WEIGHT -> R.string.goal_lose_weight
+        NutritionGoalType.MAINTAIN -> R.string.goal_maintain
+        NutritionGoalType.GAIN_WEIGHT -> R.string.goal_gain_weight
     }
 )
 

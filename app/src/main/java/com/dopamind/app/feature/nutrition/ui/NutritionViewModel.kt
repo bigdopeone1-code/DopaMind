@@ -11,6 +11,7 @@ import com.dopamind.app.feature.nutrition.data.WeightLogEntity
 import com.dopamind.app.feature.nutrition.domain.NutritionGoal
 import com.dopamind.app.feature.nutrition.domain.NutritionGoalCalculator
 import com.dopamind.app.feature.profile.data.ActivityLevel
+import com.dopamind.app.feature.profile.data.NutritionGoalType
 import com.dopamind.app.feature.profile.data.ProfileRepository
 import com.dopamind.app.feature.profile.data.UserProfileEntity
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,6 +43,7 @@ class NutritionViewModel(
                 ageYears = it.ageYears,
                 sex = runCatching { BiologicalSex.valueOf(it.biologicalSex) }.getOrDefault(BiologicalSex.OTHER),
                 activityLevel = runCatching { ActivityLevel.valueOf(it.activityLevel) }.getOrDefault(ActivityLevel.LIGHT),
+                goalType = runCatching { NutritionGoalType.valueOf(it.nutritionGoalType) }.getOrDefault(NutritionGoalType.MAINTAIN),
                 manualCalorieOverride = it.dailyCalorieGoalOverride,
             )
         }

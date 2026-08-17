@@ -29,6 +29,13 @@ enum class ActivityLevel(val tdeeMultiplier: Double) {
     VERY_ACTIVE(1.725),
 }
 
+/**
+ * The Yazio-style "what's your goal?" onboarding question. Drives the daily
+ * calorie target in NutritionGoalCalculator (deficit for LOSE_WEIGHT,
+ * surplus for GAIN_WEIGHT) — informational estimate, not a medical plan.
+ */
+enum class NutritionGoalType { LOSE_WEIGHT, MAINTAIN, GAIN_WEIGHT }
+
 private const val DEFAULT_AGE_YEARS = 30
 private const val DEFAULT_WATER_GOAL_ML = 2000
 
@@ -53,6 +60,8 @@ data class UserProfileEntity(
     val ageYears: Int = DEFAULT_AGE_YEARS,
     val dailyWaterGoalMl: Int = DEFAULT_WATER_GOAL_ML,
     val dailyCalorieGoalOverride: Int? = null,
+    val nutritionGoalType: String = NutritionGoalType.MAINTAIN.name,
+    val targetWeightKg: Float? = null,
 )
 
 @Dao
@@ -83,6 +92,8 @@ class ProfileRepository(private val dao: ProfileDao) {
         cannabisUseFrequency: UseFrequency = UseFrequency.NEVER,
         alcoholUseFrequency: UseFrequency = UseFrequency.NEVER,
         activityLevel: ActivityLevel = ActivityLevel.LIGHT,
+        nutritionGoalType: NutritionGoalType = NutritionGoalType.MAINTAIN,
+        targetWeightKg: Float? = null,
     ) {
         dao.upsert(
             UserProfileEntity(
@@ -98,6 +109,8 @@ class ProfileRepository(private val dao: ProfileDao) {
                 cannabisUseFrequency = cannabisUseFrequency.name,
                 alcoholUseFrequency = alcoholUseFrequency.name,
                 activityLevel = activityLevel.name,
+                nutritionGoalType = nutritionGoalType.name,
+                targetWeightKg = targetWeightKg,
             )
         )
     }

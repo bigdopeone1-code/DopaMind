@@ -355,6 +355,12 @@
     <string name="onboarding_profile_subtitle">Usati solo per rendere più precisi i calcolatori BAC ed edibles — restano su questo dispositivo.</string>
     <string name="onboarding_body_title">Il tuo corpo</string>
     <string name="onboarding_body_subtitle">Altezza e livello di attività — aiuta a personalizzare le statistiche.</string>
+    <string name="onboarding_goal_title">Qual è il tuo obiettivo?</string>
+    <string name="onboarding_goal_subtitle">Determina il tuo obiettivo calorico giornaliero — puoi cambiarlo quando vuoi.</string>
+    <string name="goal_lose_weight">Perdere peso</string>
+    <string name="goal_maintain">Mantenere il peso</string>
+    <string name="goal_gain_weight">Aumentare di peso</string>
+    <string name="onboarding_target_weight_label">Peso obiettivo</string>
     <string name="onboarding_height_label">Altezza</string>
     <string name="onboarding_activity_label">Livello di attività</string>
     <string name="activity_level_sedentary">Sedentario</string>

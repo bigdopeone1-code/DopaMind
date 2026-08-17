@@ -62,7 +62,7 @@ import net.sqlcipher.database.SupportFactory
         WaterLogEntity::class,
         FastingSessionEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 abstract class DopaMindDatabase : RoomDatabase() {
