@@ -95,6 +95,20 @@ app/src/main/java/com/dopamind/app/
   deficit or surplus is applied on top of the Mifflin-St Jeor TDEE, floored
   at a 1200 kcal/day safety rail. Both the goal and target weight are
   editable anytime from the Profile screen, not just at onboarding.
+- **Dashboard 3D hero**: the dashboard's tappable body is a real SceneView/
+  Filament-rendered `.glb` model (`assets/models/dopamind_body.glb`), not a
+  2D illustration — pinch/pan/rotate via the default camera manipulator, tap
+  a region to jump to the matching module. The model is a bespoke asset
+  built for this app (its own glTF extras say "Stylized prototype; not
+  medically accurate and not for clinical use" — same non-medical framing as
+  everywhere else) with real named per-organ meshes (brain regions, lungs,
+  heart, liver, kidneys, stomach, digestive tract) under a translucent body
+  shell. It replaced an earlier placeholder (a CC-BY animated humanoid,
+  CesiumMan, used only because no purpose-built asset existed yet). Taps are
+  still resolved by hit-position rather than by mesh name — see the kdoc in
+  `Model3DHero.kt` for the exact thresholds (derived from the model's real
+  bounding boxes) and the known chest-region ambiguity (heart vs. lungs sit
+  at nearly the same height, split only by distance from the centerline).
 
 Each `feature/<module>` package is split into `data` (Room entity/DAO/repository),
 `domain` (pure Kotlin calculators — Widmark BAC, edibles dosing, €/unit convenience,
