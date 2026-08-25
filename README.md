@@ -18,6 +18,8 @@ be done in this environment: an actual Gradle build run.
 ```
 app/src/main/java/com/dopamind/app/
 ├── core/
+│   ├── habit/            Habit taxonomy + the unified behaviour-event store
+│   ├── scoring/          DopaScore engine + body-load readings (pure Kotlin)
 │   ├── theme/            Dark design system: colors, typography, shapes
 │   ├── designsystem/      Reusable Compose components (DMCard, ProgressRing, DMChip, SimpleBarChart, …)
 │   ├── navigation/        Type-safe Navigation Compose routes (@Serializable) + NavHost
@@ -40,7 +42,9 @@ app/src/main/java/com/dopamind/app/
 │   ├── finance/           €/unit convenience calc, budget tracker, spend log
 │   ├── dailyvibe/         The Daily Vibe Check-in (swipeable 3-card flow)
 │   ├── weeklyrecap/       Weekly Recap + Annual Wrapped (Spotify-Wrapped style)
-│   ├── dashboard/         Home screen (7 module cards)
+│   ├── home/              Home: greeting, DopaScore, body readings, today
+│   ├── log/               The central "+" Add Event flow
+│   ├── dashboard/         Legacy module grid (route into the specialist screens)
 │   ├── profile/           Onboarding, Splash routing, Profile/Settings screen
 │   ├── badges/            Full badge gallery (locked/unlocked)
 │   ├── history/           30-day trend charts per module
@@ -117,6 +121,74 @@ The `domain` layer and most of `core` (analytics, gamification catalog, AI parse
 have no Android or Compose dependency, which is what makes a future Kotlin
 Multiplatform port to iOS realistic: Room and the Compose UI are the two layers
 that would need replacing, everything else travels as-is.
+
+### The product shell — Home, DopaScore, and the unified event log
+
+The app was originally built as eight self-contained modules, each with its own
+Room table and its own screen. That works while the set of tracked behaviours is
+fixed at build time. It stops working the moment users choose their own — which
+is what the product now does, so the logging backbone was rebuilt around it.
+
+**`core/habit` — one taxonomy, one table.** `HabitCategory` is the open list of
+trackable behaviours (nicotine, alcohol, cannabis, caffeine, energy drinks,
+social media, gaming, pornography, gambling, late-night screen use, short sleep,
+overeating, other). Users pick theirs during onboarding and the Daily Log renders
+exactly that set — the app never assumes a habit nobody told it about. Every log
+lands in a single `behavior_events` table: category, amount, timestamp, and then
+intensity / mood / stress / trigger / context / note, all optional. Adding a
+category is one entry in the enum plus two strings; no other layer hardcodes the
+list.
+
+The per-module tables did not go away. They still own the domain-specific fields
+their specialist calculators need — ABV and volume for the Widmark BAC math, THC
+mg for edibles dosing — and are reachable through the legacy module dashboard.
+They are detail stores now; `behavior_events` is what Home, DopaScore and the
+body readings actually read.
+
+**`core/scoring` — DopaScore.** A 0-100 composite of six independently-calculated
+dimensions: Habit Load, Sleep, Recovery, Energy, Focus, Stress. Two design rules
+matter more than the arithmetic:
+
+- *Weights are data, not code.* Every tunable — dimension weights, the sleep
+  target and floor, the full-load threshold, the recency decay, the band
+  boundaries — lives in `ScoringConfig` and is passed in. Retuning the product
+  means editing one data class, and a test can pin a deterministic config.
+- *Missing data is excluded, never scored zero.* A dimension with nothing behind
+  it is dropped and the remaining weights are renormalised, so someone who has
+  never logged sleep is not shown a depressed score because of it. How much of
+  the score had real data behind it is surfaced to the user as `coverage`.
+
+`DopaScoreEngine` and `BodyLoadCalculator` are pure Kotlin — no Room, no Context,
+no coroutines. `ScoreInputBuilder` is the only Android-aware piece, and its whole
+job is turning repositories into a plain `ScoreInput`. That split is why the
+scoring layer is covered by real JVM unit tests (`app/src/test/.../scoring/`) and
+why it could move to a shared KMP module without changing a line.
+
+**Body readings are exposure indices, not health measurements.** The Home screen
+shows Brain / Heart / Lungs / Liver / Recovery on 0-100. A reading of "Lungs 95"
+means *little of this week's logged load falls in categories weighted towards the
+respiratory system* — it says nothing about the user's lungs. The weights in
+`HabitCategory.systemLoad` are product design choices, not clinical data. The
+in-app copy states this on the card itself, and no copy built on this output may
+present it as a health assessment. This is the same non-medical line the rest of
+the app holds.
+
+**Known limitation, deliberately not hidden:** a user who stops logging produces
+zero load and therefore a high score. The engine cannot tell a quiet week from an
+unlogged one. Rather than bury a hidden penalty in the arithmetic, `coverage` is
+shown next to the score and logging consistency is left to be tracked on its own
+terms.
+
+**Navigation.** The shell is Home / Trends / **+** / Insights / Profile, with the
+central "+" raised and accent-filled: it is an action, not a tab, and it is the
+fastest path to a log from anywhere in the app. Add Event is one scrolling screen
+rather than a wizard — category and amount at the top with Save directly beneath
+them, every enrichment field below that, and nothing below Save able to block a
+log from being written.
+
+Trends and Insights are wired to the closest existing surfaces (module history
+and the Weekly Recap) so the shell works end to end; both are due purpose-built
+screens.
 
 ### core/analytics — the correlation engine
 

@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.dopamind.app.core.gamification.BadgeUnlockEntity
 import com.dopamind.app.core.gamification.GamificationDao
+import com.dopamind.app.core.habit.BehaviorEventDao
+import com.dopamind.app.core.habit.BehaviorEventEntity
 import com.dopamind.app.core.security.PassphraseProvider
 import com.dopamind.app.feature.alcohol.data.AlcoholDao
 import com.dopamind.app.feature.alcohol.data.DrinkLogEntity
@@ -61,8 +63,9 @@ import net.sqlcipher.database.SupportFactory
         WeightLogEntity::class,
         WaterLogEntity::class,
         FastingSessionEntity::class,
+        BehaviorEventEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 abstract class DopaMindDatabase : RoomDatabase() {
@@ -77,6 +80,7 @@ abstract class DopaMindDatabase : RoomDatabase() {
     abstract fun gamificationDao(): GamificationDao
     abstract fun profileDao(): ProfileDao
     abstract fun nutritionDao(): NutritionDao
+    abstract fun behaviorEventDao(): BehaviorEventDao
 
     companion object {
         private const val DATABASE_NAME = "dopamind_encrypted.db"

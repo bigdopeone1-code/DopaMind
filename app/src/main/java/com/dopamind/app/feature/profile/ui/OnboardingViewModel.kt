@@ -2,6 +2,7 @@ package com.dopamind.app.feature.profile.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dopamind.app.core.habit.HabitCategory
 import com.dopamind.app.core.i18n.LocaleController
 import com.dopamind.app.core.notifications.NotificationScheduler
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
@@ -24,6 +25,12 @@ data class OnboardingUiState(
     val heightCm: Int = 170,
     val sex: BiologicalSex = BiologicalSex.OTHER,
     val activityLevel: ActivityLevel = ActivityLevel.LIGHT,
+    /**
+     * The behaviours this user actually wants to track. Starts empty on purpose:
+     * the app should never assume a habit, and the Daily Log is built from
+     * exactly this set.
+     */
+    val trackedCategories: Set<HabitCategory> = emptySet(),
     val goalType: NutritionGoalType = NutritionGoalType.MAINTAIN,
     val targetWeightKg: Float? = null,
     val smokingStatus: SmokingStatus = SmokingStatus.NEVER,
@@ -49,6 +56,15 @@ class OnboardingViewModel(
     fun onHeightChange(heightCm: Int) = _uiState.update { it.copy(heightCm = heightCm) }
     fun onSexChange(sex: BiologicalSex) = _uiState.update { it.copy(sex = sex) }
     fun onActivityLevelChange(level: ActivityLevel) = _uiState.update { it.copy(activityLevel = level) }
+    fun onTrackedCategoryToggle(category: HabitCategory) = _uiState.update { state ->
+        val next = if (category in state.trackedCategories) {
+            state.trackedCategories - category
+        } else {
+            state.trackedCategories + category
+        }
+        state.copy(trackedCategories = next)
+    }
+
     fun onGoalTypeChange(goalType: NutritionGoalType) = _uiState.update {
         // A new goal invalidates any previously picked target weight — MAINTAIN has none.
         it.copy(goalType = goalType, targetWeightKg = if (goalType == NutritionGoalType.MAINTAIN) null else it.targetWeightKg)
@@ -79,6 +95,9 @@ class OnboardingViewModel(
                 activityLevel = state.activityLevel,
                 nutritionGoalType = state.goalType,
                 targetWeightKg = state.targetWeightKg,
+                // Skipping the picker is allowed; the repository falls back to
+                // the default set rather than leaving the Daily Log empty.
+                trackedCategories = state.trackedCategories.toList(),
             )
             if (state.notificationsEnabled) {
                 notificationScheduler.scheduleDailyCheckInReminder(state.dailyReminderHour)

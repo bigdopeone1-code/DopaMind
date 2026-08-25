@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import com.dopamind.app.core.habit.HabitCategory
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import kotlinx.coroutines.flow.Flow
 
@@ -62,7 +63,20 @@ data class UserProfileEntity(
     val dailyCalorieGoalOverride: Int? = null,
     val nutritionGoalType: String = NutritionGoalType.MAINTAIN.name,
     val targetWeightKg: Float? = null,
+    /**
+     * Comma-joined [HabitCategory] names the user chose to track. Empty means
+     * "not chosen yet" and callers fall back to [HabitCategory.DEFAULT_SELECTION];
+     * it is deliberately not pre-filled, so the Daily Log never assumes a habit
+     * the user never told us about.
+     */
+    val trackedCategoriesCsv: String = "",
 )
+
+/** The user's chosen categories, falling back to the default set when unset. */
+fun UserProfileEntity.trackedCategories(): List<HabitCategory> =
+    trackedCategoriesCsv.split(",")
+        .mapNotNull { HabitCategory.fromNameOrNull(it.trim()) }
+        .ifEmpty { HabitCategory.DEFAULT_SELECTION }
 
 @Dao
 interface ProfileDao {
@@ -94,6 +108,7 @@ class ProfileRepository(private val dao: ProfileDao) {
         activityLevel: ActivityLevel = ActivityLevel.LIGHT,
         nutritionGoalType: NutritionGoalType = NutritionGoalType.MAINTAIN,
         targetWeightKg: Float? = null,
+        trackedCategories: List<HabitCategory> = emptyList(),
     ) {
         dao.upsert(
             UserProfileEntity(
@@ -111,6 +126,7 @@ class ProfileRepository(private val dao: ProfileDao) {
                 activityLevel = activityLevel.name,
                 nutritionGoalType = nutritionGoalType.name,
                 targetWeightKg = targetWeightKg,
+                trackedCategoriesCsv = trackedCategories.joinToString(",") { it.name },
             )
         )
     }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -34,6 +35,7 @@ import com.dopamind.app.core.designsystem.DMTextField
 import com.dopamind.app.core.di.dopaMindViewModel
 import com.dopamind.app.core.theme.TextPrimary
 import com.dopamind.app.core.theme.TextSecondary
+import com.dopamind.app.core.habit.HabitCategory
 import com.dopamind.app.feature.alcohol.domain.BiologicalSex
 import com.dopamind.app.feature.profile.data.ActivityLevel
 import com.dopamind.app.feature.profile.data.LanguagePreference
@@ -42,7 +44,7 @@ import com.dopamind.app.feature.profile.data.SmokingStatus
 import com.dopamind.app.feature.profile.data.UseFrequency
 import kotlinx.coroutines.launch
 
-private const val ONBOARDING_PAGE_COUNT = 7
+private const val ONBOARDING_PAGE_COUNT = 8
 
 @Composable
 fun OnboardingScreen(onComplete: () -> Unit) {
@@ -63,16 +65,17 @@ fun OnboardingScreen(onComplete: () -> Unit) {
         HorizontalPager(state = pagerState, modifier = Modifier.weight(1f).fillMaxWidth()) { page ->
             when (page) {
                 0 -> WelcomeStep(uiState.displayName, viewModel::onNameChange)
-                1 -> GoalStep(
+                1 -> TrackedCategoriesStep(uiState.trackedCategories, viewModel::onTrackedCategoryToggle)
+                2 -> GoalStep(
                     goalType = uiState.goalType,
                     onGoalTypeChange = viewModel::onGoalTypeChange,
                     currentWeightKg = uiState.weightKg,
                     targetWeightKg = uiState.targetWeightKg,
                     onTargetWeightChange = viewModel::onTargetWeightChange,
                 )
-                2 -> ProfileStep(uiState.weightKg, viewModel::onWeightChange, uiState.sex, viewModel::onSexChange)
-                3 -> BodyStep(uiState.heightCm, viewModel::onHeightChange, uiState.activityLevel, viewModel::onActivityLevelChange)
-                4 -> SubstancesStep(
+                3 -> ProfileStep(uiState.weightKg, viewModel::onWeightChange, uiState.sex, viewModel::onSexChange)
+                4 -> BodyStep(uiState.heightCm, viewModel::onHeightChange, uiState.activityLevel, viewModel::onActivityLevelChange)
+                5 -> SubstancesStep(
                     smokingStatus = uiState.smokingStatus,
                     onSmokingChange = viewModel::onSmokingStatusChange,
                     cannabisFrequency = uiState.cannabisUseFrequency,
@@ -80,7 +83,7 @@ fun OnboardingScreen(onComplete: () -> Unit) {
                     alcoholFrequency = uiState.alcoholUseFrequency,
                     onAlcoholChange = viewModel::onAlcoholUseChange,
                 )
-                5 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
+                6 -> LanguageStep(uiState.language, viewModel::onLanguageChange)
                 else -> NotificationsStep(
                     enabled = uiState.notificationsEnabled,
                     onEnabledChange = { enabled ->
@@ -127,6 +130,43 @@ private fun WelcomeStep(name: String, onNameChange: (String) -> Unit) {
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 24.dp),
         )
         DMTextField(value = name, onValueChange = onNameChange, placeholder = stringResource(R.string.onboarding_name_placeholder), singleLine = true)
+    }
+}
+
+/**
+ * The personalisation question the whole product hangs off: which behaviours
+ * this user wants to track. Multi-select and skippable — an empty selection
+ * falls back to a small default set rather than blocking the flow.
+ */
+@Composable
+private fun TrackedCategoriesStep(
+    selected: Set<HabitCategory>,
+    onToggle: (HabitCategory) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Text(
+            text = stringResource(R.string.onboarding_tracking_title),
+            style = MaterialTheme.typography.headlineLarge,
+            color = TextPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(
+            text = stringResource(R.string.onboarding_tracking_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = TextSecondary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 20.dp),
+        )
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            items(HabitCategory.entries.toList()) { category ->
+                DMChip(
+                    label = stringResource(category.labelRes),
+                    selected = category in selected,
+                    onClick = { onToggle(category) },
+                )
+            }
+        }
     }
 }
 

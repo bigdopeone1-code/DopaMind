@@ -9,7 +9,10 @@ import com.dopamind.app.core.backup.BackupManager
 import com.dopamind.app.core.database.DopaMindDatabase
 import com.dopamind.app.core.gamification.BadgeEngine
 import com.dopamind.app.core.gamification.GamificationRepository
+import com.dopamind.app.core.habit.BehaviorEventRepository
 import com.dopamind.app.core.notifications.NotificationScheduler
+import com.dopamind.app.core.scoring.DopaScoreEngine
+import com.dopamind.app.core.scoring.ScoreInputBuilder
 import com.dopamind.app.feature.alcohol.data.AlcoholRepository
 import com.dopamind.app.feature.cannabis.data.CannabisRepository
 import com.dopamind.app.feature.dailyvibe.data.DailyVibeRepository
@@ -44,6 +47,20 @@ class AppContainer(private val appContext: Context) {
     val gamificationRepository: GamificationRepository by lazy { GamificationRepository(database.gamificationDao()) }
     val profileRepository: ProfileRepository by lazy { ProfileRepository(database.profileDao()) }
     val nutritionRepository: NutritionRepository by lazy { NutritionRepository(database.nutritionDao()) }
+    val behaviorEventRepository: BehaviorEventRepository by lazy { BehaviorEventRepository(database.behaviorEventDao()) }
+
+    /** Assembles the pure-Kotlin scoring input from the repositories. */
+    val scoreInputBuilder: ScoreInputBuilder by lazy {
+        ScoreInputBuilder(
+            behaviorEventRepository = behaviorEventRepository,
+            recoveryRepository = recoveryRepository,
+            dailyVibeRepository = dailyVibeRepository,
+            profileRepository = profileRepository,
+        )
+    }
+
+    /** Stateless and config-driven, so a single shared instance is fine. */
+    val dopaScoreEngine: DopaScoreEngine by lazy { DopaScoreEngine() }
 
     val correlationEngine: CorrelationEngine by lazy {
         CorrelationEngine(

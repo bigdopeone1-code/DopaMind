@@ -29,6 +29,33 @@ sealed interface Destination {
     @Serializable
     data object HistoryHub : Destination
 
+    /**
+     * The product's Home. Replaces [Dashboard] as the app's landing screen —
+     * Dashboard is kept as a reachable legacy detail view rather than deleted,
+     * because its module cards are still the entry point to the specialist
+     * screens (BAC calculator, edibles dosing) the new Home doesn't duplicate.
+     */
+    @Serializable
+    data object Home : Destination
+
+    /** Longitudinal view — per-category trends over time. */
+    @Serializable
+    data object Trends : Destination
+
+    /** Pattern and correlation surface. */
+    @Serializable
+    data object Insights : Destination
+
+    /**
+     * The central "+" flow: log a behaviour in seconds.
+     *
+     * [presetCategory] lets a caller deep-link straight past the category
+     * picker (a Home "log again" chip, a notification action) while the plain
+     * navigation from the tab bar starts at the picker.
+     */
+    @Serializable
+    data class AddEvent(val presetCategory: String? = null) : Destination
+
     @Serializable
     data object Dashboard : Destination
 

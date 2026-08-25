@@ -463,4 +463,113 @@
     <string name="tab_scan">Scan</string>
     <string name="tab_insights">Insights</string>
     <string name="tab_profile">Profile</string>
+
+    <!-- ============================================================
+         Product shell: navigation, DopaScore, habit taxonomy, logging.
+         Copy rule for this whole block: describe, never grade. No copy
+         here may call a day good or bad, or tell the user they failed.
+         ============================================================ -->
+    <string name="tab_trends">Trends</string>
+    <string name="tab_add_event">Log something</string>
+
+    <!-- Tracked behaviour categories -->
+    <string name="habit_nicotine">Nicotine</string>
+    <string name="habit_alcohol">Alcohol</string>
+    <string name="habit_cannabis">Cannabis</string>
+    <string name="habit_caffeine">Caffeine</string>
+    <string name="habit_energy_drinks">Energy drinks</string>
+    <string name="habit_social_media">Social media</string>
+    <string name="habit_gaming">Gaming</string>
+    <string name="habit_pornography">Pornography</string>
+    <string name="habit_gambling">Gambling</string>
+    <string name="habit_late_night_screen">Late-night screen use</string>
+    <string name="habit_sleep_deprivation">Short sleep</string>
+    <string name="habit_overeating">Overeating</string>
+    <string name="habit_other">Something else</string>
+
+    <string name="habit_unit_count">times</string>
+    <string name="habit_unit_drinks">drinks</string>
+    <string name="habit_unit_servings">servings</string>
+    <string name="habit_unit_minutes">min</string>
+
+    <!-- What preceded an event -->
+    <string name="trigger_stress">Stress</string>
+    <string name="trigger_boredom">Boredom</string>
+    <string name="trigger_social">Being social</string>
+    <string name="trigger_routine">Routine</string>
+    <string name="trigger_celebration">Celebrating</string>
+    <string name="trigger_fatigue">Tiredness</string>
+    <string name="trigger_low_mood">Low mood</string>
+    <string name="trigger_other">Something else</string>
+
+    <!-- Where it happened -->
+    <string name="context_home">Home</string>
+    <string name="context_work">Work</string>
+    <string name="context_out">Out</string>
+    <string name="context_commute">Commuting</string>
+    <string name="context_social_event">With people</string>
+    <string name="context_other">Elsewhere</string>
+
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+
+    <!-- Score bands: neutral descriptions of a state, never a verdict -->
+    <string name="score_band_strong">Strong</string>
+    <string name="score_band_good">Good</string>
+    <string name="score_band_steady">Steady</string>
+    <string name="score_band_under_load">Under load</string>
+
+    <string name="dimension_recovery">Recovery</string>
+    <string name="dimension_sleep">Sleep</string>
+    <string name="dimension_focus">Focus</string>
+    <string name="dimension_energy">Energy</string>
+    <string name="dimension_stress">Stress</string>
+    <string name="dimension_habit_load">Habit load</string>
+
+    <string name="system_brain">Brain</string>
+    <string name="system_heart">Heart</string>
+    <string name="system_lungs">Lungs</string>
+    <string name="system_liver">Liver</string>
+    <string name="system_recovery">Recovery</string>
+
+    <string name="dopascore_title">DopaScore</string>
+    <string name="dopascore_out_of">out of 100</string>
+    <string name="dopascore_empty">Log something and your score starts building from your own data.</string>
+    <string name="dopascore_coverage">Based on %1$d%% of the tracked signals</string>
+
+    <string name="home_subtitle">Here\'s where things stand today.</string>
+    <string name="home_today_title">Today</string>
+    <string name="home_body_status_title">Body status</string>
+    <string name="home_body_status_disclaimer">Reflects what you logged — not a health measurement.</string>
+    <string name="home_nothing_logged">Nothing logged yet</string>
+    <string name="home_insight_title">Pattern</string>
+    <string name="home_insight_lowest">Lowest right now: %1$s (%2$d)</string>
+    <string name="home_insight_highest">Holding up: %1$s (%2$d)</string>
+
+    <string name="add_event_title">Log</string>
+    <string name="add_event_what_happened">What happened?</string>
+    <string name="add_event_save">Save</string>
+    <string name="add_event_optional_hint">Everything below is optional — the log is already saved-ready.</string>
+    <string name="add_event_when">When</string>
+    <string name="add_event_intensity">How intense</string>
+    <string name="add_event_mood">How you feel</string>
+    <string name="add_event_stress">Stress right now</string>
+    <string name="add_event_trigger">What led to it</string>
+    <string name="add_event_context">Where</string>
+    <string name="add_event_note">Note</string>
+    <string name="add_event_note_placeholder">Anything worth remembering</string>
+    <string name="add_event_change">Change</string>
+    <string name="add_event_reset">Reset</string>
+    <string name="add_event_show_all">Show all categories</string>
+    <string name="add_event_show_mine">Show only mine</string>
+
+    <string name="when_now">Just now</string>
+    <string name="when_15_min">15 min ago</string>
+    <string name="when_1_hour">1 hour ago</string>
+    <string name="when_3_hours">3 hours ago</string>
+
+    <string name="onboarding_tracking_title">What do you want to track?</string>
+    <string name="onboarding_tracking_subtitle">Pick as many or as few as you like. Only what you choose shows up in your log.</string>
+    <string name="home_body_open_model">Open the 3D body</string>
 </resources>
